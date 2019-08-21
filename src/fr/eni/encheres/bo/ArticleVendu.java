@@ -38,6 +38,22 @@ public class ArticleVendu {
 		this.categorie = categorie;
 	}
 
+	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
+			LocalDate dateFinEncheres, int miseAPrix, EtatVente etatVente, 
+			Utilisateur proprietaire, Categorie categorie) {
+		super();
+		this.noArticle = noArticle;
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.etatVente = etatVente;
+		this.proprietaire = proprietaire;
+		this.encheres = new ArrayList<Enchere>();
+		this.categorie = categorie;
+	}
+	
 	public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres,
 			LocalDate dateFinEncheres, int miseAPrix, EtatVente etatVente, Adresse lieuRetrait,
 			Utilisateur proprietaire, Categorie categorie) {

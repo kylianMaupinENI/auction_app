@@ -117,9 +117,10 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				String telephone = rs.getString("telephone");
 				Adresse adresse = utilisateur.getAdresse();
 				String motDePasse = rs.getString("mot_de_passe");
+				int credit = rs.getInt("credit");
 				boolean administrateur = utilisateur.isAdministrateur();
 
-				utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, adresse, motDePasse,
+				utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, adresse, motDePasse,credit,
 						administrateur);
 			}
 		} catch (Exception e) {
@@ -138,7 +139,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 	
 	private void setParameter(PreparedStatement stm, Utilisateur utilisateur) throws SQLException {
-		// Paramètres pour la requete d'insertion dans la table ARTICLE_VENDU
+		// Paramï¿½tres pour la requete d'insertion dans la table ARTICLE_VENDU
 		stm.setInt(1, utilisateur.getNoUtilisateur());
 		stm.setString(2, utilisateur.getPseudo());
 		stm.setString(3, utilisateur.getNom());

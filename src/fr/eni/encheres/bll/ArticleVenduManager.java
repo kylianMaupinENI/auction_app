@@ -34,7 +34,6 @@ public class ArticleVenduManager {
 		ArticleVendu articleVendu = null;
 
 		return articleVendu;
-
 	}
 	
 	public ArticleVendu modifieArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
