@@ -1,5 +1,5 @@
 package fr.eni.encheres.dal;
 
-public class UtilisateurDAOJdbcImpl {
+public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 }

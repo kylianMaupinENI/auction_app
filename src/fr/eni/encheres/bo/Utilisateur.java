@@ -22,7 +22,7 @@ public class Utilisateur {
 	}
 
 	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, 
-			Adresse adresse, String motDePasse, boolean administrateur) {
+			Adresse adresse, String motDePasse, int credit, boolean administrateur) {
 		super();
 		this.noUtilisateur = noUtilisateur;
 		this.pseudo = pseudo;
@@ -32,13 +32,14 @@ public class Utilisateur {
 		this.adresse = adresse;
 		this.motDePasse = motDePasse;
 		this.administrateur = administrateur;
+		this.credit = credit;
 		this.achats = new ArrayList<ArticleVendu>();
 		this.ventes = new ArrayList<ArticleVendu>();
 		this.encheres = new ArrayList<Enchere>();
 	}
 	
 	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone,
-			Adresse adresse, String motDePasse, boolean administrateur) {
+			Adresse adresse, String motDePasse, int credit, boolean administrateur) {
 		super();
 		this.pseudo = pseudo;
 		this.nom = nom;
@@ -47,9 +48,42 @@ public class Utilisateur {
 		this.adresse = adresse;
 		this.motDePasse = motDePasse;
 		this.administrateur = administrateur;
+		this.credit = credit;
 		this.achats = new ArrayList<ArticleVendu>();
 		this.ventes = new ArrayList<ArticleVendu>();
 		this.encheres = new ArrayList<Enchere>();
+	}
+
+	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
+			Adresse adresse, String motDePasse, int credit, boolean administrateur, List<ArticleVendu> achats,
+			List<ArticleVendu> ventes, List<Enchere> encheres) {
+		super();
+		this.noUtilisateur = noUtilisateur;
+		this.pseudo = pseudo;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.telephone = telephone;
+		this.adresse = adresse;
+		this.motDePasse = motDePasse;
+		this.credit = credit;
+		this.administrateur = administrateur;
+		this.achats = achats;
+		this.ventes = ventes;
+		this.encheres = encheres;
+	}
+
+	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone, Adresse adresse,
+			String motDePasse) {
+		super();
+		this.noUtilisateur = noUtilisateur;
+		this.pseudo = pseudo;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.telephone = telephone;
+		this.adresse = adresse;
+		this.motDePasse = motDePasse;
 	}
 
 	public int getNoUtilisateur() {
