@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8">
+<link rel="stylesheet" href="css/feuilleDeStyle.css">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -20,9 +21,8 @@
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
 </head>
 
-<body class="bg-gradient-primary">
+<body>
 	<div class="container">
-
 		<!-- Outer Row -->
 		<div class="row justify-content-center">
 
@@ -42,7 +42,7 @@
 									<form class="user">
 										<div class="form-group">
 											<label for="identifiantConnexion">Identifiant :</label> <input
-												type="identifiantConnexion"
+												type="text"
 												class="form-control form-control-user"
 												id="identifiantConnexion">
 										</div>
@@ -72,7 +72,7 @@
 										</div>
 									</form>
 									<hr>
-									<a href="creation.jsp"
+									<a href="creationDeCompte.jsp"
 										class="btn btn-primary btn-user btn-block"
 										id="boutonCreerCompte"> Creer un compte </a>
 								</div>
@@ -86,7 +86,11 @@
 		</div>
 
 	</div>
-
+	
+	<!-- DEBUT BAS DE PAGE -->
+	<%@include file="basDePage.jsp"%>
+	<!-- FIN BAS DE PAGE -->
+	
 	<!-- Bootstrap core JavaScript-->
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -98,36 +102,3 @@
 	<script src="js/sb-admin-2.min.js"></script>
 </body>
 </html>
-
-<style>
-#boutonCreerCompte {
-	width: 50%;
-	margin: auto;
-}
-
-@media screen and (min-width: 768px) {
-	#boutonConnexion {
-		width: 50%;
-		float: left;
-	}
-}
-
-@media screen and (max-width: 768px) {
-	#boutonConnexion {
-		width: 42%;
-		float: left;
-	}
-	
-	#blockMdpOublie{
-		width: 30%;
-	}
-}
-#containerConnexion {
-	width: 100%;
-	height: 65px;
-}
-
-#blockMdpOublie {
-	float: right;
-}
-</style>

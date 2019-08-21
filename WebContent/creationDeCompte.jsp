@@ -21,9 +21,8 @@
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
 </head>
 
-<body class="bg-gradient-primary">
-	<div class="container">
-
+<body>
+	<!-- DEBUT ENTETE -->
 		<!-- Outer Row -->
 		<div class="row justify-content-center">
 
@@ -51,17 +50,17 @@
 										</div>
 										<div class="form-group">
 											<label for="telephoneCreationCompte">Téléphone :</label> <input
-												type="number" class="form-control form-control-user"
+												type="text" class="form-control form-control-user"
 												id="telephoneCreationCompte">
 										</div>
 										<div class="form-group">
 											<label for="codePostalCreationCompte">Code Postal :</label> <input
-												type="number" class="form-control form-control-user"
+												type="text" class="form-control form-control-user"
 												id="codePostalCreationCompte">
 										</div>
 										<div class="form-group">
 											<label for="mdpCreationCompte">Mot de passe :</label> <input
-												type="text" class="form-control form-control-user"
+												type="password" class="form-control form-control-user"
 												id="mdpCreationCompte">
 										</div>
 										<div class="text-right">
@@ -102,7 +101,7 @@
 										</div>
 										<div class="form-group">
 											<label for="confirmationMdpCreationCompte">Confirmation
-												:</label> <input type="text" class="form-control form-control-user"
+												:</label> <input type="password" class="form-control form-control-user"
 												id="confirmationMdpCreationCompte">
 										</div>
 										<div class="text-left">
@@ -149,7 +148,7 @@
 										</div>
 										<div class="form-group">
 											<label for="telephoneCreationCompte">Téléphone :</label> <input
-												type="number" class="form-control form-control-user"
+												type="text" class="form-control form-control-user"
 												id="telephoneCreationCompte">
 										</div>
 										<div class="form-group">
@@ -159,7 +158,7 @@
 										</div>
 										<div class="form-group">
 											<label for="codePostalCreationCompte">Code Postal :</label> <input
-												type="number" class="form-control form-control-user"
+												type="text" class="form-control form-control-user"
 												id="codePostalCreationCompte">
 										</div>
 										<div class="form-group">
@@ -169,12 +168,12 @@
 										</div>
 										<div class="form-group">
 											<label for="mdpCreationCompte">Mot de passe :</label> <input
-												type="text" class="form-control form-control-user"
+												type="password" class="form-control form-control-user"
 												id="mdpCreationCompte">
 										</div>
 										<div class="form-group">
 											<label for="confirmationMdpCreationCompte">Confirmation
-												:</label> <input type="text" class="form-control form-control-user"
+												:</label> <input type="password" class="form-control form-control-user"
 												id="confirmationMdpCreationCompte">
 										</div>
 										<div class="containerCreation">
@@ -197,6 +196,10 @@
 		</div>
 	</div>
 
+	<!-- DEBUT BAS DE PAGE -->
+	<%@include file="basDePage.jsp"%>
+	<!-- FIN BAS DE PAGE -->
+
 	<!-- Bootstrap core JavaScript-->
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -210,5 +213,4 @@
 </html>
 
 <style>
-
 </style>
