@@ -1,6 +1,8 @@
 package fr.eni.encheres.bll;
 
 import java.time.LocalDate;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalUnit;
 
 import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bo.Adresse;
@@ -46,7 +48,7 @@ public class ArticleVenduManager {
 		validerNomArticle(nomArticle, businessException);
 		validerDescription(description, businessException);
 		validerDateDebut(dateDebutEncheres, businessException);
-		validerDateFin(dateFinEncheres, businessException);
+		validerDateFin(dateFinEncheres, dateDebutEncheres, businessException);
 		validerMiseAPrix(miseAPrix, businessException);
 		validerEtatVente(etatVente, businessException);
 		validerRue(rue, businessException);
@@ -82,14 +84,13 @@ public class ArticleVenduManager {
 	}
 
 	private void validerEtatVente(EtatVente etatVente, BusinessException businessException) {
-				
+		
 	}
 
 	private void validerDescription(String description, BusinessException businessException) {
 		if((description == null) || (description.equals(""))) {
 			businessException.ajouterErreur(CodesResultatBLL.DESCRIPTION_INVALIDE);
 		}
-		
 	}
 
 	private void validerNomArticle(String nomArticle, BusinessException businessException) {
@@ -105,11 +106,16 @@ public class ArticleVenduManager {
 	}
 
 	private void validerDateDebut(LocalDate dateDebutEncheres, BusinessException businessException) {
-				
+		if(dateDebutEncheres.isBefore(LocalDate.now())) {
+			businessException.ajouterErreur(CodesResultatBLL.DATE_DEBUT_INVALIDE);
+		}
 	}
 
-	private void validerDateFin(LocalDate dateFinEncheres, BusinessException businessException) {
-				
+	private void validerDateFin(LocalDate dateFinEncheres, LocalDate dateDebutEncheres, BusinessException businessException) {
+		if(dateFinEncheres.isBefore(LocalDate.now())) {
+			businessException.ajouterErreur(CodesResultatBLL.DATE_FIN_ANTERIEURE_INVALIDE);
+		}
+		//TODO Ajouter la vérification de la durée (inférieure à deux mois)
 	}
 
 }

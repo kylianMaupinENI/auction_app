@@ -39,23 +39,25 @@
 							</div>
 							<div class="col-lg-6">
 								<div class="p-5">
-									<form class="user">
+									<form class="user" method="post" action="login">
 										<div class="form-group">
-											<label for="identifiantConnexion">Identifiant :</label> <input
-												type="identifiantConnexion"
+											<label for="identifiantConnexion">Identifiant :</label>
+											<input type="identifiantConnexion"
 												class="form-control form-control-user"
-												id="identifiantConnexion">
+												id="identifiantConnexion"
+												name="identifiantConnexion">
 										</div>
 										<div class="form-group">
-											<label for="motDePasseConnexion">Mot de passe :</label> <input
-												type="password" class="form-control form-control-user"
-												id="motDePasseConnexion">
+											<label for="motDePasseConnexion">Mot de passe :</label>
+											<input type="password" 
+												class="form-control form-control-user"
+												id="motDePasseConnexion" name="motDePasseConnexion">
 										</div>
 										<div id="containerConnexion">
 											<div class="form-group" id="boutonConnexion">
-												<a href="index.jsp"
-													class="btn btn-primary btn-user btn-block"> Se
-													Connecter </a>
+												<input type="submit" 
+												class="btn btn-primary btn-user btn-block"
+												id="submit">
 											</div>
 											<div id="blockMdpOublie">
 												<div class="form-group">
