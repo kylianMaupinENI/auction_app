@@ -8,4 +8,5 @@ public interface UtilisateurDAO {
 	public void update(Utilisateur utilisateur) throws BusinessException;
 	public void delete(String pseudo) throws BusinessException;
 	public Utilisateur select_by_pseudo(String pseudo) throws BusinessException;
+
 }
