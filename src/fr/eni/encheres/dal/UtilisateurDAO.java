@@ -1,15 +1,12 @@
 package fr.eni.encheres.dal;
 
+import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bo.Utilisateur;
 
 public interface UtilisateurDAO {
-
-	Utilisateur selectByPseudo();
-
-	void insert(Utilisateur utilisateur);
-
-	void delete(int noUtilisateur);
-
-	void update(Utilisateur utilisateur);
+	public void insert(Utilisateur utilisateur) throws BusinessException;
+	public void update(Utilisateur utilisateur) throws BusinessException;
+	public void delete(String pseudo) throws BusinessException;
+	public Utilisateur select_by_pseudo(String pseudo) throws BusinessException;
 
 }
