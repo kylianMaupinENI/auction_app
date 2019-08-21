@@ -86,6 +86,21 @@ public class Utilisateur {
 		this.motDePasse = motDePasse;
 	}
 
+	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email,
+			String telephone, Adresse adresse, String motDePasse, int credit, boolean administrateur) {
+		super();
+		this.noUtilisateur = noUtilisateur;
+		this.pseudo = pseudo;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.telephone = telephone;
+		this.adresse = adresse;
+		this.motDePasse = motDePasse;
+		this.credit = credit;
+		this.administrateur = administrateur;
+	}
+
 	public int getNoUtilisateur() {
 		return noUtilisateur;
 	}

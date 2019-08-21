@@ -59,8 +59,8 @@ public class UtilisateurManager {
 		return utilisateur;
 	}
 	
-	public void supprimerUtilisateur(int noUtilisateur) throws BusinessException {
-		utilisateurDAO.delete(noUtilisateur);
+	public void supprimerUtilisateur(String pseudo) throws BusinessException {
+		utilisateurDAO.delete(pseudo);
 	}
 	
 	public void modifieUtilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
@@ -87,6 +87,10 @@ public class UtilisateurManager {
 		Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, adresse, motDePasse);
 		
 		utilisateurDAO.update(utilisateur);
+	}
+	
+	public Utilisateur selectionUtilisateur(String pseudo) throws BusinessException {
+		return utilisateurDAO.selectByPseudo(pseudo);
 	}
 	
 	private void validerVille(String ville, BusinessException businessException) {
@@ -125,8 +129,8 @@ public class UtilisateurManager {
 		}
 	}
 
-	private void validerPseudo(String pseudo, BusinessException businessException) {
-		if (utilisateurDAO.selectByPseudo() == null) {
+	private void validerPseudo(String pseudo, BusinessException businessException) throws BusinessException {
+		if (utilisateurDAO.selectByPseudo(pseudo) != null) {
 			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_UTILISE);
 		}
 		if((pseudo == null) || (pseudo.equals(""))) {
@@ -146,4 +150,14 @@ public class UtilisateurManager {
 		}
 	}
 	
+	public boolean seConnecter(String pseudo, String motDePasse) throws BusinessException {
+		
+		Utilisateur utilisateur = utilisateurDAO.selectByPseudo(pseudo);
+			
+		if (!utilisateur.getMotDePasse().equals(motDePasse)) {
+			return false;
+		}
+		
+		return true;
+	}
 }

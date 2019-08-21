@@ -70,5 +70,30 @@ public abstract class CodesResultatBLL {
 	 */
 	public static final int PRIX_ARTICLE_INVALIDE = 20012;
 
+	/**
+	 * Echec la date de début ne respecte pas les règles définies
+	 */
+	public static final int DATE_DEBUT_INVALIDE = 20013;
+	
+	/**
+	 * Echec la date de fin ne peut pas être antérieure à la date de début
+	 */
+	public static final int DATE_FIN_ANTERIEURE_INVALIDE = 20014;
+	
+	/**
+	 * Echec la durée maximale d'une enchère ne peut pas excéder 2 mois
+	 */
+	public static final int DUREE_TROP_LONGUE = 20015;
+
+	/**
+	 * Echec aucun compte n'est associé à ce pseudo
+	 */
+	public static final int PSEUDO_INCONNU = 20016;
+
+	/**
+	 * Echec le mot de passe entré est incorrect
+	 */
+	public static final int MOT_DE_PASSE_INVALIDE = 20017;
+
 	
 }
