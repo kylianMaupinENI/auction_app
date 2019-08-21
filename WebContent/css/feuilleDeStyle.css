@@ -1,0 +1,84 @@
+@charset "UTF-8";
+
+/* CSS PAGE DE CONNEXION DEBUT */
+
+#boutonCreerCompte {
+	width: 50%;
+	margin: auto;
+}
+
+@media screen and (min-width: 769px) {
+	#boutonConnexion {
+		width: 50%;
+		float: left;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	#boutonConnexion {
+		width: 43%;
+		float: left;
+	}
+	
+	#blockMdpOublie{
+		width: 50%;
+		
+	}
+	#containerConnexion {
+		height: 100px!important;
+	}
+}
+#containerConnexion {
+	width: 100%;
+	height: 65px;
+}
+
+#blockMdpOublie {
+	float: right;
+}
+/* CSS PAGE DE CONNEXION FIN */
+
+
+
+/* CSS PAGE DE CREATION DE COMPTE DEBUT */
+@media screen and (min-width: 1000px) {
+	#boutonAnnuler, #boutonCree {
+		width: 50%;
+	}
+	#boutonCree {
+		float: right;
+	}
+	#titreProfil {
+		margin-top: 10%;
+	}
+	#block1Creation {
+		margin-top: 15%;
+	}
+	#versionMobile {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 999px) {
+	#versionPc {
+		display: none;
+	}
+	#containerConnexion {
+		width: 100%;
+		height: 100px;
+	}
+	#boutonCreer {
+		width: 40%;
+		float: left;
+	}
+	#boutonAnnuler {
+		width: 40%;
+		float: right;
+	}
+}
+
+#boutonCreerCompte {
+	width: 50%;
+	margin: auto;
+}
+/* CSS PAGE DE CREATION DE COMPTE FIN */
