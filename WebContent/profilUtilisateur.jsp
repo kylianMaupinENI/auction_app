@@ -45,7 +45,7 @@
 							<div class="col-lg-6">
 								<div class="p-5">
 									<%Utilisateur u = (Utilisateur)request.getAttribute("utilisateur"); %>
-									<div>Pseudo : <%=u.getPseudo() %></div>
+									<div>Pseudo :<%--  <%=u.getPseudo() %> --%></div>
 									<br>
 									<div>Nom : <%=u.getNom() %></div>
 									<br>
@@ -56,10 +56,12 @@
 									<div>Téléphone : <%=u.getTelephone() %></div>
 									<br>
 									<div>Adresse : <%=u.getAdresse() %></div>
+									<% if(Boolean.getBoolean(request.getParameter("modifiable"))){ %>
 									<hr>
 									<a href="creationDeCompte.jsp"
 										class="btn btn-primary btn-user btn-block"
 										id="boutonCreerCompte"> Modifier </a>
+									<% } %>
 								</div>
 							</div>
 						</div>
