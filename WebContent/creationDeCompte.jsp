@@ -29,7 +29,7 @@
 			<div class="col-xl-10 col-lg-12 col-md-9">
 				<div class="card o-hidden border-0 shadow-lg my-5">
 					<div class="card-body p-0">
-					
+
 						<!-- VERSION PC-->
 						<div class="row" id="versionPc">
 							<div class="col-lg-6 ">
@@ -62,12 +62,8 @@
 											type="password" class="form-control form-control-user"
 											id="mdpCreationCompte">
 									</div>
-									<div class="text-right">
-										<div class="form-group" id="boutonCree">
-											<a href="index.jsp"
-												class="btn btn-primary btn-user btn-block"> Créer </a>
-										</div>
-									</div>
+									<div id="creditCreationDeCompte">Crédit :</div>
+									<br>
 								</div>
 							</div>
 							<div class="col-lg-6">
@@ -102,14 +98,38 @@
 											class="form-control form-control-user"
 											id="confirmationMdpCreationCompte">
 									</div>
-									<div class="text-left">
-										<div class="form-group" id="boutonAnnuler">
-											<a href="index.jsp"
-												class="btn btn-primary btn-user btn-block">Annuler </a>
-										</div>
-									</div>
 								</div>
 							</div>
+							<%
+								List<Integer> listeCodesErreur = (List<Integer>) request.getAttribute("listeCodesErreur");
+								if (listeCodesErreur != null) {
+							%>
+							<p style="color: red;">Erreur, l'avis n'a pas pu être ajouté
+								:</p>
+							<%
+								for (int codeErreur : listeCodesErreur) {
+							%>
+							<p><%=LecteurMessage.getMessageErreur(codeErreur)%></p>
+							<%
+								}
+								}
+							%>
+						</div>
+						<div class="row" id="versionPc">
+							<div class="text-right col-xl-3 col-md-6 mb-4"></div>
+							<div class="text-right col-xl-3 col-md-6 mb-4">
+								<div class="form-group" id="boutonCree">
+									<a href="index.jsp" class="btn btn-primary btn-user btn-block">
+										Créer </a>
+								</div>
+							</div>
+							<div class="text-left col-xl-3 col-md-6 mb-4">
+								<div class="form-group" id="boutonAnnuler">
+									<a href="index.jsp" class="btn btn-primary btn-user btn-block">Annuler
+									</a>
+								</div>
+							</div>
+							<div class="text-right col-xl-3 col-md-6 mb-4"></div>
 						</div>
 					</div>
 				</div>
@@ -177,6 +197,21 @@
 						<input type="password" class="form-control form-control-user"
 							id="confirmationMdpCreationCompte">
 					</div>
+					<%
+						List<Integer> listeCodesErreur = (List<Integer>) request.getAttribute("listeCodesErreur");
+						if (listeCodesErreur != null) {
+					%>
+					<p style="color: red;">Erreur, l'avis n'a pas pu être ajouté :</p>
+					<%
+						for (int codeErreur : listeCodesErreur) {
+					%>
+					<p><%=LecteurMessage.getMessageErreur(codeErreur)%></p>
+					<%
+						}
+						}
+					%>
+					<div id="creditCreationDeCompte">Crédit :</div>
+					<br>
 					<div class="containerCreation">
 						<div class="form-group" id="boutonCreer">
 							<a href="index.jsp" class="btn btn-primary btn-user btn-block">
@@ -191,7 +226,6 @@
 			</div>
 		</div>
 	</div>
-
 	<!-- DEBUT BAS DE PAGE -->
 	<%@include file="basDePage.jsp"%>
 	<!-- FIN BAS DE PAGE -->
@@ -205,5 +239,13 @@
 
 	<!-- Custom scripts for all pages-->
 	<script src="js/sb-admin-2.min.js"></script>
+
+<!-- 	<script>	 -->
+<%-- 	<%if (true) {%> --%>
+// 		document.getElementById('creditCreationDeCompte').style.visibility = 'hidden';
+<%-- 	<%} else {%> --%>
+// 		document.getElementById('creditCreationDeCompte').style.visibility = 'visible';
+<%-- 	<%}%> --%>
+<!-- 	</script> -->
 </body>
 </html>

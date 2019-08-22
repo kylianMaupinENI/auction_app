@@ -1,5 +1,30 @@
 @charset "UTF-8";
 
+/* CSS PAGE INDEX DEBUT */
+#bodyIndex {
+	margin: 0;
+	font-size: 120%;
+}
+
+#blockCategorieIndex {
+	width: 65%;
+}
+
+@media screen and (min-width: 1000px) {
+	#blockCategorieIndex {
+		width: 65%;
+	}
+	#search {
+		width: 60%;
+	}
+	#boutonRechercher {
+		width: 50%;
+		margin-right: 0%;
+		margin-left: auto;
+	}
+}
+/* CSS PAGE INDEX FIN */
+
 /* CSS PAGE DE CONNEXION DEBUT */
 
 #boutonCreerCompte {
@@ -82,3 +107,10 @@
 	margin: auto;
 }
 /* CSS PAGE DE CREATION DE COMPTE FIN */
+
+/* CSS PROFIL UTILISATEUR DEBUT  */
+#bodyIndex {
+	margin: 0;
+	font-size: 130%;
+}
+/* CSS PROFIL UTILISATEUR FIN  */
