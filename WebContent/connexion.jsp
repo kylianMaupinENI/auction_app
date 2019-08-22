@@ -42,32 +42,22 @@
 									<form class="user" method="post" action="login">
 										<div class="form-group">
 											<label for="identifiantConnexion">Identifiant :</label> <input
-												type="text" class="form-control form-control-user"
-												id="identifiantConnexion" name="identifiantConnexion">
+												type="text"
+												class="form-control form-control-user"
+												id="identifiantConnexion"
+												name="identifiantConnexion">
 										</div>
 										<div class="form-group">
-											<label for="motDePasseConnexion">Mot de passe :</label> <input
-												type="password" class="form-control form-control-user"
+											<label for="motDePasseConnexion">Mot de passe :</label>
+											<input type="password" 
+												class="form-control form-control-user"
 												id="motDePasseConnexion" name="motDePasseConnexion">
 										</div>
-										<%
-											List<Integer> listeCodesErreur = (List<Integer>) request.getAttribute("listeCodesErreur");
-											if (listeCodesErreur != null) {
-										%>
-										<p style="color: red;">Erreur, l'avis n'a pas pu être
-											ajouté :</p>
-										<%
-											for (int codeErreur : listeCodesErreur) {
-										%>
-										<p><%=LecteurMessage.getMessageErreur(codeErreur)%></p>
-										<%
-											}
-											}
-										%>
 										<div id="containerConnexion">
 											<div class="form-group" id="boutonConnexion">
-												<input type="submit"
-													class="btn btn-primary btn-user btn-block" id="submit">
+												<input type="submit" 
+												class="btn btn-primary btn-user btn-block"
+												id="submit">
 											</div>
 											<div id="blockMdpOublie">
 												<div class="form-group">
@@ -98,11 +88,11 @@
 		</div>
 
 	</div>
-
+	
 	<!-- DEBUT BAS DE PAGE -->
 	<%@include file="basDePage.jsp"%>
 	<!-- FIN BAS DE PAGE -->
-
+	
 	<!-- Bootstrap core JavaScript-->
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

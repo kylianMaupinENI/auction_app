@@ -1,3 +1,5 @@
+<%@page import="fr.eni.encheres.bo.Utilisateur"%>
+<%@page import="javax.servlet.http.HttpSession"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -14,49 +16,126 @@
 <title>ENI-Encheres</title>
 </head>
 <body id="bodyIndex">
+	<%
+		HttpSession sess = request.getSession();
+		Utilisateur u = (Utilisateur) sess.getAttribute("sessionUtilisateur");
+	%>
 	<!-- DEBUT HAUT DE PAGE -->
-	<%@include file="enteteDeco.jsp"%>
+	<%
+		if (u != null) {
+	%>
+	<div id="enteteCo"><%@include file="enteteCo.jsp"%></div>
+
+	<%
+		} else {
+	%>
+	<div id="enteteDeco"><%@include file="enteteDeco.jsp"%></div>
+
+	<%
+		}
+	%>
 	<!-- FIN HAUT DE PAGE -->
 
-	<div class="container-fluid justify-content-center">
-		<div class="col-xl-3 col-md-6 mb-4"></div>
-		<div class="col-xl-3 col-md-6 mb-4">
-			<div id="blockFiltreIndex">
-				<form action="/action_page.php">
-					<input type="text" placeholder="Le nom de l'article contient"
-						name="search" id="search">
-					<button type="submit">
-						<i class="fa fa-search"></i>
-					</button>
-					<div class="form-group" id="blockCategorieIndex">
-						<label for="categorieIndex" id="categorieIndex">Catégories</label>
-						<select class="form-control" id="SelectIndex">
-							<option>Toutes</option>
-							<option>Informatique</option>
-							<option>Ameublement</option>
-							<option>Vêtement</option>
-							<option>Sport</option>
-							<option>Loisirs</option>
-						</select>
+	<form>
+		<div class="container-fluid justify-content-center">
+			<div class="row">
+				<div class="col-xl-3 col-md-6 mb-4"></div>
+				<div class="col-xl-3 col-md-6 mb-4">
+					<div id="blockFiltreIndex">
+						<input type="text" placeholder="Le nom de l'article contient"
+							name="search" id="search">
+						<button type="submit">
+							<i class="fa fa-search"></i>
+						</button>
+						<div class="form-group" id="blockCategorieIndex">
+							<label for="categorieIndex" id="categorieIndex">Catégories</label>
+							<select class="form-control" id="SelectIndex">
+								<option>Toutes</option>
+								<option>Informatique</option>
+								<option>Ameublement</option>
+								<option>Vêtement</option>
+								<option>Sport et loisirs</option>
+							</select>
+						</div>
+						<%
+							if (u != null) {
+						%>
+						<div id="enteteCo"><%@include file="enteteCo.jsp"%></div>
+
+						<%
+							}
+						%>
 					</div>
-				</form>
+				</div>
+				<div class="col-xl-3 col-md-6 mb-4" id="boutonRechercher">
+					<a href="#" class="btn btn-primary btn-user btn-block"
+						id="boutonRechercher"> Rechercher </a>
+				</div>
+				<div class="col-xl-3 col-md-6 mb-4"></div>
 			</div>
 		</div>
-		<div class="col-xl-3 col-md-6 mb-4" id="boutonRechercher">
-			<a href="#" class="btn btn-primary btn-user btn-block"
-				id="boutonRechercher"> Rechercher </a>
-		</div>
-		<div class="col-xl-3 col-md-6 mb-4"></div>
-	</div>
+		<div class="row">
+			<div class="col-xl-3 col-md-6 mb-4"></div>
+			<div class="col-xl-3 col-md-6 mb-4">
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="radioCategories"
+						id="exampleRadios1" value="option1" checked> <label
+						class="form-check-label" for="exampleRadios1">Achat</label>
+				</div>
+				<div id="checkboxAchat">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value=""
+							id="defaultCheck1"> <label class="form-check-label"
+							id="checkboxIndex " for="defaultCheck1"> Enchères ouvertes </label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value=""
+							id="defaultCheck1"> <label class="form-check-label"
+							id="checkboxIndex " for="defaultCheck1"> Mes enchères en cours </label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value=""
+							id="defaultCheck1"> <label class="form-check-label"
+							id="checkboxIndex " for="defaultCheck1"> Mes enchères remportées </label>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-md-6 mb-4">
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="radioCategories"
+						id="radioVente" value="option2" checked> <label
+						class="form-check-label" for="exampleRadios1">Mes vente</label>
+				</div>
+				<div id="checkboxVente">
 
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value=""
+							id="defaultCheck1"> <label class="form-check-label"
+							id="checkboxIndex " for="defaultCheck1"> Mes ventes en cours </label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value=""
+							id="defaultCheck1"> <label class="form-check-label"
+							id="checkboxIndex " for="defaultCheck1"> Ventes non débutées </label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value=""
+							id="defaultCheck1"><label class="form-check-label"
+							id="checkboxIndex " for="defaultCheck1"> Vente terminées </label>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-md-6 mb-4"></div>
+		</div>
+	</form>
 	<!-- DEBUT FICHE PRODUIT -->
 	<!-- Afficher tous les produits -->
 	<div class="col-xl-3 col-md-6 mb-4">
 		<div class="row no-gutters border-left-primary shadow h-100 py-2">
-<!-- 			<div class="col-md-4"> -->
-<!-- 				<img src="imageDuProduit.jpg" id="imageProduit" class="card-img" -->
-<!-- 					alt="Photo du produit"> -->
-<!-- 			</div> -->
+			<!-- 			<div class="col-md-4"> -->
+			<!-- 				<img src="imageDuProduit.jpg" id="imageProduit" class="card-img" -->
+			<!-- 					alt="Photo du produit"> -->
+			<!-- 			</div> -->
 			<div class="col-md-8">
 				<div class="card-body">
 					<h5 class="card-title">Nom du produit</h5>
@@ -75,3 +154,13 @@
 	<!-- FIN BAS DE PAGE -->
 </body>
 </html>
+
+<style>
+#checkboxVente, #checkboxAchat{
+	margin-left: 5%;
+}
+
+#checkboxIndex{
+	margin-left: 15%
+}
+</style>
