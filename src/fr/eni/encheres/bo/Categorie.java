@@ -4,7 +4,8 @@ public enum Categorie {
 	INFORMATIQUE(1, "Informatique"),
 	AMEUBLEMENT(2, "Ameublement"),
 	VETEMENT(3, "Vêtement"),
-	SPORT_LOISIRS(4, "Sport & Loisirs");
+	SPORT_LOISIRS(4, "Sport & Loisirs"),
+	TOUTES(5, "Toutes");
 	
 	private int noCategorie;
 	private String libelle;

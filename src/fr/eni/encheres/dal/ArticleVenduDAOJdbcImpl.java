@@ -20,38 +20,38 @@ import fr.eni.encheres.bo.Utilisateur;
 public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 	private static final String SELECT_ALL = "SELECT  no_article, nom_article, description, date_debut_encheres, date_fin_encheres,"
-			+ "prix_initial, prix_vente, no_utilisateur, no_categorie  FROM ArticleVendu;";
+			+ "prix_initial, prix_vente, no_utilisateur, no_categorie  FROM ARTICLES_VENDUS;";
 
 	private static final String SELECT_BY_USER_ID = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres,a.date_fin_encheres,"
-			+ "a.prix_initial, a.prix_vente, a.no_categorie, e.montant_enchere  FROM ArticleVendu a INNER JOIN ENCHERES e ON a.no_article = e.no_article "
+			+ "a.prix_initial, a.prix_vente, a.no_categorie, e.montant_enchere  FROM ARTICLES_VENDUS a INNER JOIN ENCHERES e ON a.no_article = e.no_article "
 			+ " WHERE no_Utilisateur = ?;";
 
 	private static final String SELECT_BY_ID = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres,a.date_fin_encheres,"
-			+ "a.prix_initial, a.prix_vente, a.no_categorie, e.montant_enchere  FROM ArticleVendu a INNER JOIN ENCHERES e ON a.no_article = e.no_article "
+			+ "a.prix_initial, a.prix_vente, a.no_categorie, e.montant_enchere  FROM ARTICLES_VENDUS a INNER JOIN ENCHERES e ON a.no_article = e.no_article "
 			+ "JOIN RETRAIT r ON a.no_article = r.no_article WHERE no_Utilisateur = ?;";
 
 	private static final String SELECT_BY_NOM = "SELECT  no_article, nom_article, description, date_debut_encheres, date_fin_encheres,"
-			+ "prix_initial, prix_vente, no_utilisateur, no_categorie  FROM ArticleVendu WHERE nom_article LIKE '%?%';";
+			+ "prix_initial, prix_vente, no_utilisateur, no_categorie  FROM ARTICLES_VENDUS WHERE nom_article LIKE '%?%';";
 
 	private static final String SELECT_BY_NOM_ET_CATEGORIE = "SELECT  no_article, nom_article, description, date_debut_encheres, date_fin_encheres,"
-			+ "prix_initial, prix_vente, no_utilisateur, no_categorie  FROM ArticleVendu WHERE nom_article LIKE '%?%' AND no_categorie = '?';";
+			+ "prix_initial, prix_vente, no_utilisateur, no_categorie  FROM ARTICLES_VENDUS WHERE nom_article LIKE '%?%' AND no_categorie = '?';";
 
 	private static final String SELECT_BY_CATEGORIE = "SELECT  no_article, nom_article, description, date_debut_encheres, date_fin_encheres,"
-			+ "prix_initial, prix_vente, no_utilisateur, no_categorie  FROM ArticleVendu WHERE no_categorie = '?';";
+			+ "prix_initial, prix_vente, no_utilisateur, no_categorie  FROM ARTICLES_VENDUS WHERE no_categorie = '?';";
 
 	private static final String SELECT_BY_ETAT = "SELECT  no_article, nom_article, description, date_debut_encheres, date_fin_encheres,"
-			+ "prix_initial, prix_vente, no_utilisateur, no_categorie  FROM ArticleVendu WHERE no_article IN (SELECT null FROM ENCHERES)"
+			+ "prix_initial, prix_vente, no_utilisateur, no_categorie  FROM ARTICLES_VENDUS WHERE no_article IN (SELECT null FROM ENCHERES)"
 			+ "AND date_debut_encheres = '?' AND date_fin_encheres = '?' ;";
 
-	private static final String INSERT_ARTICLE_VENDU = "INSERT INTO ARTICLE_VENDU(noArticle,nom_article, description, date_debut_encheres, date_fin_encheres,"
-			+ "prix_initial,  no_utilisateur, no_categorie  FROM ArticleVendu) VALUES ('?','?','?','?','?','?','?','?');";
+	private static final String INSERT_ARTICLE_VENDU = "INSERT INTO ARTICLES_VENDUS(nom_article, description, date_debut_encheres, date_fin_encheres,"
+			+ "prix_initial,  no_utilisateur, no_categorie) VALUES (?,?,?,?,?,?,?);";
 
-	private static final String INSERT_RETRAIT = "INSERT INTO RETRAIT(rue, code_postal, ville) VALUES('?','?','?');";
+	private static final String INSERT_RETRAIT = "INSERT INTO RETRAITS(no_article,rue, code_postal, ville) VALUES(?,?,?,?);";
 	
-	private static final String UPDATE_ARTICLE = "UPDATE ARTICLES_VENDU SET nom_article = '?', description = '?', date_debut_encheres = '?', "
+	private static final String UPDATE_ARTICLE = "UPDATE ARTICLES_VENDUS SET nom_article = '?', description = '?', date_debut_encheres = '?', "
 			+ "date_fin_encheres = '?',prix_initial = '?',  no_utilisateur = '?', no_categorie = '?';";
 	
-	private static final String DELETE_ARTICLE_VENDU = "DELETE FROM ARTICLES_VENDU WHERE no_article = ?;";
+	private static final String DELETE_ARTICLE_VENDU = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?;";
 
 	
 	@Override
@@ -67,29 +67,30 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			try {
 				cnx.setAutoCommit(false);
 				PreparedStatement pstmt;
-				ResultSet rs;
-				if (articleVendu.getNoArticle() == 0) {
+				
+				
 					pstmt = cnx.prepareStatement(INSERT_ARTICLE_VENDU, PreparedStatement.RETURN_GENERATED_KEYS);
 					setParameter(pstmt, articleVendu);
 					pstmt.executeUpdate();
-					rs = pstmt.getGeneratedKeys();
+					ResultSet rs = pstmt.getGeneratedKeys();
 					if (rs.next()) {
 						articleVendu.setNoArticle(rs.getInt(1));
 					}
 					rs.close();
 					pstmt.close();
-				}
-				if (articleVendu.getEncheres().size() == 1) { // SI AJOUT OK ALORS AJOUT DANS LA TABLE RETRAIT DE
-																// L'ADRESSE DE L'EMETTEUR
+
+			 // SI AJOUT OK ALORS AJOUT DANS LA TABLE RETRAIT DE
+			 // L'ADRESSE DE L'EMETTEUR SI NON RENSEIGNÉE LORS DE L'AJOUT D'UNE VENTE
 					pstmt = cnx.prepareStatement(INSERT_RETRAIT);
-					pstmt.setString(1, articleVendu.getEncheres().get(0).getEmmeteur().getAdresse().getRue());
-					pstmt.setString(2, articleVendu.getEncheres().get(0).getEmmeteur().getAdresse().getCodePostal());
-					pstmt.setString(3, articleVendu.getEncheres().get(0).getEmmeteur().getAdresse().getVille());
+					pstmt.setInt(1, articleVendu.getNoArticle());
+					pstmt.setString(2, articleVendu.getLieuRetrait().getRue());
+					pstmt.setString(3, articleVendu.getLieuRetrait().getCodePostal());
+					pstmt.setString(4, articleVendu.getLieuRetrait().getVille());
 					pstmt.executeUpdate();
 					pstmt.close();
-				}
+				
 				cnx.commit();
-			} catch (Exception e) {
+			} catch (SQLException e) {
 				e.printStackTrace();
 				cnx.rollback();
 				throw e;
@@ -134,7 +135,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				articleVendu.add(new ArticleVendu(id_article, nom_Article, description, date_debut_enchere,
 						date_fin_enchere, mise_a_prix, etat_vente, utilisateur, categorie));
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTE_ARTICLE_VENDU_ECHEC);
@@ -175,7 +176,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				articleVendu.add(new ArticleVendu(id_article, nom, description, date_debut_enchere, date_fin_enchere,
 						mise_a_prix, etat_vente, utilisateur, categorie));
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTE_ARTICLE_VENDU_ECHEC);
@@ -215,7 +216,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				articleVendu.add(new ArticleVendu(id_article, nom_Article, description, date_debut_enchere,
 						date_fin_enchere, mise_a_prix, etat_vente, utilisateur, categorie));
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTE_ARTICLE_VENDU_ECHEC);
@@ -255,7 +256,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				articleVendu = new ArticleVendu(id, nom_Article, description, date_debut_enchere, date_fin_enchere,
 						mise_a_prix, etat_vente, utilisateur, categorie);
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTE_ARTICLE_VENDU_ECHEC);
@@ -299,7 +300,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				articleVendu.add(new ArticleVendu(id_article, nom_Article, description, date_debut_enchere,
 						date_fin_enchere, mise_a_prix, etat_vente, utilisateur, categorie));
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTE_ARTICLE_VENDU_ECHEC);
@@ -338,7 +339,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				articleVendu.add(new ArticleVendu(id_article, nom_Article, description, date_debut_enchere,
 						date_fin_enchere, mise_a_prix, etat_vente, utilisateur, categorie));
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTE_ARTICLE_VENDU_ECHEC);
@@ -376,7 +377,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				articleVendu.add(new ArticleVendu(id_article, nom_Article, description, date_debut_enchere,
 						date_fin_enchere, mise_a_prix, etat_vente, utilisateur, categorie));
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTE_ARTICLE_VENDU_ECHEC);
@@ -406,7 +407,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				throw businessException;
 			}
 
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.UPDATE_UTILISATEUR_ECHEC);
@@ -431,14 +432,13 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 	private void setParameter(PreparedStatement stm, ArticleVendu articleVendu) throws SQLException {
 		// Paramètres pour la requete d'insertion dans la table ARTICLE_VENDU
-		stm.setInt(1, articleVendu.getNoArticle());
-		stm.setString(2, articleVendu.getNomArticle());
-		stm.setString(3, articleVendu.getDescription());
-		stm.setDate(4, Date.valueOf(articleVendu.getDateDebutEncheres()));
-		stm.setDate(5, Date.valueOf(articleVendu.getDateFinEncheres()));
-		stm.setInt(6, articleVendu.getMiseAPrix());
-		stm.setInt(7, articleVendu.getProprietaire().getNoUtilisateur());
-		stm.setString(8, articleVendu.getCategorie().getLibelle());
+		stm.setString(1, articleVendu.getNomArticle());
+		stm.setString(2, articleVendu.getDescription());
+		stm.setDate(3, Date.valueOf(articleVendu.getDateDebutEncheres()));
+		stm.setDate(4, Date.valueOf(articleVendu.getDateFinEncheres()));
+		stm.setInt(5, articleVendu.getMiseAPrix());
+		stm.setInt(6, 1);
+		stm.setInt(7, articleVendu.getCategorie().getNoCategorie());
 	}
 
 }

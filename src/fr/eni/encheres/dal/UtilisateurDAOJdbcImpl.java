@@ -47,7 +47,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				pstmt.close();
 			}
 
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
@@ -79,7 +79,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				throw businessException;
 			}
 
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.UPDATE_UTILISATEUR_ECHEC);
@@ -89,8 +89,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	@Override
 	public void delete(String pseudo) throws BusinessException {
-		try(Connection cnx = ConnectionProvider.getConnection())
-		{
+		try (Connection cnx = ConnectionProvider.getConnection()) {
 			PreparedStatement pstmt = cnx.prepareStatement(DELETE);
 			pstmt.setString(1, pseudo);
 			pstmt.executeUpdate();
@@ -103,14 +102,14 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public Utilisateur select_by_pseudo(String pseudo) throws BusinessException {
+	public Utilisateur selectByPseudo(String pseudo) throws BusinessException {
 		Utilisateur utilisateur = new Utilisateur();
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_PSEUDO);
 			pstmt.setString(1, pseudo);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				
+
 				String nom = rs.getString("nom_utilisateur");
 				String prenom = rs.getString("prenom_utilisateur");
 				String email = rs.getString("email");
@@ -120,38 +119,33 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				int credit = rs.getInt("credit");
 				boolean administrateur = utilisateur.isAdministrateur();
 
-				utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, adresse, motDePasse,credit,
+				utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, adresse, motDePasse, credit,
 						administrateur);
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
-			businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTE_ARTICLE_VENDU_ECHEC);
+			businessException.ajouterErreur(CodesResultatDAL.LECTURE_UTILISATEUR_ECHEC);
 			throw businessException;
 		}
-		if (utilisateur.getNoUtilisateur() == 0) {
-			BusinessException businessException = new BusinessException();
-			businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTE_ARTICLE_VENDU_INEXISTANTE);
-			throw businessException;
-		}
-
+		
 		return utilisateur;
 	}
-	
+
 	private void setParameter(PreparedStatement stm, Utilisateur utilisateur) throws SQLException {
 		// Param�tres pour la requete d'insertion dans la table ARTICLE_VENDU
 		stm.setInt(1, utilisateur.getNoUtilisateur());
 		stm.setString(2, utilisateur.getPseudo());
 		stm.setString(3, utilisateur.getNom());
 		stm.setString(4, utilisateur.getPrenom());
-		stm.setString(5,utilisateur.getEmail());
-		stm.setString(6,utilisateur.getTelephone());
-		stm.setString(7,utilisateur.getAdresse().getRue());
-		stm.setString(8,utilisateur.getAdresse().getCodePostal());
-		stm.setString(9,utilisateur.getAdresse().getVille());
+		stm.setString(5, utilisateur.getEmail());
+		stm.setString(6, utilisateur.getTelephone());
+		stm.setString(7, utilisateur.getAdresse().getRue());
+		stm.setString(8, utilisateur.getAdresse().getCodePostal());
+		stm.setString(9, utilisateur.getAdresse().getVille());
 		stm.setString(10, utilisateur.getMotDePasse());
 		stm.setInt(11, utilisateur.getCredit());
 		stm.setBoolean(12, utilisateur.isAdministrateur());
 	}
-	
+
 }

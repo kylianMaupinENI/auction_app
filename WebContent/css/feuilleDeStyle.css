@@ -1,84 +1,76 @@
 @charset "UTF-8";
 
+/* CSS PAGE INDEX DEBUT */
+#bodyIndex {
+	margin: 0;
+	font-size: 120%;
+}
+
+#blockCategorieIndex {
+	width: 65%;
+}
+
+@media screen and (min-width: 1000px) {
+	#blockCategorieIndex {
+		width: 65%;
+	}
+	#search {
+		width: 60%;
+	}
+	#boutonRechercher {
+		width: 50%;
+		margin-right: 0%;
+		margin-left: auto;
+	}
+}
+/* CSS PAGE INDEX FIN */
+
 /* CSS PAGE DE CONNEXION DEBUT */
-
-#boutonCreerCompte {
-	width: 50%;
-	margin: auto;
-}
-
-@media screen and (min-width: 769px) {
+@media screen and (max-width: 999px) {
 	#boutonConnexion {
-		width: 50%;
-		float: left;
+		width: 100%;
 	}
 }
 
-@media screen and (max-width: 768px) {
-	#boutonConnexion {
-		width: 43%;
-		float: left;
-	}
-	
-	#blockMdpOublie{
-		width: 50%;
-		
-	}
-	#containerConnexion {
-		height: 100px!important;
-	}
-}
-#containerConnexion {
-	width: 100%;
-	height: 65px;
-}
-
-#blockMdpOublie {
-	float: right;
+#boutonConnexion {
+	width: 35%;
 }
 /* CSS PAGE DE CONNEXION FIN */
 
-
-
 /* CSS PAGE DE CREATION DE COMPTE DEBUT */
 @media screen and (min-width: 1000px) {
-	#boutonAnnuler, #boutonCree {
+	#boutonAnnuler, #boutonCree, #boutonSupprimer, #boutonEnregistrer {
 		width: 50%;
-	}
-	#boutonCree {
-		float: right;
-	}
-	#titreProfil {
-		margin-top: 10%;
-	}
-	#block1Creation {
-		margin-top: 15%;
-	}
-	#versionMobile {
-		display: none;
+		margin: auto
 	}
 }
 
-@media screen and (max-width: 999px) {
-	#versionPc {
-		display: none;
-	}
-	#containerConnexion {
-		width: 100%;
-		height: 100px;
-	}
-	#boutonCreer {
-		width: 40%;
-		float: left;
-	}
-	#boutonAnnuler {
-		width: 40%;
-		float: right;
-	}
-}
-
-#boutonCreerCompte {
-	width: 50%;
+#blockBoutonCreationDeCompte {
+	width: 100%;
 	margin: auto;
+	margin-bottom: 5%;
 }
+
+@media screen and (max-width: 768px) {
+	#boutonAnnuler, #boutonCree, #boutonSupprimer, #boutonEnregistrer {
+		width: 100%;
+		marign: 0;
+	}
+}
+
+#titreProfil {
+	margin-top: 10%;
+}
+
+#versionMobile {
+	display: none;
+}
+
 /* CSS PAGE DE CREATION DE COMPTE FIN */
+
+/* CSS PROFIL UTILISATEUR DEBUT  */
+#bodyIndex {
+	margin: 0;
+	font-size: 130%;
+}
+/* CSS PROFIL UTILISATEUR FIN  */

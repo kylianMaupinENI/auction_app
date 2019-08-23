@@ -26,13 +26,17 @@ public abstract class CodesResultatDAL {
 	 */
 	public static final int LECTURE_LISTE_ARTICLE_VENDU_INEXISTANTE = 10004;
 	/**
+	 * Ecchec lecture de l'utilisateur
+	 */
+	public static final int LECTURE_UTILISATEUR_ECHEC = 10005;
+	/**
 	 * Echec mise à jour de l'utilisateur
 	 */
-	public static final int UPDATE_UTILISATEUR_ECHEC = 10005;
+	public static final int UPDATE_UTILISATEUR_ECHEC = 10006;
 	/**
 	 * Echec suppression de l'utilisateur
 	 */
-	public static final int DELETE_UTILISATEUR_ECHEC = 10006;
+	public static final int DELETE_UTILISATEUR_ECHEC = 10007;
 }
 
 
