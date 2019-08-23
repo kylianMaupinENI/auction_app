@@ -17,7 +17,10 @@ public interface ArticleVenduDAO {
 	public List<ArticleVendu>select_by_nom_and_categorie(String nom, Categorie categorie)throws BusinessException;
 	public List<ArticleVendu> selectByUserId(Utilisateur utilisateur) throws BusinessException;
 	public ArticleVendu select_by_id(int id) throws BusinessException;
+	public List<ArticleVendu> selectByUserIdVente(Utilisateur utilisateur) throws BusinessException;
+	public List<ArticleVendu> selectByUserIdAchat(Utilisateur utilisateur) throws BusinessException;
 	public List<ArticleVendu> select_by_etat(LocalDate date_debut_enchere, LocalDate date_fin_enchere) throws BusinessException;
 	public List<ArticleVendu>select_by_categorie(Categorie categorie)throws BusinessException;
+	List<ArticleVendu> selectByUserIdAndCategorie(Utilisateur utilisateur, Categorie categorie) throws BusinessException;
 	
 }

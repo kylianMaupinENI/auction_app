@@ -30,8 +30,8 @@ public class NouvelArticleVendu extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public static final String ATT_SESSION_USER = "sessionUtilisateur";
 
-	public static final String ACCUEIL_CONNECTE = "/accueil.jsp";
-	public static final String ACCUEIL_DECONNECTE = "/accueil.jsp";
+	public static final String ACCUEIL_CONNECTE = "/index.jsp";
+	public static final String ACCUEIL_DECONNECTE = "/index.jsp";
 	public static final String NOUVELLE_VENTE = "/nouvelle_vente.jsp";
 	
 

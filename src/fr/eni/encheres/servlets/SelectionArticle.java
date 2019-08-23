@@ -26,10 +26,11 @@ public class SelectionArticle extends HttpServlet {
 
 	public static final String ATT_SESSION_USER = "sessionUtilisateur";
 
+	private static final String CHAMP_CHOIX_VENTE = "choix_vente";
 	private static final String CHAMP_MOT_CLE = "search";
 	private static final String CHAMP_CATEGORIE = "selectCategoriesAccueilDeco";
-	public static final String ACCUEIL_CONNECTE = "/accueil.jsp";
-	public static final String ACCUEIL_DECONNECTE = "/accueil.jsp";
+	public static final String ACCUEIL_CONNECTE = "/index.jsp";
+	public static final String ACCUEIL_DECONNECTE = "/index.jsp";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -56,7 +57,7 @@ public class SelectionArticle extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		int choix = Integer.parseInt(request.getParameter(CHAMP_CHOIX_VENTE));
 		String mot_cle = request.getParameter(CHAMP_MOT_CLE);
 		String categorie = request.getParameter(CHAMP_CATEGORIE);
 		RequestDispatcher rd;
