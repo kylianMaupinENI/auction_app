@@ -130,16 +130,20 @@
 			%>
 			<div class="row content">
 				<div class="col-sm-3 sidenav"></div>
+				<%
+					if (true) {
+				%>
+<!-- 				ON AFFICHE SELON LE CRITERE SELECTIONNE -->
 				<div class="col-sm-6 text-left">
 					<div id="containerIndex">
 						<div class="row">
 							<div class="col-sm-6" id="Block3Article">
 								<div
 									class="row no-gutters border-left-primary shadow h-100 py-2">
-									<!-- 			<div class="col-md-4"> -->
-									<!-- 				<img src="imageDuProduit.jpg" id="imageProduit" class="card-img" -->
-									<!-- 					alt="Photo du produit"> -->
-									<!-- 			</div> -->
+									<div class="col-md-4">
+										<img src="imageDuProduit.jpg" id="imageProduit"
+											class="card-img" alt="Photo du produit">
+									</div>
 									<div class="col-md-8">
 										<div class="card-body">
 											<h5 class="card-title">Nom du produit</h5>
@@ -154,6 +158,37 @@
 						</div>
 					</div>
 				</div>
+				<%
+					} else {
+				%>
+<!-- 				ON AFFICHE TOUTES LES ENCHERES EN COURS -->
+				<div class="col-sm-6 text-left">
+					<div id="containerIndex">
+						<div class="row">
+							<div class="col-sm-6" id="Block3Article">
+								<div
+									class="row no-gutters border-left-primary shadow h-100 py-2">
+									<div class="col-md-4">
+										<img src="imageDuProduit.jpg" id="imageProduit"
+											class="card-img" alt="Photo du produit">
+									</div>
+									<div class="col-md-8">
+										<div class="card-body">
+											<h5 class="card-title">Nom du produit</h5>
+											<p class="card-text">Prix :</p>
+											<p class="card-text">Fin de l'enchére :</p>
+											</br>
+											<p class="card-text">Vendeur :</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<%
+					}
+				%>
 				<div class="col-sm-3 sidenav"></div>
 			</div>
 		</div>
