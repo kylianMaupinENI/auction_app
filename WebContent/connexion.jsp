@@ -30,36 +30,34 @@
 
 				<div class="card o-hidden border-0 shadow-lg my-5">
 					<div class="card-body p-0">
-						<!-- Nested Row within Card Body -->
-						<div class="row">
-							<div class="col-lg-3">
-								<div class="text-left">
-									<h1 class="h4 text-gray-900 mb-4">ENI-Enchères</h1>
+						<form class="user" method="post" action="login"
+							id="blockFormulaireConnexion" >
+							<!-- Nested Row within Card Body -->
+							<div class="row">
+								<div class="col-lg-3">
+									<div class="text-left">
+										<h1 class="h4 text-gray-900 mb-4">ENI-Enchères</h1>
+									</div>
 								</div>
-							</div>
-							<div class="col-lg-6">
-								<div class="p-5">
-									<form class="user" method="post" action="login">
+								<div class="col-lg-6">
+									<div class="p-5">
 										<div class="form-group">
 											<label for="identifiantConnexion">Identifiant :</label> <input
-												type="text"
-												class="form-control form-control-user"
-												id="identifiantConnexion"
-												name="identifiantConnexion">
+												type="text" class="form-control form-control-user"
+												id="identifiantConnexion" name="identifiantConnexion">
 										</div>
 										<div class="form-group">
-											<label for="motDePasseConnexion">Mot de passe :</label>
-											<input type="password" 
-												class="form-control form-control-user"
+											<label for="motDePasseConnexion">Mot de passe :</label> <input
+												type="password" class="form-control form-control-user"
 												id="motDePasseConnexion" name="motDePasseConnexion">
 										</div>
-										<div id="containerConnexion">
-											<div class="form-group" id="boutonConnexion">
-												<input type="submit" 
+										<div class="row">
+										<div class="col-lg-6">
+											<a href="creationDeCompte.jsp"
 												class="btn btn-primary btn-user btn-block"
-												id="submit">
-											</div>
-											<div id="blockMdpOublie">
+												id="boutonConnexion"> Connexion </a>
+												</div>
+											<div class="col-lg-6 text-right">
 												<div class="form-group">
 													<div class="custom-control custom-checkbox small">
 														<input type="checkbox" class="custom-control-input"
@@ -72,27 +70,24 @@
 													passe oublié</a>
 											</div>
 										</div>
-									</form>
-									<hr>
-									<a href="creationDeCompte.jsp"
-										class="btn btn-primary btn-user btn-block"
-										id="boutonCreerCompte"> Creer un compte </a>
+										<hr>
+										<a href="creationDeCompte.jsp"
+											class="btn btn-primary btn-user btn-block"
+											id="boutonCreerCompte"> Creer un compte </a>
+									</div>
 								</div>
 							</div>
-						</div>
+						</form>
 					</div>
 				</div>
-
 			</div>
-
 		</div>
-
 	</div>
-	
+
 	<!-- DEBUT BAS DE PAGE -->
 	<%@include file="basDePage.jsp"%>
 	<!-- FIN BAS DE PAGE -->
-	
+
 	<!-- Bootstrap core JavaScript-->
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

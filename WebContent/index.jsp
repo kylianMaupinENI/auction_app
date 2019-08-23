@@ -74,60 +74,66 @@
 				<div class="col-xl-3 col-md-6 mb-4"></div>
 			</div>
 		</div>
+		<%
+			if (u != null) {
+		%>
 		<div class="row">
 			<div class="col-xl-3 col-md-6 mb-4"></div>
 			<div class="col-xl-3 col-md-6 mb-4">
 				<div class="form-check">
 					<input class="form-check-input" type="radio" name="radioCategories"
-						id="exampleRadios1" value="option1" checked> <label
-						class="form-check-label" for="exampleRadios1">Achat</label>
+						value="option1" checked> <label
+						class="form-check-label" for="exampleRadios1" id="radioAchat" > Achat</label>
 				</div>
 				<div id="checkboxAchat">
 					<div class="form-check">
-						<input class="form-check-input" type="checkbox" value=""
-							id="defaultCheck1"> <label class="form-check-label"
-							id="checkboxIndex " for="defaultCheck1"> Enchères ouvertes </label>
+						<input type="checkbox" value=""
+							id="checkboxVente"> <label class="form-check-label"
+							id="checkboxVenteLabel" for="defaultCheck1"> Enchères ouvertes </label>
 					</div>
 					<div class="form-check">
-						<input class="form-check-input" type="checkbox" value=""
-							id="defaultCheck1"> <label class="form-check-label"
-							id="checkboxIndex " for="defaultCheck1"> Mes enchères en cours </label>
+						<input type="checkbox" value=""
+							id="checkboxVente"> <label class="form-check-label"
+							id="checkboxVenteLabel " for="defaultCheck1"> Mes enchères en cours </label>
 					</div>
 					<div class="form-check">
-						<input class="form-check-input" type="checkbox" value=""
-							id="defaultCheck1"> <label class="form-check-label"
-							id="checkboxIndex " for="defaultCheck1"> Mes enchères remportées </label>
+						<input type="checkbox" value=""
+							id="checkboxVente"> <label class="form-check-label"
+							id="checkboxVenteLabel " for="defaultCheck1"> Mes enchères remportées </label>
 					</div>
 				</div>
 			</div>
 			<div class="col-xl-3 col-md-6 mb-4">
 				<div class="form-check">
 					<input class="form-check-input" type="radio" name="radioCategories"
-						id="radioVente" value="option2" checked> <label
-						class="form-check-label" for="exampleRadios1">Mes vente</label>
+						value="option2" checked> <label
+						class="form-check-label" for="exampleRadios1" id="radioVente"> Mes vente</label>
 				</div>
 				<div id="checkboxVente">
 
 					<div class="form-check">
-						<input class="form-check-input" type="checkbox" value=""
-							id="defaultCheck1"> <label class="form-check-label"
-							id="checkboxIndex " for="defaultCheck1"> Mes ventes en cours </label>
+						<input type="checkbox" value=""
+							id="checkboxVente"> <label class="form-check-label"
+							id="checkboxVenteLabel " for="defaultCheck1"> Mes ventes en cours </label>
 					</div>
 					<div class="form-check">
-						<input class="form-check-input" type="checkbox" value=""
-							id="defaultCheck1"> <label class="form-check-label"
-							id="checkboxIndex " for="defaultCheck1"> Ventes non débutées </label>
+						<input type="checkbox" value=""
+							id="checkboxVente"> <label class="form-check-label"
+							id="checkboxVenteLabel " for="defaultCheck1"> Ventes non débutées </label>
 					</div>
 					<div class="form-check">
-						<input class="form-check-input" type="checkbox" value=""
-							id="defaultCheck1"><label class="form-check-label"
-							id="checkboxIndex " for="defaultCheck1"> Vente terminées </label>
+						<input type="checkbox" value=""
+							id="checkboxVente"><label class="form-check-label"
+							id="checkboxVenteLabel" for="defaultCheck1"> Vente terminées </label>
 					</div>
 				</div>
 			</div>
 			<div class="col-xl-3 col-md-6 mb-4"></div>
 		</div>
 	</form>
+	<%
+			}
+	%>
 	<!-- DEBUT FICHE PRODUIT -->
 	<!-- Afficher tous les produits -->
 	<div class="col-xl-3 col-md-6 mb-4">
@@ -162,5 +168,9 @@
 
 #checkboxIndex{
 	margin-left: 15%
+}
+
+#radioVente,#radioAchat{
+	margin-left:5%;
 }
 </style>
