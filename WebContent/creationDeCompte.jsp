@@ -1,4 +1,5 @@
 <%@page import="fr.eni.encheres.bo.Utilisateur"%>
+<%@page import="fr.eni.encheres.messages.LecteurMessage" %>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -169,7 +170,7 @@
 	<script>
 		
 	<% HttpSession sess = request.getSession();
-		Utilisateur u = sess.getAttribute("sessionUtilisateur");
+		Utilisateur u = (Utilisateur)sess.getAttribute("sessionUtilisateur");
 		if (u != null) {%>
 		document.getElementById('creditCreationDeCompte').style.visibility = 'visible';
 		document.getElementById('boutonAnnuler').style.display = 'none';

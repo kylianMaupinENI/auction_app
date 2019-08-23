@@ -24,7 +24,7 @@
 
 <body id="bodyIndex">
 	<!-- DEBUT HAUT DE PAGE -->
-	<%@include file="enteteCo.jsp"%>
+	<%@include file="entete.jsp"%>
 	<!-- FIN HAUT DE PAGE -->
 
 	<div class="container">
@@ -44,18 +44,18 @@
 							</div>
 							<div class="col-lg-6">
 								<div class="p-5">
-									<%Utilisateur u = (Utilisateur)request.getAttribute("utilisateur"); %>
-									<div>Pseudo :<%--  <%=u.getPseudo() %> --%></div>
+									<%Utilisateur uti = (Utilisateur)request.getAttribute("utilisateur"); %>
+									<div>Pseudo : <%=uti.getPseudo() %></div>
 									<br>
-									<div>Nom : <%=u.getNom() %></div>
+									<div>Nom : <%=uti.getNom() %></div>
 									<br>
-									<div>Prénom : <%=u.getPrenom() %></div>
+									<div>Prénom : <%=uti.getPrenom() %></div>
 									<br>
-									<div>Email : <%=u.getEmail() %></div>
+									<div>Email : <%=uti.getEmail() %></div>
 									<br>
-									<div>Téléphone : <%=u.getTelephone() %></div>
+									<div>Téléphone : <%=uti.getTelephone() %></div>
 									<br>
-									<div>Adresse : <%=u.getAdresse() %></div>
+									<div>Adresse : <%=uti.getAdresse() %></div>
 									<% if(Boolean.getBoolean(request.getParameter("modifiable"))){ %>
 									<hr>
 									<a href="creationDeCompte.jsp"
