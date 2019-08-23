@@ -1,27 +1,49 @@
 @charset "UTF-8";
 
+/*BODY DEBUT*/
+body{
+ font-size: 150%;
+}
+/*BODY FIN*/
+
+
+
 /* CSS PAGE INDEX DEBUT */
-#bodyIndex {
-	margin: 0;
-	font-size: 120%;
-}
-
-#blockCategorieIndex {
-	width: 65%;
-}
-
 @media screen and (min-width: 1000px) {
-	#blockCategorieIndex {
-		width: 65%;
-	}
-	#search {
-		width: 60%;
-	}
 	#boutonRechercher {
 		width: 50%;
 		margin-right: 0%;
 		margin-left: auto;
 	}
+}
+
+#Block3Article {
+	margin-top: 3%;
+}
+
+#containerIndex {
+	width: 100%;
+}
+
+#checkboxVente, #checkboxAchat {
+	margin-left: 5%;
+}
+
+#checkboxIndex {
+	margin-left: 15%
+}
+
+#radioVente, #radioAchat {
+	margin-left: 5%;
+}
+
+#blockFiltreIndex {
+	width: 100%;
+}
+
+#blockCategorieIndex {
+	width: 100%;
+	display: inline-block;
 }
 /* CSS PAGE INDEX FIN */
 
@@ -33,7 +55,7 @@
 }
 
 #boutonConnexion {
-	width: 35%;
+	width: 70%;
 }
 /* CSS PAGE DE CONNEXION FIN */
 
@@ -74,3 +96,51 @@
 	font-size: 130%;
 }
 /* CSS PROFIL UTILISATEUR FIN  */
+
+/* CSS VENTE DEBUT */
+#boutonEnregistrerVente, #boutonAnnulerVente {
+	width: 30%;
+}
+
+#descriptionVente {
+	height: 10%;
+}
+
+#boutonEnregistrerVente {
+	margin-right: 0;
+	margin-left: auto;
+}
+
+#boutonAnnulerVente {
+	margin-right: auto;
+	margin-left: 0;
+}
+
+#descriptionVente {
+	height: auto;
+}
+/* CSS VENTE FIN */
+
+/* CSS ENCHERE DEBUT */
+#boutonEncherirVente, #boutonAnnulerEnchere {
+	width: 30%;
+}
+
+#boutonEncherirVente {
+	margin-right: 0;
+	margin-left: auto;
+}
+
+#boutonAnnulerEnchere {
+	margin-right: auto;
+	margin-left: 0;
+}
+/* CSS ENCHERE FIN */
+
+/* CSS ENCHERE REMPORTE DEBUT */
+#boutonRetourEnchere {
+	margin-right: 0;
+	margin-left: auto;
+	width: 30%;
+}
+/* CSS ENCHERE REMPORTE FIN */

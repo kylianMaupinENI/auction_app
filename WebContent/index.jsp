@@ -1,176 +1,166 @@
-<%@page import="fr.eni.encheres.bo.Utilisateur"%>
-<%@page import="javax.servlet.http.HttpSession"%>
+<%@page import="fr.eni.encheres.bo.ArticleVendu"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
 <link rel="stylesheet" href="css/feuilleDeStyle.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<title>ENI-Encheres</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>ENI-ENCHERE</title>
+<!-- Custom fonts for this template-->
+<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+	type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
+<!-- Custom styles for this template-->
+<link href="css/sb-admin-2.min.css" rel="stylesheet">
 </head>
-<body id="bodyIndex">
-	<%
-		HttpSession sess = request.getSession();
-		Utilisateur u = (Utilisateur) sess.getAttribute("sessionUtilisateur");
-	%>
+<body>
 	<!-- DEBUT HAUT DE PAGE -->
-	<%
-		if (u != null) {
-	%>
-	<div id="enteteCo"><%@include file="enteteCo.jsp"%></div>
-
-	<%
-		} else {
-	%>
-	<div id="enteteDeco"><%@include file="enteteDeco.jsp"%></div>
-
-	<%
-		}
-	%>
+	<%@include file="entete.jsp"%>
 	<!-- FIN HAUT DE PAGE -->
-
 	<form>
-		<div class="container-fluid justify-content-center">
-			<div class="row">
-				<div class="col-xl-3 col-md-6 mb-4"></div>
-				<div class="col-xl-3 col-md-6 mb-4">
-					<div id="blockFiltreIndex">
-						<input type="text" placeholder="Le nom de l'article contient"
-							name="search" id="search">
-						<button type="submit">
-							<i class="fa fa-search"></i>
-						</button>
-						<div class="form-group" id="blockCategorieIndex">
-							<label for="categorieIndex" id="categorieIndex">Catégories</label>
-							<select class="form-control" id="SelectIndex">
-								<option>Toutes</option>
-								<option>Informatique</option>
-								<option>Ameublement</option>
-								<option>Vêtement</option>
-								<option>Sport et loisirs</option>
-							</select>
+		<div class="container-fluid text-center">
+			<div class="row content">
+				<div class="col-sm-3 sidenav"></div>
+				<div class="col-sm-6 text-left">
+					<div id="containerIndex">
+						<div class="row">
+							<div class="col-sm-6">
+								<div id="blockFiltreIndex">
+									<input type="text" placeholder="Le nom de l'article contient"
+										name="search" id="search">
+									<button type="submit">
+										<i class="fa fa-search"></i>
+									</button>
+									<div class="form-group" id="blockCategorieIndex">
+										<label for="categorieIndex" id="categorieIndex">Catégories</label>
+										<select class="form-control" id="SelectIndex">
+											<option>Toutes</option>
+											<option>Informatique</option>
+											<option>Ameublement</option>
+											<option>Vêtement</option>
+											<option>Sport et loisirs</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6" id="boutonRechercher">
+								<a href="#" class="btn btn-primary btn-user btn-block"
+									id="boutonRechercher"> Rechercher </a>
+							</div>
 						</div>
-						<%
-							if (u != null) {
-						%>
-						<div id="enteteCo"><%@include file="enteteCo.jsp"%></div>
+					</div>
+				</div>
+				<div class="col-sm-3 sidenav"></div>
+			</div>
 
-						<%
-							}
-						%>
-					</div>
-				</div>
-				<div class="col-xl-3 col-md-6 mb-4" id="boutonRechercher">
-					<a href="#" class="btn btn-primary btn-user btn-block"
-						id="boutonRechercher"> Rechercher </a>
-				</div>
-				<div class="col-xl-3 col-md-6 mb-4"></div>
-			</div>
-		</div>
-		<%
-			if (u != null) {
-		%>
-		<div class="row">
-			<div class="col-xl-3 col-md-6 mb-4"></div>
-			<div class="col-xl-3 col-md-6 mb-4">
-				<div class="form-check">
-					<input class="form-check-input" type="radio" name="radioCategories"
-						value="option1" checked> <label
-						class="form-check-label" for="exampleRadios1" id="radioAchat" > Achat</label>
-				</div>
-				<div id="checkboxAchat">
-					<div class="form-check">
-						<input type="checkbox" value=""
-							id="checkboxVente"> <label class="form-check-label"
-							id="checkboxVenteLabel" for="defaultCheck1"> Enchères ouvertes </label>
-					</div>
-					<div class="form-check">
-						<input type="checkbox" value=""
-							id="checkboxVente"> <label class="form-check-label"
-							id="checkboxVenteLabel " for="defaultCheck1"> Mes enchères en cours </label>
-					</div>
-					<div class="form-check">
-						<input type="checkbox" value=""
-							id="checkboxVente"> <label class="form-check-label"
-							id="checkboxVenteLabel " for="defaultCheck1"> Mes enchères remportées </label>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-3 col-md-6 mb-4">
-				<div class="form-check">
-					<input class="form-check-input" type="radio" name="radioCategories"
-						value="option2" checked> <label
-						class="form-check-label" for="exampleRadios1" id="radioVente"> Mes vente</label>
-				</div>
-				<div id="checkboxVente">
+			<%
+				if (true) {
+			%>
+			<div class="row content">
+				<div class="col-sm-3 sidenav"></div>
+				<div class="col-sm-6 text-left">
+					<div id="containerIndex">
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="form-check">
+									<input class="form-check-input" type="radio"
+										name="radioCategories" value="option1" checked> <label
+										class="form-check-label" for="exampleRadios1" id="radioAchat">
+										Achat</label>
+								</div>
+								<div id="checkboxAchat">
+									<div class="form-check">
+										<input type="checkbox" value="" id="checkboxVente"> <label
+											class="form-check-label" id="checkboxVenteLabel"
+											for="defaultCheck1"> Enchères ouvertes </label>
+									</div>
+									<div class="form-check">
+										<input type="checkbox" value="" id="checkboxVente"> <label
+											class="form-check-label" id="checkboxVenteLabel "
+											for="defaultCheck1"> Mes enchères en cours </label>
+									</div>
+									<div class="form-check">
+										<input type="checkbox" value="" id="checkboxVente"> <label
+											class="form-check-label" id="checkboxVenteLabel "
+											for="defaultCheck1"> Mes enchères remportées </label>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6" id="boutonRechercher">
+								<div class="form-check">
+									<input class="form-check-input" type="radio"
+										name="radioCategories" value="option2" checked> <label
+										class="form-check-label" for="exampleRadios1" id="radioVente">
+										Mes vente</label>
+								</div>
+								<div id="checkboxVente">
 
-					<div class="form-check">
-						<input type="checkbox" value=""
-							id="checkboxVente"> <label class="form-check-label"
-							id="checkboxVenteLabel " for="defaultCheck1"> Mes ventes en cours </label>
-					</div>
-					<div class="form-check">
-						<input type="checkbox" value=""
-							id="checkboxVente"> <label class="form-check-label"
-							id="checkboxVenteLabel " for="defaultCheck1"> Ventes non débutées </label>
-					</div>
-					<div class="form-check">
-						<input type="checkbox" value=""
-							id="checkboxVente"><label class="form-check-label"
-							id="checkboxVenteLabel" for="defaultCheck1"> Vente terminées </label>
+									<div class="form-check">
+										<input type="checkbox" value="" id="checkboxVente"> <label
+											class="form-check-label" id="checkboxVenteLabel "
+											for="defaultCheck1"> Mes ventes en cours </label>
+									</div>
+									<div class="form-check">
+										<input type="checkbox" value="" id="checkboxVente"> <label
+											class="form-check-label" id="checkboxVenteLabel "
+											for="defaultCheck1"> Ventes non débutées </label>
+									</div>
+									<div class="form-check">
+										<input type="checkbox" value="" id="checkboxVente"><label
+											class="form-check-label" id="checkboxVenteLabel"
+											for="defaultCheck1"> Vente terminées </label>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
+				<div class="col-sm-3 sidenav"></div>
 			</div>
-			<div class="col-xl-3 col-md-6 mb-4"></div>
+			<%
+				}
+			%>
+			<div class="row content">
+				<div class="col-sm-3 sidenav"></div>
+				<div class="col-sm-6 text-left">
+					<div id="containerIndex">
+						<div class="row">
+							<div class="col-sm-6" id="Block3Article">
+								<div
+									class="row no-gutters border-left-primary shadow h-100 py-2">
+									<!-- 			<div class="col-md-4"> -->
+									<!-- 				<img src="imageDuProduit.jpg" id="imageProduit" class="card-img" -->
+									<!-- 					alt="Photo du produit"> -->
+									<!-- 			</div> -->
+									<div class="col-md-8">
+										<div class="card-body">
+											<h5 class="card-title">Nom du produit</h5>
+											<p class="card-text">Prix :</p>
+											<p class="card-text">Fin de l'enchére :</p>
+											</br>
+											<p class="card-text">Vendeur :</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-3 sidenav"></div>
+			</div>
 		</div>
 	</form>
-	<%
-			}
-	%>
-	<!-- DEBUT FICHE PRODUIT -->
-	<!-- Afficher tous les produits -->
-	<div class="col-xl-3 col-md-6 mb-4">
-		<div class="row no-gutters border-left-primary shadow h-100 py-2">
-			<!-- 			<div class="col-md-4"> -->
-			<!-- 				<img src="imageDuProduit.jpg" id="imageProduit" class="card-img" -->
-			<!-- 					alt="Photo du produit"> -->
-			<!-- 			</div> -->
-			<div class="col-md-8">
-				<div class="card-body">
-					<h5 class="card-title">Nom du produit</h5>
-					<p class="card-text">Prix :</p>
-					<p class="card-text">Fin de l'enchére :</p>
-					</br>
-					<p class="card-text">Vendeur :</p>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- FIN FICHE PRODUIT -->
 
 	<!-- DEBUT BAS DE PAGE -->
 	<%@include file="basDePage.jsp"%>
 	<!-- FIN BAS DE PAGE -->
 </body>
 </html>
-
-<style>
-#checkboxVente, #checkboxAchat{
-	margin-left: 5%;
-}
-
-#checkboxIndex{
-	margin-left: 15%
-}
-
-#radioVente,#radioAchat{
-	margin-left:5%;
-}
-</style>
