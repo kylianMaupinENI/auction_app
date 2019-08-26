@@ -23,7 +23,7 @@ public class ArticleVenduManager {
 	}
 
 	public ArticleVendu ajouteArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAPrix, EtatVente etatVente, Adresse lieuRetrait,
+			LocalDate dateFinEncheres, int miseAPrix, int prixVente, Adresse lieuRetrait,
 			Utilisateur proprietaire, Categorie categorie) throws BusinessException {
 
 		ArticleVendu articleVendu = null;
@@ -38,7 +38,7 @@ public class ArticleVenduManager {
 			articleVendu.setMiseAPrix(miseAPrix);
 			articleVendu.setDateDebutEncheres(dateDebutEncheres);
 			articleVendu.setDateFinEncheres(dateFinEncheres);
-			articleVendu.setEtatVente(etatVente);
+			articleVendu.setPrixVente(prixVente);
 			System.out.println(lieuRetrait);
 			articleVendu.setLieuRetrait(lieuRetrait);
 			articleVendu.setProprietaire(proprietaire);
@@ -52,7 +52,7 @@ public class ArticleVenduManager {
 	}
 
 	public ArticleVendu modifieArticleVendu(int noArticle, String nomArticle, String description,
-			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, EtatVente etatVente, String rue,
+			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, int prixVente, String rue,
 			String codePostal, String ville, Utilisateur proprietaire, Categorie categorie) throws BusinessException {
 
 		BusinessException businessException = new BusinessException();
@@ -62,7 +62,7 @@ public class ArticleVenduManager {
 		validerDateDebut(dateDebutEncheres, businessException);
 		validerDateFin(dateFinEncheres, dateDebutEncheres, businessException);
 		validerMiseAPrix(miseAPrix, businessException);
-		validerEtatVente(etatVente, businessException);
+		validerPrixVente(prixVente, businessException);
 		validerRue(rue, businessException);
 		validerCodePostal(codePostal, businessException);
 		validerVille(ville, businessException);
@@ -77,7 +77,7 @@ public class ArticleVenduManager {
 
 	}
 //Attends un objet de type CATEGORIE
-	public List<ArticleVendu> SelectionArticleVendu(String mot_cle, String categorie) throws BusinessException {
+	public List<ArticleVendu> selectionArticleVendu(String motCle, String categorie) throws BusinessException {
 		
 		Categorie categ = null ;
 		switch(categorie) {
@@ -87,27 +87,27 @@ public class ArticleVenduManager {
 		case "SPORTS&LOISIRS" : categ = Categorie.SPORT_LOISIRS; break;
 		case "TOUTES" : categ = Categorie.TOUTES; break;
 		}
-		
-		if (mot_cle.equals("") && categ.equals(Categorie.TOUTES)) {
+		/*
+		if (motCle.equals("") && categ.equals(Categorie.TOUTES)) {
 
-			return articleVenduDAO.select_all();
+			return articleVenduDAO.selectAll();
 
-		} else if (!mot_cle.equals("") && ! categ.equals(Categorie.TOUTES)) {
+		} else if (!motCle.equals("") && ! categ.equals(Categorie.TOUTES)) {
 
-			return articleVenduDAO.select_by_nom_and_categorie(mot_cle, categ);
+			return articleVenduDAO.selectByNomAndCategorie(motCle, categ);
 
-		} else if (!mot_cle.equals("") && categ.equals(Categorie.TOUTES)) {
+		} else if (!motCle.equals("") && categ.equals(Categorie.TOUTES)) {
 
-			return articleVenduDAO.select_by_nom(mot_cle);
+			return articleVenduDAO.selectByNom(motCle);
 			
-		} else if (mot_cle.equals("") && ! categ.equals(Categorie.TOUTES)) {
+		} else if (motCle.equals("") && ! categ.equals(Categorie.TOUTES)) {
 			
-			return articleVenduDAO.select_by_categorie(categ);
+			return articleVenduDAO.selectByCategorie(categ);
 		}
 
 		return null;
 
-	}
+	}*/
 
 	private void validerVille(String ville, BusinessException businessException) {
 		if ((ville == null) || (ville.equals(""))) {

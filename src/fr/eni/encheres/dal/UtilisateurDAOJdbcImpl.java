@@ -14,13 +14,13 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	public static final String SELECT_BY_PSEUDO = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal,"
 			+ " ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE pseudo = ?";
 
-	public static final String INSERT = "INSERT INTO UTILISATEUR (no_utilisateur, pseudo, nom, prenom, email, telephone, rue, "
-			+ "code_postal, ville, mot_de_passe, credit, administrateur) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";
+	public static final String INSERT = "INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, "
+			+ "code_postal, ville, mot_de_passe, credit, administrateur) VALUES (?,?,?,?,?,?,?,?,?,?,?);";
 
 	public static final String UPDATE = "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?"
 			+ ", rue = ?, code_postal = ? ville = ?, mot_de_passe = ?, credit = ?, administrateur = ?  WHERE no_utilisateur = ?;";
 
-	public static final String DELETE = "DELETE FROM UTILISATEURS WHERE no_utilisateur = ?;";
+	public static final String DELETE = "DELETE FROM UTILISATEURS WHERE pseudo = ?;";
 
 	@Override
 	public void insert(Utilisateur utilisateur) throws BusinessException {
@@ -32,20 +32,15 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		}
 
 		try (Connection cnx = ConnectionProvider.getConnection()) {
-
-			PreparedStatement pstmt;
-			ResultSet rs;
-			if (utilisateur.getNoUtilisateur() == 0) {
-				pstmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
-				setParameter(pstmt, utilisateur);
-				pstmt.executeUpdate();
-				rs = pstmt.getGeneratedKeys();
-				if (rs.next()) {
-					utilisateur.setNoUtilisateur(rs.getInt(1));
-				}
-				rs.close();
-				pstmt.close();
+			PreparedStatement pstmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
+			setParameter(pstmt, utilisateur);
+			pstmt.executeUpdate();
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				utilisateur.setNoUtilisateur(rs.getInt(1));
 			}
+			rs.close();
+			pstmt.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -88,10 +83,11 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public void delete(int id) throws BusinessException {
-		try (Connection cnx = ConnectionProvider.getConnection()) {
+	public void delete(String pseudo) throws BusinessException {
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
 			PreparedStatement pstmt = cnx.prepareStatement(DELETE);
-			pstmt.setInt(1, id);
+			pstmt.setString(1, pseudo);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -100,52 +96,52 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			throw businessException;
 		}
 	}
-
+	
 	@Override
 	public Utilisateur selectByPseudo(String pseudo) throws BusinessException {
-		Utilisateur utilisateur = new Utilisateur();
+		Utilisateur utilisateur = null;
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_PSEUDO);
 			pstmt.setString(1, pseudo);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-
-				String nom = rs.getString("nom_utilisateur");
-				String prenom = rs.getString("prenom_utilisateur");
+				int noUtilisateur = rs.getInt("no_utilisateur");
+				String nom = rs.getString("nom");
+				String prenom = rs.getString("prenom");
 				String email = rs.getString("email");
 				String telephone = rs.getString("telephone");
-				Adresse adresse = utilisateur.getAdresse();
+				String rue = rs.getString("rue");
+				String codePostal = rs.getString("code_postal");
+				String ville = rs.getString("ville");
 				String motDePasse = rs.getString("mot_de_passe");
 				int credit = rs.getInt("credit");
-				boolean administrateur = utilisateur.isAdministrateur();
-
-				utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, adresse, motDePasse, credit,
+				boolean administrateur = rs.getBoolean("administrateur");
+				Adresse adresse = new Adresse(rue, codePostal, ville);
+				utilisateur = new Utilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, adresse, motDePasse, credit,
 						administrateur);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
-			businessException.ajouterErreur(CodesResultatDAL.LECTURE_UTILISATEUR_ECHEC);
+			businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTE_ARTICLE_VENDU_ECHEC);
 			throw businessException;
 		}
-		
 		return utilisateur;
 	}
-
+	
 	private void setParameter(PreparedStatement stm, Utilisateur utilisateur) throws SQLException {
-		// Paramï¿½tres pour la requete d'insertion dans la table ARTICLE_VENDU
-		stm.setInt(1, utilisateur.getNoUtilisateur());
-		stm.setString(2, utilisateur.getPseudo());
-		stm.setString(3, utilisateur.getNom());
-		stm.setString(4, utilisateur.getPrenom());
-		stm.setString(5, utilisateur.getEmail());
-		stm.setString(6, utilisateur.getTelephone());
-		stm.setString(7, utilisateur.getAdresse().getRue());
-		stm.setString(8, utilisateur.getAdresse().getCodePostal());
-		stm.setString(9, utilisateur.getAdresse().getVille());
-		stm.setString(10, utilisateur.getMotDePasse());
-		stm.setInt(11, utilisateur.getCredit());
-		stm.setBoolean(12, utilisateur.isAdministrateur());
+		// Paramètres pour la requete d'insertion dans la table ARTICLE_VENDU
+		stm.setString(1, utilisateur.getPseudo());
+		stm.setString(2, utilisateur.getNom());
+		stm.setString(3, utilisateur.getPrenom());
+		stm.setString(4,utilisateur.getEmail());
+		stm.setString(5,utilisateur.getTelephone());
+		stm.setString(6,utilisateur.getAdresse().getRue());
+		stm.setString(7,utilisateur.getAdresse().getCodePostal());
+		stm.setString(8,utilisateur.getAdresse().getVille());
+		stm.setString(9, utilisateur.getMotDePasse());
+		stm.setInt(10, utilisateur.getCredit());
+		stm.setBoolean(11, utilisateur.isAdministrateur());
 	}
-
+	
 }

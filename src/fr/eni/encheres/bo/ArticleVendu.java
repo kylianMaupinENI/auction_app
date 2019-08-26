@@ -11,7 +11,7 @@ public class ArticleVendu {
 	private LocalDate dateDebutEncheres;
 	private LocalDate dateFinEncheres;
 	private int miseAPrix;
-	private EtatVente etatVente;
+	private int prixVente;
 	private Adresse lieuRetrait;
 	private Utilisateur proprietaire;
 	private List<Enchere> encheres;
@@ -22,7 +22,7 @@ public class ArticleVendu {
 	}
 
 	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAPrix, EtatVente etatVente, Adresse lieuRetrait,
+			LocalDate dateFinEncheres, int miseAPrix, int prixVente, Adresse lieuRetrait,
 			Utilisateur proprietaire, Categorie categorie) {
 		super();
 		this.noArticle = noArticle;
@@ -31,7 +31,7 @@ public class ArticleVendu {
 		this.dateDebutEncheres = dateDebutEncheres;
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
-		this.etatVente = etatVente;
+		this.prixVente = prixVente;
 		this.proprietaire = proprietaire;
 		this.lieuRetrait = lieuRetrait;
 		this.encheres = new ArrayList<Enchere>();
@@ -39,7 +39,7 @@ public class ArticleVendu {
 	}
 
 	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAPrix, EtatVente etatVente, 
+			LocalDate dateFinEncheres, int miseAPrix, int prixVente, 
 			Utilisateur proprietaire, Categorie categorie) {
 		super();
 		this.noArticle = noArticle;
@@ -48,14 +48,14 @@ public class ArticleVendu {
 		this.dateDebutEncheres = dateDebutEncheres;
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
-		this.etatVente = etatVente;
+		this.prixVente = prixVente;
 		this.proprietaire = proprietaire;
 		this.encheres = new ArrayList<Enchere>();
 		this.categorie = categorie;
 	}
 	
 	public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAPrix, EtatVente etatVente, Adresse lieuRetrait,
+			LocalDate dateFinEncheres, int miseAPrix, int prixVente, Adresse lieuRetrait,
 			Utilisateur proprietaire, Categorie categorie) {
 		super();
 		this.nomArticle = nomArticle;
@@ -63,7 +63,7 @@ public class ArticleVendu {
 		this.dateDebutEncheres = dateDebutEncheres;
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
-		this.etatVente = etatVente;
+		this.prixVente = prixVente;
 		this.proprietaire = proprietaire;
 		this.lieuRetrait = lieuRetrait;
 		this.encheres = new ArrayList<Enchere>();
@@ -118,12 +118,12 @@ public class ArticleVendu {
 		this.miseAPrix = miseAPrix;
 	}
 
-	public EtatVente getEtatVente() {
-		return etatVente;
+	public int getPrixVente() {
+		return prixVente;
 	}
 
-	public void setEtatVente(EtatVente etatVente) {
-		this.etatVente = etatVente;
+	public void setPrixVente(int prixVente) {
+		this.prixVente = prixVente;
 	}
 
 	public Adresse getLieuRetrait() {
@@ -162,7 +162,7 @@ public class ArticleVendu {
 	public String toString() {
 		return "ArticleVendu [noArticle=" + noArticle + ", nomArticle=" + nomArticle + ", description=" + description
 				+ ", dateDebutEncheres=" + dateDebutEncheres + ", dateFinEncheres=" + dateFinEncheres + ", miseAPrix="
-				+ miseAPrix + ", etatVente=" + etatVente + ", lieuRetrait=" + lieuRetrait + ", proprietaire="
+				+ miseAPrix + ", prixVente=" + prixVente + ", lieuRetrait=" + lieuRetrait + ", proprietaire="
 				+ proprietaire + ", encheres=" + encheres + ", categorie=" + categorie + "]";
 	}
 }

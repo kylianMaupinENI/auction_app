@@ -6,15 +6,15 @@ package fr.eni.encheres.dal;
 public abstract class CodesResultatDAL {
 	
 	/**
-	 * Echec gÃ©nÃ©ral quand tentative d'ajouter un objet null
+	 * Echec général quand tentative d'ajouter un objet null
 	 */
-	public static final int INSERT_OBJET_NULL=10000;
+	public static final int INSERT_OBJET_NULL = 10000;
 	/**
-	 * Echec gÃ©nÃ©ral quand erreur non gÃ©rÃ©e Ã  l'insertion 
+	 * Echec général quand erreur non gérée à l'insertion 
 	 */
-	public static final int INSERT_OBJET_ECHEC=10001;
+	public static final int INSERT_OBJET_ECHEC = 10001;
 	/**
-	 * Echec de la lecture des listes d'articles vendu
+	 * Echec de la lecture de l'articles vendu
 	 */
 	public static final int LECTURE_ARTICLE_VENDU_ECHEC = 10002;
 	/**
@@ -26,17 +26,13 @@ public abstract class CodesResultatDAL {
 	 */
 	public static final int LECTURE_LISTE_ARTICLE_VENDU_INEXISTANTE = 10004;
 	/**
-	 * Ecchec lecture de l'utilisateur
-	 */
-	public static final int LECTURE_UTILISATEUR_ECHEC = 10005;
-	/**
 	 * Echec mise à jour de l'utilisateur
 	 */
-	public static final int UPDATE_UTILISATEUR_ECHEC = 10006;
+	public static final int UPDATE_UTILISATEUR_ECHEC = 10005;
 	/**
 	 * Echec suppression de l'utilisateur
 	 */
-	public static final int DELETE_UTILISATEUR_ECHEC = 10007;
+	public static final int DELETE_UTILISATEUR_ECHEC = 10006;
 }
 
 

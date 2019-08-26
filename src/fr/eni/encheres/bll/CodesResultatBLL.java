@@ -4,22 +4,22 @@ package fr.eni.encheres.bll;
  * Les codes disponibles sont entre 20000 et 29999
  */
 public abstract class CodesResultatBLL {
-	
+
 	/**
 	 * Echec l'adresse email de l'utilisateur ne respecte pas les règles définies
 	 */
 	public static final int EMAIL_INVALIDE = 20000;
-	
+
 	/**
 	 * Echec le mot de passe ne respecte pas les règles définies
 	 */
 	public static final int MOT_DE_PASSSE_INVALIDE = 20001;
-	
+
 	/**
 	 * Echec le nom ne respecte pas les règles définies
 	 */
 	public static final int NOM_INVALIDE = 20002;
-	
+
 	/**
 	 * Echec le prenom ne respecte pas les règles définies
 	 */
@@ -54,7 +54,7 @@ public abstract class CodesResultatBLL {
 	 * Echec le pseudo est déja utilisé par un autre utilisateur
 	 */
 	public static final int PSEUDO_UTILISE = 20009;
-	
+
 	/**
 	 * Echec le nom de l'article ne respecte pas les règles définies
 	 */
@@ -74,12 +74,12 @@ public abstract class CodesResultatBLL {
 	 * Echec la date de début ne respecte pas les règles définies
 	 */
 	public static final int DATE_DEBUT_INVALIDE = 20013;
-	
+
 	/**
 	 * Echec la date de fin ne peut pas être antérieure à la date de début
 	 */
 	public static final int DATE_FIN_ANTERIEURE_INVALIDE = 20014;
-	
+
 	/**
 	 * Echec la durée maximale d'une enchère ne peut pas excéder 2 mois
 	 */
@@ -95,5 +95,19 @@ public abstract class CodesResultatBLL {
 	 */
 	public static final int MOT_DE_PASSE_INVALIDE = 20017;
 
+	/**
+	 * Echec le mot de passe et la validation du mot de passe ne correspondent pas
+	 */
+	public static final int CONFIRMATION_INVALIDE = 20018;
+
+	/**
+	 * Echec le code postal entré ne respecte pas les règles définies
+	 */
+	public static final int CODE_POSTAL_NON_RENSEIGNE = 20019;
 	
+	/**
+	 * Echec le téléphone entré ne respecte pas les règles définies
+	 */
+	public static final int TELEPHONE_NON_RENSEIGNE = 20020;
+
 }
