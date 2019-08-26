@@ -1,3 +1,6 @@
+<%@page import="java.util.List"%>
+<%@page import="fr.eni.encheres.servlets.ServletUtils"%>
+<%@page import="fr.eni.encheres.messages.LecteurMessage"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -41,21 +44,25 @@
 								</div>
 								<div class="col-lg-6">
 									<div class="p-5">
+										<%List<Integer> listeCodesErreur = (List<Integer>) request.getAttribute("listeCodesErreur");
+											if (listeCodesErreur != null) {%>
+										<%for (int codeErreur : listeCodesErreur) {%>
+										<p style="color: red";><%=LecteurMessage.getMessageErreur(codeErreur)%></p>
+										<%}}%>
 										<div class="form-group">
-											<label for="identifiantConnexion">Identifiant :</label> <input
-												type="text" class="form-control form-control-user"
-												id="identifiantConnexion" name="identifiantConnexion">
+											<label for="<%= ServletUtils.CHAMP_PSEUDO %>">Identifiant :</label> 
+											<input type="text" class="form-control form-control-user"
+												id="<%= ServletUtils.CHAMP_PSEUDO %>" name="<%= ServletUtils.CHAMP_PSEUDO %>">
 										</div>
 										<div class="form-group">
-											<label for="motDePasseConnexion">Mot de passe :</label> <input
-												type="password" class="form-control form-control-user"
-												id="motDePasseConnexion" name="motDePasseConnexion">
+											<label for="<%= ServletUtils.CHAMP_MOT_DE_PASSE %>">Mot de passe :</label> 
+											<input type="password" class="form-control form-control-user"
+												id="<%= ServletUtils.CHAMP_MOT_DE_PASSE %>" name="<%= ServletUtils.CHAMP_MOT_DE_PASSE %>">
 										</div>
 										<div class="row">
 										<div class="col-lg-6">
-											<a href="creationDeCompte.jsp"
-												class="btn btn-primary btn-user btn-block"
-												id="boutonConnexion"> Connexion </a>
+											<input type="submit"
+												class="btn btn-primary btn-user btn-block" value="Connexion">
 												</div>
 											<div class="col-lg-6 text-right">
 												<div class="form-group">
@@ -71,7 +78,7 @@
 											</div>
 										</div>
 										<hr>
-										<a href="creationDeCompte.jsp"
+										<a href="signin"
 											class="btn btn-primary btn-user btn-block"
 											id="boutonCreerCompte"> Creer un compte </a>
 									</div>

@@ -44,18 +44,18 @@
 							</div>
 							<div class="col-lg-6">
 								<div class="p-5">
-									<%Utilisateur uti = (Utilisateur)request.getAttribute("utilisateur"); %>
-									<div>Pseudo : <%=uti.getPseudo() %></div>
+									<%Utilisateur u = (Utilisateur)request.getAttribute("utilisateur"); %>
+									<div>Pseudo :  <%=u.getPseudo() %></div>
 									<br>
-									<div>Nom : <%=uti.getNom() %></div>
+									<div>Nom : <%=u.getNom() %></div>
 									<br>
-									<div>Prénom : <%=uti.getPrenom() %></div>
+									<div>Prénom : <%=u.getPrenom() %></div>
 									<br>
-									<div>Email : <%=uti.getEmail() %></div>
+									<div>Email : <%=u.getEmail() %></div>
 									<br>
-									<div>Téléphone : <%=uti.getTelephone() %></div>
+									<div>Téléphone : <%=u.getTelephone() %></div>
 									<br>
-									<div>Adresse : <%=uti.getAdresse() %></div>
+									<div>Adresse : <%=u.getAdresse().getRue() + " " + u.getAdresse().getCodePostal() + " " + u.getAdresse().getVille() %></div>
 									<% if(Boolean.getBoolean(request.getParameter("modifiable"))){ %>
 									<hr>
 									<a href="creationDeCompte.jsp"
