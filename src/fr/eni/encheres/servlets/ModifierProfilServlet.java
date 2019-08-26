@@ -17,7 +17,7 @@ import fr.eni.encheres.bo.Utilisateur;
 /**
  * Servlet implementation class ModifierServlet
  */
-@WebServlet("/ModifierProfilServlet")
+@WebServlet("/modifier")
 public class ModifierProfilServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -36,7 +36,7 @@ public class ModifierProfilServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		this.getServletContext().getRequestDispatcher(ServletUtils.JSP_INSCRIPTION).forward(request, response);
 	}
 
 	/**
@@ -89,14 +89,14 @@ public class ModifierProfilServlet extends HttpServlet {
 			motDePasse = utilisateur.getMotDePasse();
 		}
 
-		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(ServletUtils.VUE_ACCUEIL);
+		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(ServletUtils.ACCUEIL);
 		
 		int credit = utilisateur.getCredit();
 		boolean administrateur = utilisateur.isAdministrateur();
 
 		try {
 			utilisateurManager.modifieUtilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, confirmation, credit, administrateur);
-			rd = this.getServletContext().getRequestDispatcher(ServletUtils.VUE_PROFIL);
+			rd = this.getServletContext().getRequestDispatcher(ServletUtils.DETAILS_PROFIL);
 			
 		} catch (BusinessException e) {
 			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());

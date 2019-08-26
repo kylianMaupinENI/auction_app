@@ -17,7 +17,7 @@ import fr.eni.encheres.bo.Utilisateur;
 /**
  * Servlet implementation class InscriptionServlet
  */
-@WebServlet("/signin")
+@WebServlet("/inscription")
 public class InscriptionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -37,7 +37,7 @@ public class InscriptionServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		this.getServletContext().getRequestDispatcher(ServletUtils.VUE_INSCRIPTION).forward(request, response);
+		this.getServletContext().getRequestDispatcher(ServletUtils.JSP_INSCRIPTION).forward(request, response);
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class InscriptionServlet extends HttpServlet {
 		String motDePasse = request.getParameter(ServletUtils.CHAMP_MOT_DE_PASSE);
 		String confirmation = request.getParameter(ServletUtils.CHAMP_CONFIRMATION);
 
-		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(ServletUtils.VUE_INSCRIPTION);
+		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(ServletUtils.INSCRIPTION);
 		
 		System.out.println("servlet " + telephone);
 
@@ -68,7 +68,7 @@ public class InscriptionServlet extends HttpServlet {
 			Utilisateur utilisateur = utilisateurManager.ajouteUtilisateur(pseudo, nom, prenom, email, telephone, rue,
 					codePostal, ville, motDePasse, confirmation);
 			session.setAttribute(ServletUtils.ATT_SESSION_USER, utilisateur);
-			rd = this.getServletContext().getRequestDispatcher(ServletUtils.VUE_ACCUEIL);
+			rd = this.getServletContext().getRequestDispatcher(ServletUtils.ACCUEIL);
 		} catch (BusinessException e) {
 			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 			e.printStackTrace();

@@ -19,7 +19,6 @@ import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bll.ArticleVenduManager;
 import fr.eni.encheres.bo.Adresse;
 import fr.eni.encheres.bo.Categorie;
-import fr.eni.encheres.bo.EtatVente;
 import fr.eni.encheres.bo.Utilisateur;
 
 /**
@@ -94,6 +93,8 @@ public class NouvelArticleVendu extends HttpServlet {
 		System.out.println(nom);
 		System.out.println(description);
 		System.out.println(categ);
+		int prixInitial = 0;
+		int prixVente = 0;
 		switch (categ) {
 			case "Informatique":
 				categorie = Categorie.INFORMATIQUE;
@@ -111,17 +112,23 @@ public class NouvelArticleVendu extends HttpServlet {
 				categorie = Categorie.TOUTES;
 		}
 
-		prixInitial = Integer.parseInt(request.getParameter(CHAMP_PRIX_INITIAL));
+		
 		System.out.println(prix_initial);
 		List<Integer> listeCodeErreur = new ArrayList<>();
 		try {
+			prixInitial = Integer.parseInt(request.getParameter(CHAMP_PRIX_INITIAL));
 			DateTimeFormatter dft = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			dateDebutEnchere = LocalDate.parse(request.getParameter(CHAMP_DATE_DEBUT), dft);
 			dateFinEnchere = LocalDate.parse(request.getParameter(CHAMP_DATE_FIN), dft);
+			
 		} catch (DateTimeException e) {
 			e.printStackTrace();
 			listeCodeErreur.add(CodesResultatServlets.FORMAT_DATE_ERREUR);
-		}
+			
+		}  catch (NumberFormatException e) {
+			e.printStackTrace();
+			listeCodeErreur.add(CodesResultatServlets.FORMAT_DATE_ERREUR);
+		}  
 		
 		//TODO Vérifier si l'article est en cours ou en attente de vente
 		

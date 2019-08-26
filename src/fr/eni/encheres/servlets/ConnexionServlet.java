@@ -17,7 +17,7 @@ import fr.eni.encheres.bo.Utilisateur;
 /**
  * Servlet implementation class ConnexionServlet
  */
-@WebServlet("/login")
+@WebServlet("/connexion")
 public class ConnexionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -34,7 +34,7 @@ public class ConnexionServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		this.getServletContext().getRequestDispatcher(ServletUtils.VUE_CONNEXION).forward(request, response);
+		this.getServletContext().getRequestDispatcher(ServletUtils.JSP_CONNEXION).forward(request, response);
 	}
 
 	/**
@@ -43,23 +43,19 @@ public class ConnexionServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		String pseudo = request.getParameter(ServletUtils.CHAMP_PSEUDO);
 		String motDePasse = request.getParameter(ServletUtils.CHAMP_MOT_DE_PASSE);
-
-		System.out.println(pseudo);
-		System.out.println(motDePasse);
 		
 		HttpSession session = request.getSession();
-
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
-
-		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(ServletUtils.VUE_CONNEXION);
+		RequestDispatcher rd = null;
 		
 		try {
 			if (utilisateurManager.seConnecter(pseudo, motDePasse)) {
 				Utilisateur utilisateur = utilisateurManager.selectionUtilisateur(pseudo);
 				session.setAttribute(ServletUtils.ATT_SESSION_USER, utilisateur);
-				rd = this.getServletContext().getRequestDispatcher(ServletUtils.VUE_ACCUEIL);
+				rd = this.getServletContext().getRequestDispatcher(ServletUtils.ACCUEIL);
 			} else {
 				session.setAttribute(ServletUtils.ATT_SESSION_USER, null);
 			}
@@ -67,9 +63,12 @@ public class ConnexionServlet extends HttpServlet {
 		} catch (BusinessException e) {
 			request.setAttribute(ServletUtils.ATT_LISTE_ERREURS, e.getListeCodesErreur());
 			e.printStackTrace();
+			rd = this.getServletContext().getRequestDispatcher(ServletUtils.CONNEXION);
+		
+		} finally {
+			rd.forward(request, response);
 		}
 		
-		rd.forward(request, response);
 	}
 
 }
