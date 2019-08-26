@@ -1,14 +1,18 @@
 @charset "UTF-8";
 
 /*BODY DEBUT*/
-body{
- font-size: 150%;
+body {
+	font-size: 150%;
 }
 /*BODY FIN*/
 
-
-
 /* CSS PAGE INDEX DEBUT */
+.ombrageTopCotes {
+	box-shadow: 0px 0px 10px 4px rgba(119, 119, 119, 0.75);
+	-moz-box-shadow: 0px 0px 10px 4px rgba(119, 119, 119, 0.75);
+	-webkit-box-shadow: 0px 0px 10px 4px rgba(119, 119, 119, 0.75);
+}
+
 @media screen and (min-width: 1000px) {
 	#boutonRechercher {
 		width: 50%;
@@ -16,19 +20,40 @@ body{
 		margin-left: auto;
 	}
 }
-#imageProduit{
+
+.boderRadiusIndex{
+	border-radius: 15px;
+}
+
+#titreIndex {
+	margin-bottom: 5%;
+}
+
+#boutonRechercher {
+	width: 35%;
+	margin: auto;
+}
+
+#imageProduit {
 	marin-left: 5%;
 }
+
 #Block3Article {
 	margin-top: 3%;
 }
 
-#containerIndex {
+.containerIndex {
 	width: 100%;
+	margin-left: 5%;
 }
 
 #checkboxVente, #checkboxAchat {
 	margin-left: 5%;
+}
+
+#block3index {
+	padding-bottom: 5%;
+	border-radius: 15px;
 }
 
 #checkboxIndex {
@@ -43,9 +68,9 @@ body{
 	width: 100%;
 }
 
-#blockCategorieIndex {
-	width: 100%;
-	display: inline-block;
+#container1Index {
+	/* 	padding-right: 10%;	 */
+	
 }
 /* CSS PAGE INDEX FIN */
 
