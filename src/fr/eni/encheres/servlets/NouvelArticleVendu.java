@@ -73,8 +73,8 @@ public class NouvelArticleVendu extends HttpServlet {
 		String description = null;
 		Categorie categorie = null;
 		int prix_initial = 0;
-		LocalDate date_debut_enchere = null;
-		LocalDate date_fin_enchere = null;
+		LocalDate dateDebutEnchere = null;
+		LocalDate dateFinEnchere = null;
 		Utilisateur proprietaire = null;
 		Adresse adresse = null;
 
@@ -87,14 +87,14 @@ public class NouvelArticleVendu extends HttpServlet {
 		nom = request.getParameter(CHAMP_NOM);
 		description = request.getParameter(CHAMP_DESCRIPTION);
 		String categ = request.getParameter(CHAMP_CATEGORIE);
+		int prixInitial = Integer.parseInt(request.getParameter(CHAMP_PRIX_INITIAL));
+		int prixVente = 0;
 		String rue = request.getParameter(CHAMP_RUE);
-		String code_postal = request.getParameter(CHAMP_CODE_POSTAL);
+		String codePostal = request.getParameter(CHAMP_CODE_POSTAL);
 		String ville = request.getParameter(CHAMP_VILLE);
 		System.out.println(nom);
 		System.out.println(description);
 		System.out.println(categ);
-		int prixInitial = 0;
-		int prixVente = 0;
 		switch (categ) {
 			case "Informatique":
 				categorie = Categorie.INFORMATIQUE;

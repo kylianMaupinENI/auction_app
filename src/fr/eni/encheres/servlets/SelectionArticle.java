@@ -67,7 +67,7 @@ public class SelectionArticle extends HttpServlet {
 		utilisateur = (Utilisateur) session.getAttribute(ATT_SESSION_USER);
 
 		try {
-			articleVendu = articleVenduManager.selectionArticleVendu(mot_cle, categorie);
+			articleVendu = articleVenduManager.selectionArticleVendu(mot_cle, categorie, utilisateur, false);
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}

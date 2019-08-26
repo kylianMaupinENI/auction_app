@@ -18,41 +18,38 @@ import fr.eni.encheres.bo.Utilisateur;
 
 public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
-	//Visionner le détail d'une vente
+	// Visionner le détail d'une vente
 	private static final String SELECT_BY_ID = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres, a.date_fin_encheres, "
 			+ "a.prix_initial, a.prix_vente, a.no_categorie, r.rue, r.code_postal, r.ville, u.pseudo "
-			+ "FROM ARTICLES_VENDUS a "
-			+ "INNER JOIN RETRAITS r ON a.no_article = r.no_article "
-			+ "INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur "
-			+ "WHERE no_article = ?";
-	
-	//Page achats en cours (connecté / déconnecté)
-	//Page ventes en cours connecté
-	//Page ventes (vente en cours, vente non debutées, vente_terminee)
+			+ "FROM ARTICLES_VENDUS a " + "INNER JOIN RETRAITS r ON a.no_article = r.no_article "
+			+ "INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur " + "WHERE no_article = ?";
+
+	// Page achats en cours (connecté / déconnecté)
+	// Page ventes en cours connecté
+	// Page ventes (vente en cours, vente non debutées, vente_terminee)
 	private static final String SELECT_VENTE = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres, a.date_fin_encheres, "
-			+ "a.prix_initial, a.prix_vente, u.pseudo, r.rue, r.code_postal, r.ville "
-			+ "FROM ARTICLES_VENDUS a "
+			+ "a.prix_initial, a.prix_vente, u.pseudo, r.rue, r.code_postal, r.ville " + "FROM ARTICLES_VENDUS a "
 			+ "INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur"
 			+ "INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie"
 			+ "INNER JOIN RETRAITS r ON r.no_article = a.no_artcle";
-	
-	//Page achats en cours
-	//Page enchères remportées
+
+	// Page achats en cours
+	// Page enchères remportées
 	private static final String SELECT_ACHATS = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres, a.date_fin_encheres, "
 			+ "a.prix_initial, a.prix_vente, u.pseudo, r.rue, r.code_postal, r.ville "
 			+ "FROM ARTICLES_VENDUS a "
 			+ "INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur"
 			+ "INNER JOIN ENCHERES e ON e.no_utilisateur = a.no_utilisateur"
 			+ "INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie";
-	
+
 	private static final String NON_DEBUTE = " WHERE a.date_debut_encheres > ?";
-	
+
 	private static final String EN_COURS = " WHERE a.date_debut_encheres < ? AND a.date_fin_encheres > ?";
-	
+
 	private static final String TERMINE = " WHERE a.date_fin_encheres < ?";
 
 	private static final String COND_RECHERCHE = " AND a.nom_article LIKE '%?%'";
-	
+
 	private static final String COND_CATEGORIE = " AND c.libelle = ?";
 	
 	private static final String COND_UTILISATEUR = " AND a.no_utilisateur = ?";
@@ -61,13 +58,22 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			+ "prix_initial,  no_utilisateur, no_categorie) VALUES (?,?,?,?,?,?,?);";
 
 	private static final String INSERT_RETRAIT = "INSERT INTO RETRAITS(no_article,rue, code_postal, ville) VALUES(?,?,?,?);";
-	
-	private static final String UPDATE_ARTICLE = "UPDATE ARTICLES_VENDUS SET nom_article = '?', description = '?', date_debut_encheres = '?', "
-			+ "date_fin_encheres = '?',prix_initial = '?',  no_utilisateur = '?', no_categorie = '?';";
-	
+
+	private static final String UPDATE_ARTICLE = "UPDATE ARTICLES_VENDUS SET nom_article = ?, description = ?, date_debut_encheres = ?, "
+			+ "date_fin_encheres = ? ,prix_initial = ?,  no_utilisateur = ?, no_categorie = ?;";
+
+	private static final String UPDATE_RETRAIT = "UPDATE RETRAITS rue = ?, code_postal = ? , ville = ? WHERE no_article = ? ";
+
+	private static final String UPDATE_PRIX_DE_VENTE = "UPDATE ARTICLES_VENDUS SET prix_vente = ? WHERE no_article = ?;";
+
 	private static final String DELETE_ARTICLE_VENDU = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?;";
 
-	
+	private static final String SELECT_BY_PSEUDO_ET_NOM = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres, a.date_fin_encheres, "
+			+ "a.prix_initial, a.prix_vente,c.no_categorie, c.libelle, u.pseudo, r.rue, r.code_postal, r.ville "
+			+ "FROM ARTICLES_VENDUS a " + "INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur"
+			+ "INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie"
+			+ "INNER JOIN RETRAITS r ON r.no_article = a.no_artcle" + "WHERE u.pseudo = ? AND a.nom_article = ?";
+
 	@Override
 	public void insert(ArticleVendu articleVendu) throws BusinessException {
 		// INSERTION D'UN ARTICLE_VENDU
@@ -81,28 +87,27 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			try {
 				cnx.setAutoCommit(false);
 				PreparedStatement pstmt;
-				
-				
-					pstmt = cnx.prepareStatement(INSERT_ARTICLE_VENDU, PreparedStatement.RETURN_GENERATED_KEYS);
-					setParameter(pstmt, articleVendu);
-					pstmt.executeUpdate();
-					ResultSet rs = pstmt.getGeneratedKeys();
-					if (rs.next()) {
-						articleVendu.setNoArticle(rs.getInt(1));
-					}
-					rs.close();
-					pstmt.close();
 
-			 // SI AJOUT OK ALORS AJOUT DANS LA TABLE RETRAIT DE
-			 // L'ADRESSE DE L'EMETTEUR SI NON RENSEIGNÉE LORS DE L'AJOUT D'UNE VENTE
-					pstmt = cnx.prepareStatement(INSERT_RETRAIT);
-					pstmt.setInt(1, articleVendu.getNoArticle());
-					pstmt.setString(2, articleVendu.getLieuRetrait().getRue());
-					pstmt.setString(3, articleVendu.getLieuRetrait().getCodePostal());
-					pstmt.setString(4, articleVendu.getLieuRetrait().getVille());
-					pstmt.executeUpdate();
-					pstmt.close();
-				
+				pstmt = cnx.prepareStatement(INSERT_ARTICLE_VENDU, PreparedStatement.RETURN_GENERATED_KEYS);
+				setParameter(pstmt, articleVendu);
+				pstmt.executeUpdate();
+				ResultSet rs = pstmt.getGeneratedKeys();
+				if (rs.next()) {
+					articleVendu.setNoArticle(rs.getInt(1));
+				}
+				rs.close();
+				pstmt.close();
+
+				// SI AJOUT OK ALORS AJOUT DANS LA TABLE RETRAIT DE
+				// L'ADRESSE DE L'EMETTEUR SI NON RENSEIGNÉE LORS DE L'AJOUT D'UNE VENTE
+				pstmt = cnx.prepareStatement(INSERT_RETRAIT);
+				pstmt.setInt(1, articleVendu.getNoArticle());
+				pstmt.setString(2, articleVendu.getLieuRetrait().getRue());
+				pstmt.setString(3, articleVendu.getLieuRetrait().getCodePostal());
+				pstmt.setString(4, articleVendu.getLieuRetrait().getVille());
+				pstmt.executeUpdate();
+				pstmt.close();
+
 				cnx.commit();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -116,18 +121,18 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			throw businessException;
 		}
 	}
-	
+
 	public ArticleVendu selectById(int noArticle) throws BusinessException {
 		ArticleVendu article = null;
-		
+
 		try (Connection cnx = ConnectionProvider.getConnection()) {
-			
+
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_ID);
 			pstmt.setInt(1, noArticle);
-			
+
 			ResultSet rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				String nomArticle = rs.getString("a.nom_article");
 				String description = rs.getString("a.description");
 				LocalDate dateDebutEncheres = rs.getDate("a.date_debut_encheres").toLocalDate();
@@ -139,40 +144,41 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				String codePostal = rs.getString("r.code_postal");
 				String ville = rs.getString("r.ville");
 				String pseudo = rs.getString("u.pseudo");
-				
+
 				UtilisateurManager utilisateurManager = new UtilisateurManager();
 				Utilisateur utilisateur = utilisateurManager.selectionUtilisateur(pseudo);
 				Adresse adresse = new Adresse(rue, codePostal, ville);
-				
-				Categorie categorie = null ;
-				switch(categorieStr.toUpperCase()) {
-					case "INFORMATIQUE" : 
-						categorie = Categorie.INFORMATIQUE; 
-						break;
-					case "AMEUBLEMENT" : 
-						categorie = Categorie.AMEUBLEMENT; 
-						break;
-					case "VETEMENTS" : 
-						categorie = Categorie.VETEMENT; 
-						break;
-					case "SPORTS&LOISIRS" : 
-						categorie = Categorie.SPORT_LOISIRS; 
-						break;
-					case "TOUTES" : 
-						categorie = Categorie.TOUTES; 
+
+				Categorie categorie = null;
+				switch (categorieStr.toUpperCase()) {
+				case "INFORMATIQUE":
+					categorie = Categorie.INFORMATIQUE;
+					break;
+				case "AMEUBLEMENT":
+					categorie = Categorie.AMEUBLEMENT;
+					break;
+				case "VETEMENTS":
+					categorie = Categorie.VETEMENT;
+					break;
+				case "SPORTS&LOISIRS":
+					categorie = Categorie.SPORT_LOISIRS;
+					break;
+				case "TOUTES":
+					categorie = Categorie.TOUTES;
 				}
-				
-				article = new ArticleVendu(noArticle, nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente, adresse, utilisateur, categorie);
+
+				article = new ArticleVendu(noArticle, nomArticle, description, dateDebutEncheres, dateFinEncheres,
+						prixInitial, prixVente, adresse, utilisateur, categorie);
 
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTE_ARTICLE_VENDU_ECHEC);
 			throw businessException;
 		}
-		
+
 		return article;
 	}
 
@@ -185,10 +191,10 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			if((recherche != null) || (!recherche.equals(""))) {
 				query += COND_RECHERCHE;
 			}
-			if(categorie != Categorie.TOUTES) {
+			if (categorie != Categorie.TOUTES) {
 				query += COND_CATEGORIE;
 			}
-			
+
 			PreparedStatement pstmt = cnx.prepareStatement(query);
 			
 			LocalDate now = LocalDate.now();
@@ -317,17 +323,17 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			}
 			
 			int curParam = 3;
-			
-			if(query.contains(COND_RECHERCHE)) {
+
+			if (query.contains(COND_RECHERCHE)) {
 				pstmt.setString(curParam, recherche);
 				curParam++;
 			}
-			if(query.contains(COND_CATEGORIE)) {
+			if (query.contains(COND_CATEGORIE)) {
 				pstmt.setString(curParam, categorie.getLibelle());
 			}
-			
+
 			ResultSet rs = pstmt.executeQuery();
-			
+
 			while (rs.next()) {
 				int noArticle = rs.getInt("a.no_article");
 				String nomArticle = rs.getString("a.nom_article");
@@ -340,7 +346,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				String rue = rs.getString("r.rue");
 				String codePostal = rs.getString("r.code_postal");
 				String ville = rs.getString("r.ville");
-				
+
 				UtilisateurManager utilisateurManager = new UtilisateurManager();
 				Utilisateur utilisateur = utilisateurManager.selectionUtilisateur(pseudo);
 				Adresse adresse = new Adresse(rue, codePostal, ville);
@@ -357,7 +363,88 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		return articlesVendus;
 	}
 
+	public ArticleVendu selectByPseudoAndNom(String pseudo, String nomArticle) throws BusinessException {
+		ArticleVendu articlesVendus = null;
+		try (Connection cnx = ConnectionProvider.getConnection()) {
 
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_PSEUDO_ET_NOM);
+			pstmt.setString(1, pseudo);
+			pstmt.setString(2, nomArticle);
+
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				int noArticle = rs.getInt("a.no_article");
+				String description = rs.getString("a.description");
+				LocalDate dateDebutEnchere = rs.getDate("a.date_debut_encheres").toLocalDate();
+				LocalDate dateFinEnchere = rs.getDate("a.date_fin_encheres").toLocalDate();
+				int prixInitial = rs.getInt("a.prix_initial");
+				int prixVente = rs.getInt("a.prix_vente");
+				String rue = rs.getString("r.rue");
+				String codePostal = rs.getString("r.code_postal");
+				String ville = rs.getString("r.ville");
+				String libelleCategorie = rs.getString("c.libelle");
+
+				UtilisateurManager utilisateurManager = new UtilisateurManager();
+
+				Utilisateur utilisateur = utilisateurManager.selectionUtilisateur(pseudo);
+
+				Adresse adresse = new Adresse(rue, codePostal, ville);
+
+				Categorie categorie = null;
+				switch (libelleCategorie.toUpperCase()) {
+				case "INFORMATIQUE":
+					categorie = Categorie.INFORMATIQUE;
+					break;
+				case "AMEUBLEMENT":
+					categorie = Categorie.AMEUBLEMENT;
+					break;
+				case "VETEMENTS":
+					categorie = Categorie.VETEMENT;
+					break;
+				case "SPORTS&LOISIRS":
+					categorie = Categorie.SPORT_LOISIRS;
+					break;
+				case "TOUTES":
+					categorie = Categorie.TOUTES;
+				}
+
+				articlesVendus = new ArticleVendu(noArticle, nomArticle, description, dateDebutEnchere, dateFinEnchere,
+						prixInitial, prixVente, adresse, utilisateur, categorie);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTE_ARTICLE_VENDU_ECHEC);
+			throw businessException;
+		}
+		return articlesVendus;
+	}
+
+	public void updatePrixVente(int prixVente, int noArticle) throws BusinessException {
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt;
+
+			pstmt = cnx.prepareStatement(UPDATE_ARTICLE);
+			pstmt.setInt(1,prixVente);
+			pstmt.setInt(2, noArticle);
+
+			int res = pstmt.executeUpdate();
+			if (res == 0) {
+				BusinessException businessException = new BusinessException();
+				businessException.ajouterErreur(CodesResultatDAL.UPDATE_UTILISATEUR_ECHEC);
+				throw businessException;
+			}
+			
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.UPDATE_UTILISATEUR_ECHEC);
+			throw businessException;
+		}
+	}
+	
 	@Override
 	public void update(ArticleVendu articleVendu) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
@@ -378,6 +465,20 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				businessException.ajouterErreur(CodesResultatDAL.UPDATE_UTILISATEUR_ECHEC);
 				throw businessException;
 			}
+			
+			pstmt.close();
+			
+			pstmt = cnx.prepareStatement(UPDATE_RETRAIT);
+			pstmt.setString(1,articleVendu.getLieuRetrait().getRue());
+			pstmt.setString(2,articleVendu.getLieuRetrait().getCodePostal());
+			pstmt.setString(3,articleVendu.getLieuRetrait().getVille());
+			
+			 res = pstmt.executeUpdate();
+			if (res == 0) {
+				BusinessException businessException = new BusinessException();
+				businessException.ajouterErreur(CodesResultatDAL.UPDATE_UTILISATEUR_ECHEC);
+				throw businessException;
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -389,8 +490,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 	@Override
 	public void delete(int id) throws BusinessException {
-		try(Connection cnx = ConnectionProvider.getConnection())
-		{
+		try (Connection cnx = ConnectionProvider.getConnection()) {
 			PreparedStatement pstmt = cnx.prepareStatement(DELETE_ARTICLE_VENDU);
 			pstmt.setInt(1, id);
 			pstmt.executeUpdate();
