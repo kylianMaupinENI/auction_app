@@ -21,13 +21,6 @@ import fr.eni.encheres.bo.Utilisateur;
 public class ConnexionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public static final String ATT_SESSION_USER = "sessionUtilisateur";
-	public static final String VUE = "/connexion.jsp";
-	public static final String ACCUEIL = "/accueil.jsp";
-
-	private static final String CHAMP_PSEUDO = "identifiantConnexion";
-	private static final String CHAMP_MOT_DE_PASSE = "motDePasseConnexion";
-
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -41,7 +34,7 @@ public class ConnexionServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		this.getServletContext().getRequestDispatcher(VUE).forward(request, response);
+		this.getServletContext().getRequestDispatcher(ServletUtils.VUE_CONNEXION).forward(request, response);
 	}
 
 	/**
@@ -50,28 +43,29 @@ public class ConnexionServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String pseudo = request.getParameter(CHAMP_PSEUDO);
-		String motDePasse = request.getParameter(CHAMP_MOT_DE_PASSE);
+		String pseudo = request.getParameter(ServletUtils.CHAMP_PSEUDO);
+		String motDePasse = request.getParameter(ServletUtils.CHAMP_MOT_DE_PASSE);
 
+		System.out.println(pseudo);
+		System.out.println(motDePasse);
+		
 		HttpSession session = request.getSession();
 
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
 
-		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(VUE);
+		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(ServletUtils.VUE_CONNEXION);
 		
 		try {
 			if (utilisateurManager.seConnecter(pseudo, motDePasse)) {
 				Utilisateur utilisateur = utilisateurManager.selectionUtilisateur(pseudo);
-				session.setAttribute(ATT_SESSION_USER, utilisateur);
-				rd = this.getServletContext().getRequestDispatcher(ACCUEIL);
+				session.setAttribute(ServletUtils.ATT_SESSION_USER, utilisateur);
+				rd = this.getServletContext().getRequestDispatcher(ServletUtils.VUE_ACCUEIL);
 			} else {
-				session.setAttribute(ATT_SESSION_USER, null);
+				session.setAttribute(ServletUtils.ATT_SESSION_USER, null);
 			}
 			
 		} catch (BusinessException e) {
-			e.printStackTrace();
-			
-		} catch (NullPointerException e) {
+			request.setAttribute(ServletUtils.ATT_LISTE_ERREURS, e.getListeCodesErreur());
 			e.printStackTrace();
 		}
 		

@@ -14,16 +14,12 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/logout")
 public class DéconnexionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	public static final String ATT_SESSION_USER = "sessionUtilisateur";
-	public static final String ACCUEIL = "/accueil.jsp";
-       
+	       
     /**
      * @see HttpServlet#HttpServlet()
      */
     public DéconnexionServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -31,8 +27,14 @@ public class DéconnexionServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		session.setAttribute(ATT_SESSION_USER, null);
-		this.getServletContext().getRequestDispatcher(ACCUEIL).forward(request, response);
+		
+		if(session.getAttribute(ServletUtils.ATT_SESSION_USER) != null) {
+			session.setAttribute(ServletUtils.ATT_SESSION_USER, null);
+		}
+		
+		session.invalidate();
+		
+		this.getServletContext().getRequestDispatcher(ServletUtils.VUE_ACCUEIL).forward(request, response);
 	}
 
 	/**

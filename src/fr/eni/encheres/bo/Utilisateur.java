@@ -45,6 +45,7 @@ public class Utilisateur {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
+		this.telephone = telephone;
 		this.adresse = adresse;
 		this.motDePasse = motDePasse;
 		this.administrateur = administrateur;
@@ -212,5 +213,7 @@ public class Utilisateur {
 				+ motDePasse + ", credit=" + credit + ", administrateur=" + administrateur + ", achats=" + achats
 				+ ", ventes=" + ventes + ", encheres=" + encheres + "]";
 	}
+
+	
 	
 }
