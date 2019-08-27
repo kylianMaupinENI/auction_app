@@ -4,17 +4,17 @@ public class ServletUtils {
 	
 	public final static String ATT_SESSION_USER = "sessionUtilisateur";
 	
-	public static final String CHAMP_PSEUDO = "pseudo";
-	public static final String CHAMP_NOM = "nom";
-	public static final String CHAMP_PRENOM = "prenom";
-	public static final String CHAMP_EMAIL = "email";
-	public static final String CHAMP_TELEPHONE = "telephone";
-	public static final String CHAMP_CODE_POSTAL = "codePostal";
-	public static final String CHAMP_RUE = "rue";
-	public static final String CHAMP_CONFIRMATION = "confirmation";
-	public static final String CHAMP_MOT_DE_PASSE = "motDePasse";
-	public static final String CHAMP_VILLE = "ville";
-	public static final String CHAMP_CREDIT = "credit";
+	public static final String CHAMP_PSEUDO_INSCRIPTION = "pseudo";
+	public static final String CHAMP_NOM_INSCRIPTION = "nom";
+	public static final String CHAMP_PRENOM_INSCRIPTION = "prenom";
+	public static final String CHAMP_EMAIL_INSCRIPTION = "email";
+	public static final String CHAMP_TELEPHONE_INSCRIPTION = "telephone";
+	public static final String CHAMP_CODE_POSTAL_INSCRIPTION = "codePostal";
+	public static final String CHAMP_RUE_INSCRIPTION = "rue";
+	public static final String CHAMP_CONFIRMATION_INSCRIPTION = "confirmation";
+	public static final String CHAMP_MOT_DE_PASSE_INSCRIPTION = "motDePasse";
+	public static final String CHAMP_VILLE_INSCRIPTION = "ville";
+	public static final String CHAMP_CREDIT_INSCRIPTION = "credit";
 	
 	public static final String BTN_ANNULER = "annuler";
 	public static final String BTN_INSCRIPTION = "inscription";
@@ -53,6 +53,12 @@ public class ServletUtils {
 	public static final String CHAMP_RUE_ARTICLE = "rue_proprietaire";
 	public static final String CHAMP_CODE_POSTAL_ARTICLE = "code_postal_proprietaire";
 	public static final String CHAMP_VILLE_ARTICLE = "ville_proprietaire";
+	
+	public static final String CHAMP_MOT_CLE_ACCUEIL = "search";
+	public static final String CHAMP_CATEGORIE_ACCUEIL = "selectCategoriesAccueilDeco";
+
+	public static final String CHAMP_PSEUDO_CONNEXION = "pseudo";
+	public static final String CHAMP_MOT_DE_PASSE_CONNEXION = "motDePasse";
 	
 	
 }

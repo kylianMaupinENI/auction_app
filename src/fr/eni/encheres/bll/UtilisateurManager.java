@@ -86,8 +86,7 @@ public class UtilisateurManager {
 
 		Adresse adresse = new Adresse(rue, codePostal, ville);
 		// Nouveaux paramètres de l'utilisateur
-		Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, adresse,
-				motDePasse);
+		Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, adresse, motDePasse);
 
 		utilisateurDAO.update(utilisateur);
 	}

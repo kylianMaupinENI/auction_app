@@ -31,4 +31,13 @@ public enum Categorie {
 		this.libelle = libelle;
 	}
 	
+	public static Categorie fromString(String string) {
+        for (Categorie c : Categorie.values()) {
+            if (c.name().equalsIgnoreCase(string)) {
+                return c;
+            }
+        }
+        return null;
+    }
+	
 }

@@ -49,16 +49,16 @@ public class InscriptionServlet extends HttpServlet {
 
 		HttpSession session = request.getSession();
 
-		String pseudo = request.getParameter(ServletUtils.CHAMP_PSEUDO);
-		String nom = request.getParameter(ServletUtils.CHAMP_NOM);
-		String prenom = request.getParameter(ServletUtils.CHAMP_PRENOM);
-		String email = request.getParameter(ServletUtils.CHAMP_EMAIL);
-		String telephone = request.getParameter(ServletUtils.CHAMP_TELEPHONE);
-		String rue = request.getParameter(ServletUtils.CHAMP_RUE);
-		String codePostal = request.getParameter(ServletUtils.CHAMP_CODE_POSTAL);
-		String ville = request.getParameter(ServletUtils.CHAMP_VILLE);
-		String motDePasse = request.getParameter(ServletUtils.CHAMP_MOT_DE_PASSE);
-		String confirmation = request.getParameter(ServletUtils.CHAMP_CONFIRMATION);
+		String pseudo = request.getParameter(ServletUtils.CHAMP_PSEUDO_INSCRIPTION);
+		String nom = request.getParameter(ServletUtils.CHAMP_NOM_INSCRIPTION);
+		String prenom = request.getParameter(ServletUtils.CHAMP_PRENOM_INSCRIPTION);
+		String email = request.getParameter(ServletUtils.CHAMP_EMAIL_INSCRIPTION);
+		String telephone = request.getParameter(ServletUtils.CHAMP_TELEPHONE_INSCRIPTION);
+		String rue = request.getParameter(ServletUtils.CHAMP_RUE_INSCRIPTION);
+		String codePostal = request.getParameter(ServletUtils.CHAMP_CODE_POSTAL_INSCRIPTION);
+		String ville = request.getParameter(ServletUtils.CHAMP_VILLE_INSCRIPTION);
+		String motDePasse = request.getParameter(ServletUtils.CHAMP_MOT_DE_PASSE_INSCRIPTION);
+		String confirmation = request.getParameter(ServletUtils.CHAMP_CONFIRMATION_INSCRIPTION);
 
 		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(ServletUtils.INSCRIPTION);
 		

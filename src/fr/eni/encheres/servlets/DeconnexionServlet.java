@@ -34,7 +34,7 @@ public class DeconnexionServlet extends HttpServlet {
 		
 		session.invalidate();
 		
-		this.getServletContext().getRequestDispatcher(ServletUtils.VUE_ACCUEIL).forward(request, response);
+		this.getServletContext().getRequestDispatcher(ServletUtils.ACCUEIL).forward(request, response);
 	}
 
 	/**

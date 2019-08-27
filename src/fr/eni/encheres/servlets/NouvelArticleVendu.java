@@ -27,22 +27,6 @@ import fr.eni.encheres.bo.Utilisateur;
 @WebServlet("/nouvellevente")
 public class NouvelArticleVendu extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public static final String ATT_SESSION_USER = "sessionUtilisateur";
-
-	public static final String ACCUEIL_CONNECTE = "/accueil.jsp";
-	public static final String ACCUEIL_DECONNECTE = "/accueil.jsp";
-	public static final String NOUVELLE_VENTE = "/nouvelle_vente.jsp";
-	
-
-	public static final String CHAMP_NOM = "nom_vente";
-	public static final String CHAMP_DESCRIPTION = "description_vente";
-	public static final String CHAMP_CATEGORIE = "selectCategoriesAccueilDeco";
-	public static final String CHAMP_PRIX_INITIAL = "prix_initial";
-	public static final String CHAMP_DATE_DEBUT = "date_debut_enchere";
-	public static final String CHAMP_DATE_FIN = "date_fin_enchere";
-	public static final String CHAMP_RUE = "rue_proprietaire";
-	public static final String CHAMP_CODE_POSTAL = "code_postal_proprietaire";
-	public static final String CHAMP_VILLE = "ville_proprietaire";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -58,7 +42,7 @@ public class NouvelArticleVendu extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(NOUVELLE_VENTE);
+		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(ServletUtils.NOUVELLE_VENTE);
 		rd.forward(request, response);
 	}
 
@@ -82,44 +66,25 @@ public class NouvelArticleVendu extends HttpServlet {
 
 		HttpSession session = request.getSession();
 
-		proprietaire = (Utilisateur) session.getAttribute(ATT_SESSION_USER);
+		proprietaire = (Utilisateur) session.getAttribute(ServletUtils.ATT_SESSION_USER);
 
-		nom = request.getParameter(CHAMP_NOM);
-		description = request.getParameter(CHAMP_DESCRIPTION);
-		String categ = request.getParameter(CHAMP_CATEGORIE);
-		int prixInitial = Integer.parseInt(request.getParameter(CHAMP_PRIX_INITIAL));
+		nom = request.getParameter(ServletUtils.CHAMP_NOM_ARTICLE);
+		description = request.getParameter(ServletUtils.CHAMP_DESCRIPTION_ARTICLE);
+		String categorieStr = request.getParameter(ServletUtils.CHAMP_CATEGORIE_ARTICLE);
+		int prixInitial = Integer.parseInt(request.getParameter(ServletUtils.CHAMP_PRIX_INITIAL_ARTICLE));
 		int prixVente = 0;
-		String rue = request.getParameter(CHAMP_RUE);
-		String codePostal = request.getParameter(CHAMP_CODE_POSTAL);
-		String ville = request.getParameter(CHAMP_VILLE);
-		System.out.println(nom);
-		System.out.println(description);
-		System.out.println(categ);
-		switch (categ) {
-			case "Informatique":
-				categorie = Categorie.INFORMATIQUE;
-				break;
-			case "Ameublement":
-				categorie = Categorie.AMEUBLEMENT;
-				break;
-			case "V�tement":
-				categorie = Categorie.VETEMENT;
-				break;
-			case "Sport et loisirs":
-				categorie = Categorie.SPORT_LOISIRS;
-				break;
-			case "Toutes":
-				categorie = Categorie.TOUTES;
-		}
-
+		String rue = request.getParameter(ServletUtils.CHAMP_RUE_ARTICLE);
+		String codePostal = request.getParameter(ServletUtils.CHAMP_CODE_POSTAL_ARTICLE);
+		String ville = request.getParameter(ServletUtils.CHAMP_VILLE_ARTICLE);
 		
-		System.out.println(prix_initial);
+		categorie = Categorie.fromString(categorieStr);
+
 		List<Integer> listeCodeErreur = new ArrayList<>();
 		try {
-			prixInitial = Integer.parseInt(request.getParameter(CHAMP_PRIX_INITIAL));
+			prixInitial = Integer.parseInt(request.getParameter(ServletUtils.CHAMP_PRIX_INITIAL_ARTICLE));
 			DateTimeFormatter dft = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-			dateDebutEnchere = LocalDate.parse(request.getParameter(CHAMP_DATE_DEBUT), dft);
-			dateFinEnchere = LocalDate.parse(request.getParameter(CHAMP_DATE_FIN), dft);
+			dateDebutEnchere = LocalDate.parse(request.getParameter(ServletUtils.CHAMP_DATE_DEBUT_ARTICLE), dft);
+			dateFinEnchere = LocalDate.parse(request.getParameter(ServletUtils.CHAMP_DATE_FIN_ARTICLE), dft);
 			
 		} catch (DateTimeException e) {
 			e.printStackTrace();
@@ -140,19 +105,19 @@ public class NouvelArticleVendu extends HttpServlet {
 		
 		if (listeCodeErreur.size() > 0) {
 			request.setAttribute("lstErreurs", listeCodeErreur);
-			RequestDispatcher rd = request.getRequestDispatcher(ACCUEIL_CONNECTE);
+			RequestDispatcher rd = request.getRequestDispatcher(ServletUtils.ACCUEIL);
 			rd.forward(request, response);
 		} else {
 			ArticleVenduManager articleVenduManager = new ArticleVenduManager();
 			try {
 				articleVenduManager.ajouteArticleVendu(nom, description, dateDebutEnchere, dateFinEnchere, prixInitial, prixVente, adresse,  proprietaire, categorie);
-				RequestDispatcher rd = request.getRequestDispatcher(ACCUEIL_CONNECTE);
+				RequestDispatcher rd = request.getRequestDispatcher(ServletUtils.ACCUEIL);
 
 				rd.forward(request, response);
 			} catch (BusinessException e) {
 				e.printStackTrace();
 				request.setAttribute("lstErreurs", e.getListeCodesErreur());
-				RequestDispatcher rd = request.getRequestDispatcher(ACCUEIL_CONNECTE);
+				RequestDispatcher rd = request.getRequestDispatcher(ServletUtils.ACCUEIL);
 				rd.forward(request, response);
 			}
 		}

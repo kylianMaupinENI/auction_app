@@ -191,7 +191,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			if((recherche != null) || (!recherche.equals(""))) {
 				query += COND_RECHERCHE;
 			}
-			if (categorie != Categorie.TOUTES) {
+			if (categorie != null) {
 				query += COND_CATEGORIE;
 			}
 

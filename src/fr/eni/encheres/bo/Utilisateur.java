@@ -213,7 +213,5 @@ public class Utilisateur {
 				+ motDePasse + ", credit=" + credit + ", administrateur=" + administrateur + ", achats=" + achats
 				+ ", ventes=" + ventes + ", encheres=" + encheres + "]";
 	}
-
-	
 	
 }
