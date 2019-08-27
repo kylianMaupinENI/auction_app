@@ -32,7 +32,7 @@ public class EnchereTermineeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String noArticle = request.getParameter(ServletUtils.ID_ARTICLE_PARAM);
+		String noArticleStr = request.getParameter(ServletUtils.ID_ARTICLE_PARAM);
 		
 		ArticleVenduManager articleVenduManager = new ArticleVenduManager();
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
@@ -40,11 +40,15 @@ public class EnchereTermineeServlet extends HttpServlet {
 		ArticleVendu article;
 		Utilisateur gagnant = null;
 		try {
+			int noArticle = Integer.parseInt(noArticleStr);
 			article = articleVenduManager.selectById(noArticle);
 			int noUtilisateur = article.getProprietaire().getNoUtilisateur();
 			gagnant = utilisateurManager.selectById(noUtilisateur);
 			
 		} catch (BusinessException e) {
+			e.printStackTrace();
+			
+		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
 		request.setAttribute(ServletUtils.ATT_USER_GAGNANT, gagnant);

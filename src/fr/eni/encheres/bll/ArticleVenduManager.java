@@ -99,7 +99,7 @@ public class ArticleVenduManager {
 		return articles;
 	}
 
-	public ArticleVendu selectById(String noArticle) throws BusinessException {
+	public ArticleVendu selectById(int noArticle) throws BusinessException {
 		return articleVenduDAO.selectById(noArticle);
 	}
 
