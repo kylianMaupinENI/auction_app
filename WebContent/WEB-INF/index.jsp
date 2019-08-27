@@ -67,7 +67,10 @@
 				<div class="col-sm-2 sidenav"></div>
 
 				<%
+					
 					if (session != null) {
+						Utilisateur utilisateur = (Utilisateur) session.getAttribute(ServletUtils.ATT_REQUEST_USER);
+						if (utilisateur != null) {
 				%>
 				<div class="col-sm-2 sidenav"></div>
 				<div class="col-sm-8 text-left ">
@@ -129,7 +132,7 @@
 				</div>
 				<div class="col-sm-2 sidenav"></div>
 				<%
-					}
+					}}
 				%>
 
 				<div class="col-sm-2 sidenav"></div>
