@@ -27,9 +27,10 @@ public class ServletUtils {
 	public static final String JSP_CONNEXION = "/WEB-INF/connexion.jsp";
 	public static final String JSP_NOUVELLE_VENTE = "/WEB-INF/nouvelle_vente.jsp";
 	public static final String JSP_403 = "/WEB-INF/403.jsp";
+	public static final String JSP_404 = "/WEB-INF/404.jsp";
 	public static final String DETAIL_ENCHERE = "/WEB-INF/detailEnchere.jsp";
 
-	public static final String ACCUEIL = "/";
+	public static final String ACCUEIL = "/accueil";
 	public static final String NOUVELLE_VENTE = "/nouveau";
 	public static final String CONNEXION = "/connexion";
 	public static final String DECONNEXION = "/deconnexion";

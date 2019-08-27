@@ -33,7 +33,7 @@
 
 				<div class="card o-hidden border-0 shadow-lg my-5">
 					<div class="card-body p-0">
-						<form class="user" method="post" action="login"
+						<form class="user" method="post" action="connexion"
 							id="blockFormulaireConnexion">
 							<!-- Nested Row within Card Body -->
 							<div class="row">

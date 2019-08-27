@@ -87,7 +87,7 @@ public class SelectionArticle extends HttpServlet {
 		}
 
 		request.setAttribute("articleVendu", articleVendu);
-		this.getServletContext().getRequestDispatcher(ServletUtils.ACCUEIL).forward(request, response);
+		this.getServletContext().getRequestDispatcher(ServletUtils.JSP_ACCUEIL).forward(request, response);
 
 	}
 

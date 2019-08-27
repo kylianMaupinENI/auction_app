@@ -6,10 +6,6 @@ package fr.eni.encheres.servlets;
 public abstract class CodesResultatServlets {
 
 	/**
-	 * Echec général quand tentative d'ajouter un objet null
-	 */
-	public static final int INSERT_OBJET_NULL = 10000;
-	/**
 	 * SI LA DATE DE FIN DE L'ENCHERE EST DEJA DÉPASSÉE OU EST INFERIEURE A LA DATE
 	 * DE DEBUT
 	 */

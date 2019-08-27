@@ -85,14 +85,14 @@ public class ArticleVenduManager {
 		// Ventes
 		if (isVente) {
 			if (utilisateur != null) {
-
+				
 			}
 		}
 
 		// Achats
 		else {
 			if (utilisateur != null) {
-
+				
 			}
 		}
 

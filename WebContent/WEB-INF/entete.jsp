@@ -32,25 +32,27 @@
 			%>
 			<li class="nav-item dropdown no-arrow mx-1"><a
 				class="nav-link dropdown-toggle"
-				href="http://localhost:8080/projet_encheres/" id="accueil">
+				href="<%= request.getContextPath() + ServletUtils.ACCUEIL %>" id="accueil">
 					Enchères </a></li>
 			<li class="nav-item dropdown no-arrow mx-1"><a
-				class="nav-link dropdown-toggle" href="vendre.jsp" id="vendre">
+				class="nav-link dropdown-toggle" 
+				href="<%= request.getContextPath() + ServletUtils.NOUVELLE_VENTE%>" 
+				id="vendre">
 					Vendre un article </a></li>
 			<li class="nav-item dropdown no-arrow mx-1"><a
 				class="nav-link dropdown-toggle"
-				href="http://localhost:8080/projet_encheres/profil"
+				href="<%= request.getContextPath() + ServletUtils.DETAILS_PROFIL + ServletUtils.PSEUDO_UTILISATEUR_PARAM + utilisateur.getPseudo() %>"
 				id="profilUtilisateur"> Mon Profil </a></li>
 			<li class="nav-item dropdown no-arrow mx-1"><a
 				class="nav-link dropdown-toggle"
-				href="http://localhost:8080/projet_encheres/logout" id="index">
+				href="<%= request.getContextPath() + ServletUtils.DECONNEXION %>" id="index">
 					Déconnexion </a></li>
 			<%
 				} else {
 			%>
 			<li class="nav-item dropdown no-arrow"><a
 				class="nav-link dropdown-toggle"
-				href="${pageContext.request.contextPath}/connexion" id="userDropdown">
+				href="<%= request.getContextPath() + ServletUtils.CONNEXION %>" id="userDropdown">
 					S'inscrire - Se connecter </a></li>
 			<%
 				}

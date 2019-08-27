@@ -24,7 +24,7 @@ import fr.eni.encheres.bo.Utilisateur;
 /**
  * Servlet implementation class NouvelArticleVendu
  */
-@WebServlet("/nouvellevente")
+@WebServlet("/nouveau")
 public class NouvelArticleVendu extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -42,7 +42,7 @@ public class NouvelArticleVendu extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(ServletUtils.NOUVELLE_VENTE);
+		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(ServletUtils.JSP_NOUVELLE_VENTE);
 		rd.forward(request, response);
 	}
 

@@ -28,7 +28,7 @@
 	<!-- DEBUT HAUT DE PAGE -->
 	<%@include file="entete.jsp"%>
 	<!-- FIN HAUT DE PAGE -->
-	<form>
+	<form action="accueil" method="post">
 		<div class="container-fluid text-center">
 			<div class="row content">
 				<div class="col-sm-2 sidenav"></div>
