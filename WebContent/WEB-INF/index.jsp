@@ -1,4 +1,6 @@
 <%@page import="fr.eni.encheres.bo.ArticleVendu"%>
+<%@page import="fr.eni.encheres.servlets.ServletUtils"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -23,7 +25,7 @@
 </head>
 <body>
 	<!-- DEBUT HAUT DE PAGE -->
-	<%@include file="/WEB-INF/entete.jsp"%>
+	<%@include file="entete.jsp"%>
 	<!-- FIN HAUT DE PAGE -->
 	<form>
 		<div class="container-fluid text-center">
@@ -64,7 +66,7 @@
 				<div class="col-sm-2 sidenav"></div>
 
 				<%
-					if (true) {
+					if (session != null) {
 				%>
 				<div class="col-sm-2 sidenav"></div>
 				<div class="col-sm-8 text-left ">
@@ -128,20 +130,24 @@
 				<%
 					}
 				%>
-				
-				<div class="col-sm-2 sidenav" ></div>
-				<div class="col-sm-8 "><hr></div>
+
 				<div class="col-sm-2 sidenav"></div>
-				
-				<%
-					if (true) {
-				%>
+				<div class="col-sm-8 ">
+					<hr>
+				</div>
+				<div class="col-sm-2 sidenav"></div>
+
+
 				<!-- 				ON AFFICHE SELON LE CRITERE SELECTIONNE -->
 				<div class="col-sm-2 sidenav"></div>
 				<div class="col-sm-8 text-left bg-gray-100" id="block3index">
 					<div class="containerIndex">
 						<div class="row">
 							<div class="col-sm-4" id="Block3Article">
+								<%
+									List<ArticleVendu> articles = (List<ArticleVendu>)request.getAttribute(ServletUtils.ATT_LISTE_ARTICLES);
+									for(ArticleVendu article : articles) {
+								%>
 								<div
 									class="row no-gutters border-left-primary shadow h-100 py-2">
 									<div class="col-md-4">
@@ -158,48 +164,20 @@
 										</div>
 									</div>
 								</div>
+								<%
+									}
+								%>
 							</div>
 						</div>
 					</div>
 				</div>
-				<%
-					} else {
-				%>
-				<!-- 				ON AFFICHE TOUTES LES ENCHERES EN COURS -->
-				<div class="col-sm-8 text-left">
-					<div class="containerIndex">
-						<div class="row">
-							<div class="col-sm-4" id="Block3Article">
-								<div
-									class="row no-gutters border-left-primary shadow h-100 py-2">
-									<div class="col-md-4">
-										<img src="imageDuProduit.jpg" id="imageProduit"
-											class="card-img" alt="Photo du produit">
-									</div>
-									<div class="col-md-8">
-										<div class="card-body">
-											<h5 class="card-title">Nom du produit</h5>
-											<p class="card-text">Prix :</p>
-											<p class="card-text">Fin de l'enchére :</p>
-											</br>
-											<p class="card-text">Vendeur :</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<%
-					}
-				%>
 				<div class="col-sm-2 sidenav"></div>
 			</div>
 		</div>
 	</form>
 
 	<!-- DEBUT BAS DE PAGE -->
-	<%@include file="/WEB-INF/basDePage.jsp"%>
+	<%@include file="basDePage.jsp"%>
 	<!-- FIN BAS DE PAGE -->
 </body>
 </html>

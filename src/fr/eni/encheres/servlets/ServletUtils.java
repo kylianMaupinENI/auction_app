@@ -41,6 +41,7 @@ public class ServletUtils {
 	public static final String ATT_LISTE_ERREURS = "listeCodesErreur";
 	public static final String ATT_MODIFIABLE = "modifiable";
 	public final static String ATT_REQUEST_USER = "utilisateur";
+	public final static String ATT_LISTE_ARTICLES = "listArticle";
 	
 	public static final String CHAMP_NOM_ARTICLE = "nom_vente";
 	public static final String CHAMP_DESCRIPTION_ARTICLE = "description_vente";
