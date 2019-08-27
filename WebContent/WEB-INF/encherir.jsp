@@ -84,9 +84,9 @@
 							id="boutonEncherirVente"> Encherir </a>
 					</div>
 					<div class="col-md-6">
-							<a href="index.jsp" class="btn btn-primary btn-user btn-block"
-								id="boutonAnnulerEnchere"> Annuler </a>
-						</div>
+						<a href="index.jsp" class="btn btn-primary btn-user btn-block"
+							id="boutonAnnulerEnchere"> Annuler </a>
+					</div>
 				</div>
 			</div>
 			<div class="col-sm-2 sidenav"></div>

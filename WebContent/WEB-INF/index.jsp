@@ -146,36 +146,44 @@
 						<div class="row">
 							<div class="col-sm-4" id="Block3Article">
 								<%
-								List<ArticleVendu> articles = (List<ArticleVendu>) request.getAttribute(ServletUtils.ATT_LISTE_ARTICLES);
-								if((articles != null) && (articles.size() > 0)) {
-									for(ArticleVendu article : articles) {
+									List<ArticleVendu> articles = (List<ArticleVendu>) request.getAttribute(ServletUtils.ATT_LISTE_ARTICLES);
+									if ((articles != null) && (articles.size() > 0)) {
+										for (ArticleVendu article : articles) {
 								%>
-									<div
-										class="row no-gutters border-left-primary shadow h-100 py-2">
-										<div class="col-md-4">
-											<img src="imageDuProduit.jpg" id="imageProduit"
-												class="card-img" alt="Photo du produit">
-										</div>
-										<div class="col-md-8">
-											<div class="card-body">
-												<h5 class="card-title">
-													<a href="<%= request.getContextPath() + ServletUtils.DETAILS_ARTICLE + ServletUtils.ID_ARTICLE_PARAM + article.getNoArticle()%>">
-														<%= article.getNomArticle() %>
-													</a>
-												</h5>
-												<p class="card-text">Prix : <%= article.getPrixVente() %></p>
-												<p class="card-text">Fin de l'enchére : <%= article.getDateFinEncheres().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) %></p>
-												</br>
-												<a href="<%= request.getContextPath() + ServletUtils.DETAILS_PROFIL + ServletUtils.PSEUDO_UTILISATEUR_PARAM + article.getProprietaire().getPseudo()%>">
-													<p class="card-text">Vendeur :<%= article.getProprietaire().getNom() %></p>
+								<div
+									class="row no-gutters border-left-primary shadow h-100 py-2">
+									<div class="col-md-4">
+										<img src="imageDuProduit.jpg" id="imageProduit"
+											class="card-img" alt="Photo du produit">
+									</div>
+									<div class="col-md-8">
+										<div class="card-body">
+											<h5 class="card-title">
+												<a
+													href="<%=request.getContextPath() + ServletUtils.DETAILS_ARTICLE + ServletUtils.ID_ARTICLE_PARAM
+							+ article.getNoArticle()%>">
+													<%=article.getNomArticle()%>
 												</a>
-												
-											</div>
+											</h5>
+											<p class="card-text">
+												Prix :
+												<%=article.getPrixVente()%></p>
+											<p class="card-text">
+												Fin de l'enchére :
+												<%=article.getDateFinEncheres().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))%></p>
+											</br> <a
+												href="<%=request.getContextPath() + ServletUtils.DETAILS_PROFIL
+							+ ServletUtils.PSEUDO_UTILISATEUR_PARAM + article.getProprietaire().getPseudo()%>">
+												<p class="card-text">
+													Vendeur :<%=article.getProprietaire().getNom()%></p>
+											</a>
+
 										</div>
 									</div>
+								</div>
 								<%
 									}
-								}
+									}
 								%>
 							</div>
 						</div>

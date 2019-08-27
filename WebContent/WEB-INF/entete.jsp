@@ -25,36 +25,37 @@
 
 		<!-- Topbar Navbar -->
 		<ul class="navbar-nav ml-auto">
-			<% if (session != null) { 
+			<%
+				if (session != null) {
 					Utilisateur utilisateur = (Utilisateur) session.getAttribute(ServletUtils.ATT_SESSION_USER);
-					if (utilisateur != null) {%>
-						<li class="nav-item dropdown no-arrow mx-1">
-							<a class="nav-link dropdown-toggle" href="http://localhost:8080/projet_encheres/"
-								id="accueil"> Enchères 
-							</a>
-						</li>
-						<li class="nav-item dropdown no-arrow mx-1">
-							<a class="nav-link dropdown-toggle" href="vendre.jsp" id="vendre"> 
-							Vendre un article 
-							</a>
-						</li>
-						<li class="nav-item dropdown no-arrow mx-1">
-							<a class="nav-link dropdown-toggle" href="http://localhost:8080/projet_encheres/profil"
-								id="profilUtilisateur"> 
-								Mon Profil
-							</a>
-						</li>
-						<li class="nav-item dropdown no-arrow mx-1">
-							<a class="nav-link dropdown-toggle" href="http://localhost:8080/projet_encheres/logout" id="index"> Déconnexion
-							</a>
-						</li>
-					<% } else { %>
-						<li class="nav-item dropdown no-arrow">
-							<a class="nav-link dropdown-toggle" href="http://localhost:8080/projet_encheres/login" id="userDropdown"
-								> S'inscrire - Se connecter
-							</a>
-						</li>
-					<% }} %>
+					if (utilisateur != null) {
+			%>
+			<li class="nav-item dropdown no-arrow mx-1"><a
+				class="nav-link dropdown-toggle"
+				href="http://localhost:8080/projet_encheres/" id="accueil">
+					Enchères </a></li>
+			<li class="nav-item dropdown no-arrow mx-1"><a
+				class="nav-link dropdown-toggle" href="vendre.jsp" id="vendre">
+					Vendre un article </a></li>
+			<li class="nav-item dropdown no-arrow mx-1"><a
+				class="nav-link dropdown-toggle"
+				href="http://localhost:8080/projet_encheres/profil"
+				id="profilUtilisateur"> Mon Profil </a></li>
+			<li class="nav-item dropdown no-arrow mx-1"><a
+				class="nav-link dropdown-toggle"
+				href="http://localhost:8080/projet_encheres/logout" id="index">
+					Déconnexion </a></li>
+			<%
+				} else {
+			%>
+			<li class="nav-item dropdown no-arrow"><a
+				class="nav-link dropdown-toggle"
+				href="http://localhost:8080/projet_encheres/login" id="userDropdown">
+					S'inscrire - Se connecter </a></li>
+			<%
+				}
+				}
+			%>
 		</ul>
 
 	</nav>
