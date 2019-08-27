@@ -17,7 +17,7 @@ import fr.eni.encheres.bo.Utilisateur;
 /**
  * Servlet Filter implementation class FiltreUtilisateurConnecte
  */
-@WebFilter(urlPatterns = { "/profil", "/nouveau" })
+@WebFilter(urlPatterns = { "/profil", "/nouveau", "/deconnexion", "/modifier" })
 public class FiltreUtilisateurConnecte implements Filter {
 
 	/**
@@ -46,7 +46,7 @@ public class FiltreUtilisateurConnecte implements Filter {
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute(ServletUtils.ATT_SESSION_USER);
 
 		if (session == null || utilisateur == null) {
-			res.sendRedirect(ServletUtils.CONNEXION);
+			res.sendRedirect(req.getContextPath() + ServletUtils.CONNEXION);
 		} else {
 			chain.doFilter(request, response);
 		}
