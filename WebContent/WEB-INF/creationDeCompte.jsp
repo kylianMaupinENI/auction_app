@@ -26,6 +26,9 @@
 </head>
 
 <body>
+
+	<%HttpSession sess = request.getSession();
+			Utilisateur u = (Utilisateur) sess.getAttribute("sessionUtilisateur");%>
 	<!-- DEBUT ENTETE -->
 	<!-- Outer Row -->
 	<form class="user" id="formCreationDeCompte" method="post"
@@ -91,9 +94,11 @@
 											id="<%=ServletUtils.CHAMP_TELEPHONE_INSCRIPTION%>"
 											name="<%=ServletUtils.CHAMP_TELEPHONE_INSCRIPTION%>">
 									</div>
+									<% if (u != null) {%>
 									<div id=<%=ServletUtils.CHAMP_CREDIT_INSCRIPTION%>>Crédit
 										:</div>
 									<br>
+									<% } %>
 								</div>
 							</div>
 							<div class="col-lg-6" id="block2CreationDeCompte">
@@ -138,28 +143,34 @@
 						<div class="row" id="blockBoutonCreationDeCompte">
 							<div class="col-sm-2"></div>
 							<div class="col-sm-4">
+								<% if (u == null) {%>
 								<div class="text-right form-group"
 									id="<%=ServletUtils.BTN_INSCRIPTION%>">
 									<input type="submit" class="btn btn-primary btn-user btn-block"
 										value="S'inscrire">
 								</div>
+								<% }else{ %>
 								<div class="text-right form-group"
 									id="<%=ServletUtils.BTN_ENREGISTRER%>">
 									<a href="index.jsp" class="btn btn-primary btn-user btn-block">
 										Enregistrer </a>
 								</div>
+								<%} %>
 							</div>
 							<div class="col-sm-4">
+								<% if (u == null) {%>
 								<div class="text-left form-group"
 									id="<%=ServletUtils.BTN_ANNULER%>">
 									<a href="index.jsp" class="btn btn-primary btn-user btn-block">Annuler
 									</a>
 								</div>
+								<%} else { %>
 								<div class="text-left form-group"
 									id="<%=ServletUtils.BTN_SUPPRIMER%>">
 									<a href="index.jsp" class="btn btn-primary btn-user btn-block">Supprimer
 										mon compte </a>
 								</div>
+								<%} %>
 							</div>
 							<div class="col-sm-2"></div>
 						</div>
@@ -181,29 +192,5 @@
 	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
 	<!-- Custom scripts for all pages-->
-	<script src="js/sb-admin-2.min.js"></script>
-
-	<!-- Fonction pour savoir si on est dans le cas d'une modif ou création -->
-	<script>
-		
-	<%HttpSession sess = request.getSession();
-			Utilisateur u = (Utilisateur) sess.getAttribute("sessionUtilisateur");
-
-			if (u != null) {%>
-		document.getElementById('<%=ServletUtils.CHAMP_CREDIT_INSCRIPTION%>').style.visibility = 'visible';
-		document.getElementById('<%=ServletUtils.BTN_ANNULER%>').style.display = 'none';
-		document.getElementById('<%=ServletUtils.BTN_INSCRIPTION%>').style.display = 'none';
-		document.getElementById('<%=ServletUtils.BTN_ENREGISTRER%>').style.visibility = 'visible';
-		document.getElementById('<%=ServletUtils.BTN_SUPPRIMER%>').style.visibility = 'visible';
-	<%} else {%>
-		document.getElementById('<%=ServletUtils.CHAMP_CREDIT_INSCRIPTION%>').style.display = 'none';
-		document.getElementById('<%=ServletUtils.BTN_ANNULER%>').style.visibility = 'visible';
-		document.getElementById('<%=ServletUtils.BTN_INSCRIPTION%>').style.visibility = 'visible';
-		document.getElementById('<%=ServletUtils.BTN_ENREGISTRER%>').style.display = 'none';
-		document.getElementById('<%=ServletUtils.BTN_SUPPRIMER%>
-		').style.display = 'none';
-	<%}%>
-		
-	</script>
 </body>
 </html>
