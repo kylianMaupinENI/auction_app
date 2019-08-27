@@ -63,5 +63,10 @@ public class ServletUtils {
 
 	public static final String ID_ARTICLE_PARAM = "?noArticle=";
 	public static final String PSEUDO_UTILISATEUR_PARAM = "?pseudo=";
+	
+	public static final String ATT_ARTICLE_REMPORTE = "articleVendu";
+
+	public static final String ATT_USER_GAGNANT = "gagnant";
+	public static final String ATT_ARTICLE_GAGNANT = "article";
 
 }

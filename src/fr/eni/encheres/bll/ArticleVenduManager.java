@@ -99,8 +99,8 @@ public class ArticleVenduManager {
 		return articles;
 	}
 
-	public ArticleVendu selectById(int id) throws BusinessException {
-		return articleVenduDAO.selectById(id);
+	public ArticleVendu selectById(int noArticle) throws BusinessException {
+		return articleVenduDAO.selectById(noArticle);
 	}
 
 	public void updatePrixVenteEnchere(int prixVente, int noArticle) throws BusinessException {
@@ -155,6 +155,16 @@ public class ArticleVenduManager {
 			businessException.ajouterErreur(CodesResultatBLL.DATE_FIN_ANTERIEURE_INVALIDE);
 		}
 		// TODO Ajouter la vérification de la durée (inférieure à deux mois)
+	}
+
+	private int valeurDerniereEnchere(int noArticle) throws BusinessException {
+		ArticleVendu articleVendu = selectById(noArticle);
+		return articleVendu.getPrixVente();
+	}
+	
+	private Utilisateur recupererGagnant(int noArticle) throws BusinessException {
+		ArticleVendu articleVendu = selectById(noArticle);
+		return articleVendu.getProprietaire();
 	}
 
 }
