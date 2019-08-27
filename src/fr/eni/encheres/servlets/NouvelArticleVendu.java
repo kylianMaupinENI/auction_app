@@ -74,8 +74,8 @@ public class NouvelArticleVendu extends HttpServlet {
 		String description = null;
 		Categorie categorie = null;
 		int prix_initial = 0;
-		LocalDate dateDebutEnchere = null;
-		LocalDate dateFinEnchere = null;
+		LocalDate date_debut_enchere = null;
+		LocalDate date_fin_enchere = null;
 		Utilisateur proprietaire = null;
 		Adresse adresse = null;
 
@@ -89,7 +89,7 @@ public class NouvelArticleVendu extends HttpServlet {
 		description = request.getParameter(CHAMP_DESCRIPTION);
 		String categ = request.getParameter(CHAMP_CATEGORIE);
 		String rue = request.getParameter(CHAMP_RUE);
-		String codePostal = request.getParameter(CHAMP_CODE_POSTAL);
+		String code_postal = request.getParameter(CHAMP_CODE_POSTAL);
 		String ville = request.getParameter(CHAMP_VILLE);
 		System.out.println(nom);
 		System.out.println(description);
@@ -101,7 +101,7 @@ public class NouvelArticleVendu extends HttpServlet {
 			case "Ameublement":
 				categorie = Categorie.AMEUBLEMENT;
 				break;
-			case "Vêtement":
+			case "Vï¿½tement":
 				categorie = Categorie.VETEMENT;
 				break;
 			case "Sport et loisirs":
@@ -123,7 +123,7 @@ public class NouvelArticleVendu extends HttpServlet {
 			listeCodeErreur.add(CodesResultatServlets.FORMAT_DATE_ERREUR);
 		}
 		
-		//TODO Vérifier si l'article est en cours ou en attente de vente
+		//TODO Vï¿½rifier si l'article est en cours ou en attente de vente
 		
 		if(!ville.equals("") || ! rue.equals("") || ! codePostal.equals("")) {
 			adresse = new Adresse (rue,codePostal,ville);
