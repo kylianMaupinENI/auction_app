@@ -50,7 +50,7 @@
 			%>
 			<li class="nav-item dropdown no-arrow"><a
 				class="nav-link dropdown-toggle"
-				href="http://localhost:8080/projet_encheres/login" id="userDropdown">
+				href="${pageContext.request.contextPath}/connexion" id="userDropdown">
 					S'inscrire - Se connecter </a></li>
 			<%
 				}
