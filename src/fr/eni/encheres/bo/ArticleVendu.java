@@ -16,14 +16,14 @@ public class ArticleVendu {
 	private Utilisateur proprietaire;
 	private List<Enchere> encheres;
 	private Categorie categorie;
-	
+
 	public ArticleVendu() {
-		
+
 	}
 
 	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAPrix, int prixVente, Adresse lieuRetrait,
-			Utilisateur proprietaire, Categorie categorie) {
+			LocalDate dateFinEncheres, int miseAPrix, int prixVente, Adresse lieuRetrait, Utilisateur proprietaire,
+			Categorie categorie) {
 		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
@@ -39,8 +39,7 @@ public class ArticleVendu {
 	}
 
 	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAPrix, int prixVente, 
-			Utilisateur proprietaire, Categorie categorie) {
+			LocalDate dateFinEncheres, int miseAPrix, int prixVente, Utilisateur proprietaire, Categorie categorie) {
 		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
@@ -53,10 +52,9 @@ public class ArticleVendu {
 		this.encheres = new ArrayList<Enchere>();
 		this.categorie = categorie;
 	}
-	
-	public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAPrix, int prixVente, Adresse lieuRetrait,
-			Utilisateur proprietaire, Categorie categorie) {
+
+	public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
+			int miseAPrix, int prixVente, Adresse lieuRetrait, Utilisateur proprietaire, Categorie categorie) {
 		super();
 		this.nomArticle = nomArticle;
 		this.description = description;

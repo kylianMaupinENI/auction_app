@@ -19,48 +19,52 @@ import fr.eni.encheres.bo.Utilisateur;
  */
 @WebServlet("/modifier")
 public class ModifierProfilServlet extends HttpServlet {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private UtilisateurManager utilisateurManager;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ModifierProfilServlet() {
-        super();
-        utilisateurManager = new UtilisateurManager();
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public ModifierProfilServlet() {
+		super();
+		utilisateurManager = new UtilisateurManager();
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		this.getServletContext().getRequestDispatcher(ServletUtils.JSP_INSCRIPTION).forward(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		HttpSession session = request.getSession();
-		
+
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute(ServletUtils.ATT_SESSION_USER);
-		
-		String pseudo = request.getParameter(ServletUtils.CHAMP_PSEUDO);
-		String nom = request.getParameter(ServletUtils.CHAMP_NOM);
-		String prenom = request.getParameter(ServletUtils.CHAMP_PRENOM);
-		String email = request.getParameter(ServletUtils.CHAMP_EMAIL);
-		String telephone = request.getParameter(ServletUtils.CHAMP_TELEPHONE);
-		String rue = request.getParameter(ServletUtils.CHAMP_RUE);
-		String codePostal = request.getParameter(ServletUtils.CHAMP_CODE_POSTAL);
-		String ville = request.getParameter(ServletUtils.CHAMP_VILLE);
-		String motDePasse = request.getParameter(ServletUtils.CHAMP_MOT_DE_PASSE);
-		String confirmation = request.getParameter(ServletUtils.CHAMP_CONFIRMATION);
-		
+
+		String pseudo = request.getParameter(ServletUtils.CHAMP_PSEUDO_INSCRIPTION);
+		String nom = request.getParameter(ServletUtils.CHAMP_NOM_INSCRIPTION);
+		String prenom = request.getParameter(ServletUtils.CHAMP_PRENOM_INSCRIPTION);
+		String email = request.getParameter(ServletUtils.CHAMP_EMAIL_INSCRIPTION);
+		String telephone = request.getParameter(ServletUtils.CHAMP_TELEPHONE_INSCRIPTION);
+		String rue = request.getParameter(ServletUtils.CHAMP_RUE_INSCRIPTION);
+		String codePostal = request.getParameter(ServletUtils.CHAMP_CODE_POSTAL_INSCRIPTION);
+		String ville = request.getParameter(ServletUtils.CHAMP_VILLE_INSCRIPTION);
+		String motDePasse = request.getParameter(ServletUtils.CHAMP_MOT_DE_PASSE_INSCRIPTION);
+		String confirmation = request.getParameter(ServletUtils.CHAMP_CONFIRMATION_INSCRIPTION);
+
 		int noUtilisateur = utilisateur.getNoUtilisateur();
-		
+
 		if ((pseudo == null) || pseudo.equals("")) {
 			pseudo = utilisateur.getPseudo();
 		}
@@ -90,14 +94,15 @@ public class ModifierProfilServlet extends HttpServlet {
 		}
 
 		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(ServletUtils.ACCUEIL);
-		
+
 		int credit = utilisateur.getCredit();
 		boolean administrateur = utilisateur.isAdministrateur();
 
 		try {
-			utilisateurManager.modifieUtilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, confirmation, credit, administrateur);
+			utilisateurManager.modifieUtilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal,
+					ville, motDePasse, confirmation, credit, administrateur);
 			rd = this.getServletContext().getRequestDispatcher(ServletUtils.DETAILS_PROFIL);
-			
+
 		} catch (BusinessException e) {
 			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 			e.printStackTrace();

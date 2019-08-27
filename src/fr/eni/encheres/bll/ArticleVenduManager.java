@@ -175,4 +175,14 @@ public class ArticleVenduManager {
 		// TODO Ajouter la vérification de la durée (inférieure à deux mois)
 	}
 
+	private int valeurDerniereEnchere(int noArticle) throws BusinessException {
+		ArticleVendu articleVendu = selectById(noArticle);
+		return articleVendu.getPrixVente();
+	}
+	
+	private Utilisateur recupererGagnant(int noArticle) throws BusinessException {
+		ArticleVendu articleVendu = selectById(noArticle);
+		return articleVendu.getProprietaire();
+	}
+
 }

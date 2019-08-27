@@ -26,6 +26,9 @@
 </head>
 
 <body>
+
+	<%HttpSession sess = request.getSession();
+			Utilisateur u = (Utilisateur) sess.getAttribute("sessionUtilisateur");%>
 	<!-- DEBUT ENTETE -->
 	<!-- Outer Row -->
 	<form class="user" id="formCreationDeCompte" method="post"
@@ -44,87 +47,94 @@
 									<h4 class="h4 text-gray-900 mb-4" id="titreProfil">Création
 										de compte</h4>
 								</div>
-								<%List<Integer> listeCodesErreur = (List<Integer>) request.getAttribute("listeCodesErreur");
-									if (listeCodesErreur != null) {%>
-								<%for (int codeErreur : listeCodesErreur) {%>
+								<%
+									List<Integer> listeCodesErreur = (List<Integer>) request.getAttribute("listeCodesErreur");
+									if (listeCodesErreur != null) {
+								%>
+								<%
+									for (int codeErreur : listeCodesErreur) {
+								%>
 								<p style="color: red";><%=LecteurMessage.getMessageErreur(codeErreur)%></p>
-								<%}}%>
+								<%
+									}
+									}
+								%>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-6 ">
 								<div class="p-5" id="block1Creation">
 									<div class="form-group">
-										<label for="<%=ServletUtils.CHAMP_PSEUDO%>">Pseudo :</label>
-										<input type="text" class="form-control form-control-user"
-											id="<%=ServletUtils.CHAMP_PSEUDO%>"
-											name="<%=ServletUtils.CHAMP_PSEUDO%>">
-									</div>
-									<div class="form-group">
-										<label for="<%=ServletUtils.CHAMP_NOM%>">Nom :</label> <input
-											type="text" class="form-control form-control-user"
-											id="<%=ServletUtils.CHAMP_NOM%>"
-											name="<%=ServletUtils.CHAMP_NOM%>">
-									</div>
-									<div class="form-group">
-										<label for="<%=ServletUtils.CHAMP_PRENOM%>">Prenom :</label>
-										<input type="text" class="form-control form-control-user"
-											id="<%=ServletUtils.CHAMP_PRENOM%>"
-											name="<%=ServletUtils.CHAMP_PRENOM%>">
-									</div>
-									<div class="form-group">
-										<label for="<%=ServletUtils.CHAMP_EMAIL%>">Email :</label> <input
-											type="text" class="form-control form-control-user"
-											id="<%=ServletUtils.CHAMP_EMAIL%>"
-											name="<%=ServletUtils.CHAMP_EMAIL%>">
-									</div>
-									<div class="form-group">
-										<label for="<%=ServletUtils.CHAMP_TELEPHONE%>">Téléphone
+										<label for="<%=ServletUtils.CHAMP_PSEUDO_INSCRIPTION%>">Pseudo
 											:</label> <input type="text" class="form-control form-control-user"
-											id="<%=ServletUtils.CHAMP_TELEPHONE%>"
-											name="<%=ServletUtils.CHAMP_TELEPHONE%>">
+											id="<%=ServletUtils.CHAMP_PSEUDO_INSCRIPTION%>"
+											name="<%=ServletUtils.CHAMP_PSEUDO_INSCRIPTION%>">
 									</div>
-									<div id=<%=ServletUtils.CHAMP_CREDIT%>>Crédit :</div>
+									<div class="form-group">
+										<label for="<%=ServletUtils.CHAMP_NOM_INSCRIPTION%>">Nom
+											:</label> <input type="text" class="form-control form-control-user"
+											id="<%=ServletUtils.CHAMP_NOM_INSCRIPTION%>"
+											name="<%=ServletUtils.CHAMP_NOM_INSCRIPTION%>">
+									</div>
+									<div class="form-group">
+										<label for="<%=ServletUtils.CHAMP_PRENOM_INSCRIPTION%>">Prenom
+											:</label> <input type="text" class="form-control form-control-user"
+											id="<%=ServletUtils.CHAMP_PRENOM_INSCRIPTION%>"
+											name="<%=ServletUtils.CHAMP_PRENOM_INSCRIPTION%>">
+									</div>
+									<div class="form-group">
+										<label for="<%=ServletUtils.CHAMP_EMAIL_INSCRIPTION%>">Email
+											:</label> <input type="text" class="form-control form-control-user"
+											id="<%=ServletUtils.CHAMP_EMAIL_INSCRIPTION%>"
+											name="<%=ServletUtils.CHAMP_EMAIL_INSCRIPTION%>">
+									</div>
+									<div class="form-group">
+										<label for="<%=ServletUtils.CHAMP_TELEPHONE_INSCRIPTION%>">Téléphone
+											:</label> <input type="text" class="form-control form-control-user"
+											id="<%=ServletUtils.CHAMP_TELEPHONE_INSCRIPTION%>"
+											name="<%=ServletUtils.CHAMP_TELEPHONE_INSCRIPTION%>">
+									</div>
+									<% if (u != null) {%>
+									<div id=<%=ServletUtils.CHAMP_CREDIT_INSCRIPTION%>>Crédit
+										:</div>
 									<br>
+									<% } %>
 								</div>
 							</div>
 							<div class="col-lg-6" id="block2CreationDeCompte">
 								<div class="p-5">
 									<div class="form-group">
-										<label for="<%=ServletUtils.CHAMP_RUE%>">Rue :</label> <input
-											type="text" class="form-control form-control-user"
-											id="<%=ServletUtils.CHAMP_RUE%>"
-											name="<%=ServletUtils.CHAMP_RUE%>">
+										<label for="<%=ServletUtils.CHAMP_RUE_INSCRIPTION%>">Rue
+											:</label> <input type="text" class="form-control form-control-user"
+											id="<%=ServletUtils.CHAMP_RUE_INSCRIPTION%>"
+											name="<%=ServletUtils.CHAMP_RUE_INSCRIPTION%>">
 									</div>
 									<div class="form-group">
-										<label for="<%=ServletUtils.CHAMP_CODE_POSTAL%>">Code
+										<label for="<%=ServletUtils.CHAMP_CODE_POSTAL_INSCRIPTION%>">Code
 											postal :</label> <input type="text"
 											class="form-control form-control-user"
-											id="<%=ServletUtils.CHAMP_CODE_POSTAL%>"
-											name="<%=ServletUtils.CHAMP_CODE_POSTAL%>">
+											id="<%=ServletUtils.CHAMP_CODE_POSTAL_INSCRIPTION%>"
+											name="<%=ServletUtils.CHAMP_CODE_POSTAL_INSCRIPTION%>">
 									</div>
 									<div class="form-group">
-										<label for="<%=ServletUtils.CHAMP_VILLE%>">Ville :</label> <input
-											type="text" class="form-control form-control-user"
-											id="<%=ServletUtils.CHAMP_VILLE%>"
-											name="<%=ServletUtils.CHAMP_VILLE%>">
+										<label for="<%=ServletUtils.CHAMP_VILLE_INSCRIPTION%>">Ville
+											:</label> <input type="text" class="form-control form-control-user"
+											id="<%=ServletUtils.CHAMP_VILLE_INSCRIPTION%>"
+											name="<%=ServletUtils.CHAMP_VILLE_INSCRIPTION%>">
 									</div>
 									<div class="form-group">
-										<label for="<%=ServletUtils.CHAMP_MOT_DE_PASSE%>">
-											Mot de passe :</label> 
-										<input type="password"
+										<label for="<%=ServletUtils.CHAMP_MOT_DE_PASSE_INSCRIPTION%>">
+											Mot de passe :</label> <input type="password"
 											class="form-control form-control-user"
-											id="<%=ServletUtils.CHAMP_MOT_DE_PASSE%>"
-											name="<%=ServletUtils.CHAMP_MOT_DE_PASSE%>">
+											id="<%=ServletUtils.CHAMP_MOT_DE_PASSE_INSCRIPTION%>"
+											name="<%=ServletUtils.CHAMP_MOT_DE_PASSE_INSCRIPTION%>">
 									</div>
 									<div class="form-group">
-										<label for="<%=ServletUtils.CHAMP_CONFIRMATION%>">
-											Confirmation :
-										</label> 
-										<input type="password"
+										<label for="<%=ServletUtils.CHAMP_CONFIRMATION_INSCRIPTION%>">
+											Confirmation : </label> <input type="password"
 											class="form-control form-control-user"
-											id="<%=ServletUtils.CHAMP_CONFIRMATION%>"
-											name="<%=ServletUtils.CHAMP_CONFIRMATION%>">
+											id="<%=ServletUtils.CHAMP_CONFIRMATION_INSCRIPTION%>"
+											name="<%=ServletUtils.CHAMP_CONFIRMATION_INSCRIPTION%>">
 									</div>
 								</div>
 							</div>
@@ -133,24 +143,34 @@
 						<div class="row" id="blockBoutonCreationDeCompte">
 							<div class="col-sm-2"></div>
 							<div class="col-sm-4">
-								<div class="text-right form-group" id="<%= ServletUtils.BTN_INSCRIPTION %>">
+								<% if (u == null) {%>
+								<div class="text-right form-group"
+									id="<%=ServletUtils.BTN_INSCRIPTION%>">
 									<input type="submit" class="btn btn-primary btn-user btn-block"
 										value="S'inscrire">
 								</div>
-								<div class="text-right form-group" id="<%= ServletUtils.BTN_ENREGISTRER %>">
+								<% }else{ %>
+								<div class="text-right form-group"
+									id="<%=ServletUtils.BTN_ENREGISTRER%>">
 									<a href="index.jsp" class="btn btn-primary btn-user btn-block">
 										Enregistrer </a>
 								</div>
+								<%} %>
 							</div>
 							<div class="col-sm-4">
-								<div class="text-left form-group" id="<%= ServletUtils.BTN_ANNULER %>">
+								<% if (u == null) {%>
+								<div class="text-left form-group"
+									id="<%=ServletUtils.BTN_ANNULER%>">
 									<a href="index.jsp" class="btn btn-primary btn-user btn-block">Annuler
 									</a>
 								</div>
-								<div class="text-left form-group" id="<%= ServletUtils.BTN_SUPPRIMER %>">
+								<%} else { %>
+								<div class="text-left form-group"
+									id="<%=ServletUtils.BTN_SUPPRIMER%>">
 									<a href="index.jsp" class="btn btn-primary btn-user btn-block">Supprimer
 										mon compte </a>
 								</div>
+								<%} %>
 							</div>
 							<div class="col-sm-2"></div>
 						</div>
@@ -172,28 +192,5 @@
 	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
 	<!-- Custom scripts for all pages-->
-	<script src="js/sb-admin-2.min.js"></script>
-
-	<!-- Fonction pour savoir si on est dans le cas d'une modif ou création -->
-	<script>
-		
-	<%HttpSession sess = request.getSession();
-			Utilisateur u = (Utilisateur) sess.getAttribute("sessionUtilisateur");
-			
-			if (u != null) {%>
-		document.getElementById('<%= ServletUtils.CHAMP_CREDIT %>').style.visibility = 'visible';
-		document.getElementById('<%= ServletUtils.BTN_ANNULER %>').style.display = 'none';
-		document.getElementById('<%= ServletUtils.BTN_INSCRIPTION %>').style.display = 'none';
-		document.getElementById('<%= ServletUtils.BTN_ENREGISTRER %>').style.visibility = 'visible';
-		document.getElementById('<%= ServletUtils.BTN_SUPPRIMER %>').style.visibility = 'visible';
-	<%} else {%>
-		document.getElementById('<%= ServletUtils.CHAMP_CREDIT %>').style.display = 'none';
-		document.getElementById('<%= ServletUtils.BTN_ANNULER %>').style.visibility = 'visible';
-		document.getElementById('<%= ServletUtils.BTN_INSCRIPTION %>').style.visibility = 'visible';
-		document.getElementById('<%= ServletUtils.BTN_ENREGISTRER %>').style.display = 'none';
-		document.getElementById('<%= ServletUtils.BTN_SUPPRIMER %>').style.display = 'none';
-	<%}%>
-		
-	</script>
 </body>
 </html>

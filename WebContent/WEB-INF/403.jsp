@@ -1,4 +1,5 @@
 <%@page import="fr.eni.encheres.bo.ArticleVendu"%>
+<%@page import ="fr.eni.encheres.servlets.ServletUtils" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -11,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>SB Admin 2 - 404</title>
+<title>ENI-Enchères</title>
 
 <!-- Custom fonts for this template-->
 <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
@@ -33,9 +34,10 @@
 
 		<!-- 404 Error Text -->
 		<div class="text-center">
-			<div class="error mx-auto" data-text="404">404</div>
-			<p class="lead text-gray-800 mb-5">Page non trouvée</p>
-			<a href="index.html">&larr; Back to Dashboard</a>
+			<div class="error mx-auto" data-text="403">403</div>
+			<p class="lead text-gray-800 mb-5">Erreur serveur</p>
+			<a href="ServletUtile">&larr; Retourner à
+				l'accueil</a>
 		</div>
 
 	</div>

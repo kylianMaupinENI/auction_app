@@ -11,36 +11,40 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class D�connexionServlet
  */
-@WebServlet("/logout")
+@WebServlet("/deconnexion")
 public class DeconnexionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public DeconnexionServlet() {
-        super();
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		
-		if(session.getAttribute(ServletUtils.ATT_SESSION_USER) != null) {
-			session.setAttribute(ServletUtils.ATT_SESSION_USER, null);
-		}
-		
-		session.invalidate();
-		
-		this.getServletContext().getRequestDispatcher(ServletUtils.VUE_ACCUEIL).forward(request, response);
+	public DeconnexionServlet() {
+		super();
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+
+		if (session.getAttribute(ServletUtils.ATT_SESSION_USER) != null) {
+			session.setAttribute(ServletUtils.ATT_SESSION_USER, null);
+		}
+
+		session.invalidate();
+
+		this.getServletContext().getRequestDispatcher(ServletUtils.ACCUEIL).forward(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 

@@ -22,6 +22,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	public static final String DELETE = "DELETE FROM UTILISATEURS WHERE pseudo = ?;";
 
+	public static final String SELECT_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal,"
+			+ " ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE no_utilisateur = ?";
+
 	@Override
 	public void insert(Utilisateur utilisateur) throws BusinessException {
 		// INSERTION D'UN ARTICLE_VENDU
@@ -84,8 +87,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	@Override
 	public void delete(String pseudo) throws BusinessException {
-		try(Connection cnx = ConnectionProvider.getConnection())
-		{
+		try (Connection cnx = ConnectionProvider.getConnection()) {
 			PreparedStatement pstmt = cnx.prepareStatement(DELETE);
 			pstmt.setString(1, pseudo);
 			pstmt.executeUpdate();
@@ -96,7 +98,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			throw businessException;
 		}
 	}
-	
+
 	@Override
 	public Utilisateur selectByPseudo(String pseudo) throws BusinessException {
 		Utilisateur utilisateur = null;
@@ -117,8 +119,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				int credit = rs.getInt("credit");
 				boolean administrateur = rs.getBoolean("administrateur");
 				Adresse adresse = new Adresse(rue, codePostal, ville);
-				utilisateur = new Utilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, adresse, motDePasse, credit,
-						administrateur);
+				utilisateur = new Utilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, adresse, motDePasse,
+						credit, administrateur);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -129,19 +131,51 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		return utilisateur;
 	}
 	
+	@Override
+	public Utilisateur selectById(int noUtilisateur) throws BusinessException {
+		Utilisateur utilisateur = null;
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_ID);
+			pstmt.setInt(1, noUtilisateur);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				String pseudo = rs.getString("pseudo");
+				String nom = rs.getString("nom");
+				String prenom = rs.getString("prenom");
+				String email = rs.getString("email");
+				String telephone = rs.getString("telephone");
+				String rue = rs.getString("rue");
+				String codePostal = rs.getString("code_postal");
+				String ville = rs.getString("ville");
+				String motDePasse = rs.getString("mot_de_passe");
+				int credit = rs.getInt("credit");
+				boolean administrateur = rs.getBoolean("administrateur");
+				Adresse adresse = new Adresse(rue, codePostal, ville);
+				utilisateur = new Utilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, adresse, motDePasse,
+						credit, administrateur);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTE_ARTICLE_VENDU_ECHEC);
+			throw businessException;
+		}
+		return utilisateur;
+	}
+
 	private void setParameter(PreparedStatement stm, Utilisateur utilisateur) throws SQLException {
 		// Paramètres pour la requete d'insertion dans la table ARTICLE_VENDU
 		stm.setString(1, utilisateur.getPseudo());
 		stm.setString(2, utilisateur.getNom());
 		stm.setString(3, utilisateur.getPrenom());
-		stm.setString(4,utilisateur.getEmail());
-		stm.setString(5,utilisateur.getTelephone());
-		stm.setString(6,utilisateur.getAdresse().getRue());
-		stm.setString(7,utilisateur.getAdresse().getCodePostal());
-		stm.setString(8,utilisateur.getAdresse().getVille());
+		stm.setString(4, utilisateur.getEmail());
+		stm.setString(5, utilisateur.getTelephone());
+		stm.setString(6, utilisateur.getAdresse().getRue());
+		stm.setString(7, utilisateur.getAdresse().getCodePostal());
+		stm.setString(8, utilisateur.getAdresse().getVille());
 		stm.setString(9, utilisateur.getMotDePasse());
 		stm.setInt(10, utilisateur.getCredit());
 		stm.setBoolean(11, utilisateur.isAdministrateur());
 	}
-	
+
 }

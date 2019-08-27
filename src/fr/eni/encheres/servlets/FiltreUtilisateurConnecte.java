@@ -17,48 +17,46 @@ import fr.eni.encheres.bo.Utilisateur;
 /**
  * Servlet Filter implementation class FiltreUtilisateurConnecte
  */
-@WebFilter(
-		urlPatterns = { "/profil", "/nouveau" })
+@WebFilter(urlPatterns = { "/profil", "/nouveau", "/deconnexion", "/modifier" })
 public class FiltreUtilisateurConnecte implements Filter {
 
-    /**
-     * Default constructor. 
-     */
-    public FiltreUtilisateurConnecte() {
-        // TODO Auto-generated constructor stub
-    }
+	/**
+	 * Default constructor.
+	 */
+	public FiltreUtilisateurConnecte() {
+	}
 
 	/**
 	 * @see Filter#destroy()
 	 */
 	public void destroy() {
-		
+
 	}
 
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
-				
+
 		HttpSession session = req.getSession(false);
-		
+
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute(ServletUtils.ATT_SESSION_USER);
-		
-		if(session == null || utilisateur == null) {
-			res.sendRedirect(ServletUtils.CONNEXION);
-		} else{
+
+		if (session == null || utilisateur == null) {
+			res.sendRedirect(req.getContextPath() + ServletUtils.CONNEXION);
+		} else {
 			chain.doFilter(request, response);
 		}
 	}
 
-	
 	/**
 	 * @see Filter#init(FilterConfig)
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
-		
+
 	}
 
 }

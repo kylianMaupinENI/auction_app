@@ -24,19 +24,11 @@ import fr.eni.encheres.bo.Utilisateur;
 public class SelectionArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public static final String ATT_SESSION_USER = "sessionUtilisateur";
-
-	private static final String CHAMP_MOT_CLE = "search";
-	private static final String CHAMP_CATEGORIE = "selectCategoriesAccueilDeco";
-	public static final String ACCUEIL_CONNECTE = "/accueil.jsp";
-	public static final String ACCUEIL_DECONNECTE = "/accueil.jsp";
-
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public SelectionArticle() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -45,7 +37,26 @@ public class SelectionArticle extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+		ArticleVenduManager articleVenduManager = new ArticleVenduManager();
+		List<ArticleVendu> articles = new ArrayList<>();
+
+		Utilisateur utilisateur = null;
+
+		HttpSession session = request.getSession();
+		if (session != null) {
+			utilisateur = (Utilisateur) session.getAttribute(ServletUtils.ATT_SESSION_USER);
+		}
+
+		try {
+			articles = articleVenduManager.selectionArticleVendu("", "", utilisateur, false);
+			request.setAttribute(ServletUtils.ATT_LISTE_ARTICLES, articles);
+
+		} catch (BusinessException e) {
+			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+			e.printStackTrace();
+		}
+
+		this.getServletContext().getRequestDispatcher(ServletUtils.JSP_ACCUEIL).forward(request, response);
 	}
 
 	/**
@@ -56,32 +67,27 @@ public class SelectionArticle extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String mot_cle = request.getParameter(CHAMP_MOT_CLE);
-		String categorie = request.getParameter(CHAMP_CATEGORIE);
+		String mot_cle = request.getParameter(ServletUtils.CHAMP_MOT_CLE_ACCUEIL);
+		String categorie = request.getParameter(ServletUtils.CHAMP_CATEGORIE_ACCUEIL);
 		RequestDispatcher rd;
 		ArticleVenduManager articleVenduManager = new ArticleVenduManager();
 		List<ArticleVendu> articleVendu = new ArrayList<ArticleVendu>();
 		Utilisateur utilisateur = null;
-		
+
 		HttpSession session = request.getSession();
-		utilisateur = (Utilisateur) session.getAttribute(ATT_SESSION_USER);
+		if (session != null) {
+			utilisateur = (Utilisateur) session.getAttribute(ServletUtils.ATT_SESSION_USER);
+		}
 
 		try {
 			articleVendu = articleVenduManager.selectionArticleVendu(mot_cle, categorie, utilisateur,false);
 		} catch (BusinessException e) {
+			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 			e.printStackTrace();
 		}
 
 		request.setAttribute("articleVendu", articleVendu);
-
-		if (utilisateur.equals(null)) {
-
-			rd = this.getServletContext().getRequestDispatcher(ACCUEIL_DECONNECTE);
-		} else {
-			rd = this.getServletContext().getRequestDispatcher(ACCUEIL_CONNECTE);
-		}
-
-		rd.forward(request, response);
+		this.getServletContext().getRequestDispatcher(ServletUtils.JSP_ACCUEIL).forward(request, response);
 
 	}
 

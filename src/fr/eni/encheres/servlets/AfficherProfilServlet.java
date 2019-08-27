@@ -40,13 +40,13 @@ public class AfficherProfilServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession(false);
-		    
+
 		Utilisateur utilisateurConnecte = null;
-		
+
 		if (session != null) {
 			utilisateurConnecte = (Utilisateur) session.getAttribute(ServletUtils.ATT_SESSION_USER);
 		}
-		
+
 		request.setAttribute(ServletUtils.ATT_REQUEST_USER, utilisateurConnecte);
 
 		this.getServletContext().getRequestDispatcher(ServletUtils.JSP_PROFIL).forward(request, response);

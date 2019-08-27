@@ -14,15 +14,15 @@ public class Utilisateur {
 	private String motDePasse;
 	private int credit;
 	private boolean administrateur;
-	private List<ArticleVendu> achats; //Appartiennent à un autre utilisateur
-	private List<ArticleVendu> ventes; //Appartiennent à l'utilisateur
-	private List<Enchere> encheres;	//Appartiennent à l'utilisateur
-	
+	private List<ArticleVendu> achats; // Appartiennent à un autre utilisateur
+	private List<ArticleVendu> ventes; // Appartiennent à l'utilisateur
+	private List<Enchere> encheres; // Appartiennent à l'utilisateur
+
 	public Utilisateur() {
 	}
 
-	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, 
-			Adresse adresse, String motDePasse, int credit, boolean administrateur) {
+	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, Adresse adresse,
+			String motDePasse, int credit, boolean administrateur) {
 		super();
 		this.noUtilisateur = noUtilisateur;
 		this.pseudo = pseudo;
@@ -37,9 +37,9 @@ public class Utilisateur {
 		this.ventes = new ArrayList<ArticleVendu>();
 		this.encheres = new ArrayList<Enchere>();
 	}
-	
-	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone,
-			Adresse adresse, String motDePasse, int credit, boolean administrateur) {
+
+	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, Adresse adresse,
+			String motDePasse, int credit, boolean administrateur) {
 		super();
 		this.pseudo = pseudo;
 		this.nom = nom;
@@ -74,8 +74,8 @@ public class Utilisateur {
 		this.encheres = encheres;
 	}
 
-	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone, Adresse adresse,
-			String motDePasse) {
+	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
+			Adresse adresse, String motDePasse) {
 		super();
 		this.noUtilisateur = noUtilisateur;
 		this.pseudo = pseudo;
@@ -87,8 +87,8 @@ public class Utilisateur {
 		this.motDePasse = motDePasse;
 	}
 
-	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email,
-			String telephone, Adresse adresse, String motDePasse, int credit, boolean administrateur) {
+	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
+			Adresse adresse, String motDePasse, int credit, boolean administrateur) {
 		super();
 		this.noUtilisateur = noUtilisateur;
 		this.pseudo = pseudo;
@@ -214,6 +214,4 @@ public class Utilisateur {
 				+ ", ventes=" + ventes + ", encheres=" + encheres + "]";
 	}
 
-	
-	
 }

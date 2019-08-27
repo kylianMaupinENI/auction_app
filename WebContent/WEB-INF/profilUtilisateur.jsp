@@ -44,24 +44,42 @@
 							</div>
 							<div class="col-lg-6">
 								<div class="p-5">
-									<%Utilisateur u = (Utilisateur)request.getAttribute("utilisateur"); %>
-									<div>Pseudo :  <%=u.getPseudo() %></div>
+									<%
+										Utilisateur u = (Utilisateur) request.getAttribute("utilisateur");
+									%>
+									<div>
+										Pseudo :
+										<%=u.getPseudo()%></div>
 									<br>
-									<div>Nom : <%=u.getNom() %></div>
+									<div>
+										Nom :
+										<%=u.getNom()%></div>
 									<br>
-									<div>Prénom : <%=u.getPrenom() %></div>
+									<div>
+										Prénom :
+										<%=u.getPrenom()%></div>
 									<br>
-									<div>Email : <%=u.getEmail() %></div>
+									<div>
+										Email :
+										<%=u.getEmail()%></div>
 									<br>
-									<div>Téléphone : <%=u.getTelephone() %></div>
+									<div>
+										Téléphone :
+										<%=u.getTelephone()%></div>
 									<br>
-									<div>Adresse : <%=u.getAdresse().getRue() + " " + u.getAdresse().getCodePostal() + " " + u.getAdresse().getVille() %></div>
-									<% if(Boolean.getBoolean(request.getParameter("modifiable"))){ %>
+									<div>
+										Adresse :
+										<%=u.getAdresse().getRue() + " " + u.getAdresse().getCodePostal() + " " + u.getAdresse().getVille()%></div>
+									<%
+										if (Boolean.getBoolean(request.getParameter("modifiable"))) {
+									%>
 									<hr>
 									<a href="creationDeCompte.jsp"
 										class="btn btn-primary btn-user btn-block"
 										id="boutonCreerCompte"> Modifier </a>
-									<% } %>
+									<%
+										}
+									%>
 								</div>
 							</div>
 						</div>

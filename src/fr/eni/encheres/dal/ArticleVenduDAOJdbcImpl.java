@@ -23,8 +23,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			+ "a.prix_initial, a.prix_vente, a.no_categorie, r.rue, r.code_postal, r.ville, u.pseudo, c.libelle "
 			+ "FROM ARTICLES_VENDUS a " + "INNER JOIN RETRAITS r ON a.no_article = r.no_article "
 			+ "INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur "
-			+ "INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie " 
-			+ "WHERE a.no_article = ?";
+			+ "INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie " + "WHERE a.no_article = ?";
 
 	// Page achats en cours (connecté / déconnecté)
 	// Page ventes en cours connecté
@@ -194,7 +193,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			if ((recherche != null) || (!recherche.equals(""))) {
 				query += COND_RECHERCHE;
 			}
-			if (categorie != Categorie.TOUTES) {
+			if (categorie != null) {
 				query += COND_CATEGORIE;
 			}
 
@@ -368,7 +367,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		return articlesVendus;
 	}
 
-	public void updatePrixVente(int prixVente, int noArticle, int no_utilisateur, LocalDate date_enchere) throws BusinessException {
+	public void updatePrixVente(int prixVente, int noArticle, int no_utilisateur, LocalDate date_enchere)
+			throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			try {
 				PreparedStatement pstmt;
@@ -401,7 +401,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				cnx.rollback();
 				throw e;
 			}
-		} catch (Exception e) {
+
+		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
@@ -476,7 +477,5 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		stm.setInt(6, 1);
 		stm.setInt(7, articleVendu.getCategorie().getNoCategorie());
 	}
-
-
 
 }
