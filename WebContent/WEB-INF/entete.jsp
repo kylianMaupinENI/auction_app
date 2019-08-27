@@ -20,9 +20,8 @@
 		class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
 		<!-- Sidebar Toggle (Topbar) -->
-		<button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
-			ENI-Enchères</button>
-
+		<a href="<%= request.getContextPath() + ServletUtils.ACCUEIL%>"><img src="logo.png"/></a>
+		
 		<!-- Topbar Navbar -->
 		<ul class="navbar-nav ml-auto">
 			<%

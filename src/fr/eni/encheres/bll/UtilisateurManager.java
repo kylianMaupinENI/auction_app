@@ -182,4 +182,8 @@ public class UtilisateurManager {
 		}
 		return false;
 	}
+
+	public Utilisateur selectById(int noUtilisateur) throws BusinessException {
+		return utilisateurDAO.selectById(noUtilisateur);
+	}
 }

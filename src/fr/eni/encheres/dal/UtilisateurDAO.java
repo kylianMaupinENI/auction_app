@@ -12,4 +12,6 @@ public interface UtilisateurDAO {
 
 	public Utilisateur selectByPseudo(String pseudo) throws BusinessException;
 
+	public Utilisateur selectById(int noUtilisateur) throws BusinessException;
+
 }
