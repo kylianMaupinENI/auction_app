@@ -13,4 +13,6 @@ public interface ArticleVenduDAO {
 	public void update(ArticleVendu articleVendu)throws BusinessException;
 	public void delete(int id)throws BusinessException;
 	public List<ArticleVendu> selectEncheresOuvertes(String recherche, Categorie categorie) throws BusinessException;
+	public List<ArticleVendu> selectMesAchats(String recherche, Categorie categorie, int noUtilisateur)
+			throws BusinessException;
 }

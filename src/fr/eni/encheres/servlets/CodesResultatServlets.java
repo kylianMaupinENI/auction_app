@@ -22,6 +22,8 @@ public abstract class CodesResultatServlets {
 	 */
 	public static final int FORMAT_DATE_ERREUR = 10003;
 	
+	public static final Integer FORMAT_PRIX_ERREUR = 10004;
+	
 }
 
 

@@ -1,13 +1,13 @@
 package fr.eni.encheres.bll;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bo.Adresse;
 import fr.eni.encheres.bo.ArticleVendu;
 import fr.eni.encheres.bo.Categorie;
-import fr.eni.encheres.bo.EtatVente;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.ArticleVenduDAO;
 import fr.eni.encheres.dal.DAOFactory;
@@ -39,7 +39,6 @@ public class ArticleVenduManager {
 			articleVendu.setDateDebutEncheres(dateDebutEncheres);
 			articleVendu.setDateFinEncheres(dateFinEncheres);
 			articleVendu.setPrixVente(prixVente);
-			System.out.println(lieuRetrait);
 			articleVendu.setLieuRetrait(lieuRetrait);
 			articleVendu.setProprietaire(proprietaire);
 			articleVenduDAO.insert(articleVendu);
@@ -62,7 +61,6 @@ public class ArticleVenduManager {
 		validerDateDebut(dateDebutEncheres, businessException);
 		validerDateFin(dateFinEncheres, dateDebutEncheres, businessException);
 		validerMiseAPrix(miseAPrix, businessException);
-		validerPrixVente(prixVente, businessException);
 		validerRue(rue, businessException);
 		validerCodePostal(codePostal, businessException);
 		validerVille(ville, businessException);
@@ -76,38 +74,30 @@ public class ArticleVenduManager {
 		return articleVendu;
 
 	}
-//Attends un objet de type CATEGORIE
-	public List<ArticleVendu> selectionArticleVendu(String motCle, String categorie) throws BusinessException {
+
+	public List<ArticleVendu> selectionArticleVendu(String recherche, String categorie, Utilisateur utilisateur, boolean isVente) throws BusinessException {
 		
-		Categorie categ = null ;
-		switch(categorie) {
-		case "INFORMATIQUE" : categ = Categorie.INFORMATIQUE; break;
-		case "AMEUBLEMENT" : categ = Categorie.AMEUBLEMENT; break;
-		case "VETEMENTS" : categ = Categorie.VETEMENT; break;
-		case "SPORTS&LOISIRS" : categ = Categorie.SPORT_LOISIRS; break;
-		case "TOUTES" : categ = Categorie.TOUTES; break;
-		}
-		/*
-		if (motCle.equals("") && categ.equals(Categorie.TOUTES)) {
-
-			return articleVenduDAO.selectAll();
-
-		} else if (!motCle.equals("") && ! categ.equals(Categorie.TOUTES)) {
-
-			return articleVenduDAO.selectByNomAndCategorie(motCle, categ);
-
-		} else if (!motCle.equals("") && categ.equals(Categorie.TOUTES)) {
-
-			return articleVenduDAO.selectByNom(motCle);
-			
-		} else if (motCle.equals("") && ! categ.equals(Categorie.TOUTES)) {
-			
-			return articleVenduDAO.selectByCategorie(categ);
+		Categorie categ = null;
+		
+		List<ArticleVendu> articles = new ArrayList<>();
+		
+		//Ventes
+		if (isVente) {
+			if(utilisateur != null) {
+				
+			}
+		} 
+		
+		//Achats
+		else {
+			if(utilisateur != null) {
+				
+			}
 		}
 
-		return null;
+		return articles;
 
-	}*/
+	}
 
 	private void validerVille(String ville, BusinessException businessException) {
 		if ((ville == null) || (ville.equals(""))) {
@@ -125,10 +115,6 @@ public class ArticleVenduManager {
 		if ((rue == null) || (rue.equals(""))) {
 			businessException.ajouterErreur(CodesResultatBLL.RUE_INVALIDE);
 		}
-	}
-
-	private void validerEtatVente(EtatVente etatVente, BusinessException businessException) {
-
 	}
 
 	private void validerDescription(String description, BusinessException businessException) {
