@@ -21,13 +21,13 @@ public class ServletUtils {
 	public static final String BTN_ENREGISTRER = "enregistrer";
 	public static final String BTN_SUPPRIMER = "supprimer";
 	
-	public static final String JSP_PROFIL = "/profilUtilisateur.jsp";
-	public static final String JSP_ACCUEIL = "/accueil.jsp";
-	public static final String JSP_INSCRIPTION = "/creationDeCompte.jsp";
-	public static final String JSP_CONNEXION = "/connexion.jsp";
-	public static final String JSP_NOUVELLE_VENTE = "/nouvelle_vente.jsp";
-	public static final String JSP_403 = "/403.jsp";
-	public static final String DETAIL_ENCHERE = "/detailEnchere.jsp";
+	public static final String JSP_PROFIL = "/WEB-INF/profilUtilisateur.jsp";
+	public static final String JSP_ACCUEIL = "/WEB-INF/index.jsp";
+	public static final String JSP_INSCRIPTION = "/WEB-INF/creationDeCompte.jsp";
+	public static final String JSP_CONNEXION = "/WEB-INF/connexion.jsp";
+	public static final String JSP_NOUVELLE_VENTE = "/WEB-INF/nouvelle_vente.jsp";
+	public static final String JSP_403 = "/WEB-INF/403.jsp";
+	public static final String DETAIL_ENCHERE = "/WEB-INF/detailEnchere.jsp";
 
 	public static final String ACCUEIL = "/";
 	public static final String NOUVELLE_VENTE = "/nouveau";
@@ -59,6 +59,9 @@ public class ServletUtils {
 
 	public static final String CHAMP_PSEUDO_CONNEXION = "pseudo";
 	public static final String CHAMP_MOT_DE_PASSE_CONNEXION = "motDePasse";
+	
+	public static final String ID_ARTICLE_PARAM = "?noArticle=";
+	public static final String PSEUDO_UTILISATEUR_PARAM = "?pseudo=";
 	
 	
 }

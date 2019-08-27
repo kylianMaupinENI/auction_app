@@ -38,7 +38,26 @@ public class SelectionArticle extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		ArticleVenduManager articleVenduManager = new ArticleVenduManager();
+		List<ArticleVendu> articles = new ArrayList<>();
 		
+		Utilisateur utilisateur = null;
+		
+		HttpSession session = request.getSession();
+		if(session != null) {
+			utilisateur = (Utilisateur) session.getAttribute(ServletUtils.ATT_SESSION_USER);
+		}
+		
+		try {
+			articles = articleVenduManager.selectionArticleVendu("", "", utilisateur, false);
+			request.setAttribute(ServletUtils.ATT_LISTE_ARTICLES, articles);
+			
+		} catch (BusinessException e) {
+			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+			e.printStackTrace();
+		}
+		
+		this.getServletContext().getRequestDispatcher(ServletUtils.JSP_ACCUEIL).forward(request, response);
 	}
 
 	/**
@@ -57,11 +76,14 @@ public class SelectionArticle extends HttpServlet {
 		Utilisateur utilisateur = null;
 		
 		HttpSession session = request.getSession();
-		utilisateur = (Utilisateur) session.getAttribute(ServletUtils.ATT_SESSION_USER);
+		if(session != null) {
+			utilisateur = (Utilisateur) session.getAttribute(ServletUtils.ATT_SESSION_USER);
+		}
 
 		try {
 			articleVendu = articleVenduManager.selectionArticleVendu(mot_cle, categorie, utilisateur, false);
 		} catch (BusinessException e) {
+			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 			e.printStackTrace();
 		}
 
