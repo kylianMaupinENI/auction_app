@@ -27,6 +27,7 @@ public class ServletUtils {
 	public static final String JSP_CONNEXION = "/connexion.jsp";
 	public static final String JSP_NOUVELLE_VENTE = "/nouvelle_vente.jsp";
 	public static final String JSP_403 = "/403.jsp";
+	public static final String DETAIL_ENCHERE = "/detailEnchere.jsp";
 
 	public static final String ACCUEIL = "/";
 	public static final String NOUVELLE_VENTE = "/nouveau";

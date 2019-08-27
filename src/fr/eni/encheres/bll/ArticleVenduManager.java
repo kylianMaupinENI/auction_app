@@ -23,15 +23,15 @@ public class ArticleVenduManager {
 	}
 
 	public ArticleVendu ajouteArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAPrix, int prixVente, Adresse lieuRetrait,
-			Utilisateur proprietaire, Categorie categorie) throws BusinessException {
+			LocalDate dateFinEncheres, int miseAPrix, int prixVente, Adresse lieuRetrait, Utilisateur proprietaire,
+			Categorie categorie) throws BusinessException {
 
 		ArticleVendu articleVendu = null;
-		
+
 		BusinessException businessException = new BusinessException();
 		if (!businessException.hasErreurs()) {
 			articleVendu = new ArticleVendu();
-			
+
 			articleVendu.setNomArticle(nomArticle);
 			articleVendu.setDescription(description);
 			articleVendu.setCategorie(categorie);
@@ -74,7 +74,6 @@ public class ArticleVenduManager {
 		return articleVendu;
 
 	}
-
 	public List<ArticleVendu> selectionArticleVendu(String recherche, String categorie, Utilisateur utilisateur, boolean isVente) throws BusinessException {
 		
 		Categorie categ = null;
@@ -96,7 +95,14 @@ public class ArticleVenduManager {
 		}
 
 		return articles;
-
+	}
+	
+	public ArticleVendu selectById(int id) throws BusinessException{
+		return articleVenduDAO.selectById(id);
+	}
+	
+	public void updatePrixVenteEnchere(int prixVente,int noArticle) throws BusinessException {
+		  articleVenduDAO.updatePrixVente(prixVente, noArticle);
 	}
 
 	private void validerVille(String ville, BusinessException businessException) {
