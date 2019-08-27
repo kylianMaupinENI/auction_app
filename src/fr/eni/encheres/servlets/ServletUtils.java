@@ -34,7 +34,7 @@ public class ServletUtils {
 	public static final String NOUVELLE_VENTE = "/nouveau";
 	public static final String CONNEXION = "/connexion";
 	public static final String DECONNEXION = "/deconnexion";
-	public static final String INSCRIPTION = "/inscription";
+	public static final String INSCRIPTION = "/auction_app/inscription";
 	public static final String DETAILS_ARTICLE = "/article";
 	public static final String DETAILS_PROFIL = "/profil";
 	public static final String MODIFIER_PROFIL = "/modifier_profil";

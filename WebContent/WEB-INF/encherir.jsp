@@ -21,7 +21,7 @@
 <!-- Custom styles for this template-->
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="text-lg">
 	<!-- DEBUT HAUT DE PAGE -->
 	<%@include file="entete.jsp"%>
 	<!-- FIN HAUT DE PAGE -->
