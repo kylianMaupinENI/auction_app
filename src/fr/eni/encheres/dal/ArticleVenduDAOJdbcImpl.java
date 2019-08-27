@@ -20,9 +20,11 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 	// Visionner le détail d'une vente
 	private static final String SELECT_BY_ID = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres, a.date_fin_encheres, "
-			+ "a.prix_initial, a.prix_vente, a.no_categorie, r.rue, r.code_postal, r.ville, u.pseudo "
+			+ "a.prix_initial, a.prix_vente, a.no_categorie, r.rue, r.code_postal, r.ville, u.pseudo, c.libelle "
 			+ "FROM ARTICLES_VENDUS a " + "INNER JOIN RETRAITS r ON a.no_article = r.no_article "
-			+ "INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur " + "WHERE no_article = ?";
+			+ "INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur "
+			+ "INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie " 
+			+ "WHERE a.no_article = ?";
 
 	// Page achats en cours (connecté / déconnecté)
 	// Page ventes en cours connecté
@@ -36,8 +38,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	// Page achats en cours
 	// Page enchères remportées
 	private static final String SELECT_ACHATS = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres, a.date_fin_encheres, "
-			+ "a.prix_initial, a.prix_vente, u.pseudo, r.rue, r.code_postal, r.ville "
-			+ "FROM ARTICLES_VENDUS a "
+			+ "a.prix_initial, a.prix_vente, u.pseudo, r.rue, r.code_postal, r.ville " + "FROM ARTICLES_VENDUS a "
 			+ "INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur"
 			+ "INNER JOIN ENCHERES e ON e.no_utilisateur = a.no_utilisateur"
 			+ "INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie";
@@ -51,13 +52,15 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	private static final String COND_RECHERCHE = " AND a.nom_article LIKE '%?%'";
 
 	private static final String COND_CATEGORIE = " AND c.libelle = ?";
-	
+
 	private static final String COND_UTILISATEUR = " AND a.no_utilisateur = ?";
 
 	private static final String INSERT_ARTICLE_VENDU = "INSERT INTO ARTICLES_VENDUS(nom_article, description, date_debut_encheres, date_fin_encheres,"
 			+ "prix_initial,  no_utilisateur, no_categorie) VALUES (?,?,?,?,?,?,?);";
 
 	private static final String INSERT_RETRAIT = "INSERT INTO RETRAITS(no_article,rue, code_postal, ville) VALUES(?,?,?,?);";
+
+	private static final String INSERT_ENCHERE = "INSERT INTO ENCHERES(no_utilisateur, no_article, date_enchere,montant_enchere) VALUES(?,?,?,?);";
 
 	private static final String UPDATE_ARTICLE = "UPDATE ARTICLES_VENDUS SET nom_article = ?, description = ?, date_debut_encheres = ?, "
 			+ "date_fin_encheres = ? ,prix_initial = ?,  no_utilisateur = ?, no_categorie = ?;";
@@ -133,17 +136,17 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				String nomArticle = rs.getString("a.nom_article");
-				String description = rs.getString("a.description");
-				LocalDate dateDebutEncheres = rs.getDate("a.date_debut_encheres").toLocalDate();
-				LocalDate dateFinEncheres = rs.getDate("a.date_fin_encheres").toLocalDate();
-				int prixInitial = rs.getInt("a.prix_initial");
-				int prixVente = rs.getInt("a.prix_vente");
-				String categorieStr = rs.getString("c.libelle");
-				String rue = rs.getString("r.rue");
-				String codePostal = rs.getString("r.code_postal");
-				String ville = rs.getString("r.ville");
-				String pseudo = rs.getString("u.pseudo");
+				String nomArticle = rs.getString("nom_article");
+				String description = rs.getString("description");
+				LocalDate dateDebutEncheres = rs.getDate("date_debut_encheres").toLocalDate();
+				LocalDate dateFinEncheres = rs.getDate("date_fin_encheres").toLocalDate();
+				int prixInitial = rs.getInt("prix_initial");
+				int prixVente = rs.getInt("prix_vente");
+				String categorieStr = rs.getString("libelle");
+				String rue = rs.getString("rue");
+				String codePostal = rs.getString("code_postal");
+				String ville = rs.getString("ville");
+				String pseudo = rs.getString("pseudo");
 
 				UtilisateurManager utilisateurManager = new UtilisateurManager();
 				Utilisateur utilisateur = utilisateurManager.selectionUtilisateur(pseudo);
@@ -187,8 +190,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		List<ArticleVendu> articlesVendus = new ArrayList<ArticleVendu>();
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			String query = SELECT_VENTE + EN_COURS;
-			
-			if((recherche != null) || (!recherche.equals(""))) {
+
+			if ((recherche != null) || (!recherche.equals(""))) {
 				query += COND_RECHERCHE;
 			}
 			if (categorie != Categorie.TOUTES) {
@@ -196,132 +199,11 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			}
 
 			PreparedStatement pstmt = cnx.prepareStatement(query);
-			
+
 			LocalDate now = LocalDate.now();
 			pstmt.setDate(1, Date.valueOf(now));
 			pstmt.setDate(2, Date.valueOf(now));
-			
-			int curParam = 3;
-			
-			if(query.contains(COND_RECHERCHE)) {
-				pstmt.setString(curParam, recherche);
-				curParam++;
-			}
-			if(query.contains(COND_CATEGORIE)) {
-				pstmt.setString(curParam, categorie.getLibelle());
-			}
-			
-			ResultSet rs = pstmt.executeQuery();
-			
-			while (rs.next()) {
-				int noArticle = rs.getInt("a.no_article");
-				String nomArticle = rs.getString("a.nom_article");
-				String description = rs.getString("a.description");
-				LocalDate dateDebutEnchere = rs.getDate("a.date_debut_encheres").toLocalDate();
-				LocalDate dateFinEnchere = rs.getDate("a.date_fin_encheres").toLocalDate();
-				int prixInitial = rs.getInt("a.prix_initial");
-				int prixVente = rs.getInt("a.prix_vente");
-				String pseudo = rs.getString("u.pseudo");
-				String rue = rs.getString("r.rue");
-				String codePostal = rs.getString("r.code_postal");
-				String ville = rs.getString("r.ville");
-				
-				UtilisateurManager utilisateurManager = new UtilisateurManager();
-				Utilisateur utilisateur = utilisateurManager.selectionUtilisateur(pseudo);
-				Adresse adresse = new Adresse(rue, codePostal, ville);
 
-				articlesVendus.add(new ArticleVendu(noArticle, nomArticle, description, dateDebutEnchere,
-						dateFinEnchere, prixInitial, prixVente, adresse, utilisateur, categorie));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			BusinessException businessException = new BusinessException();
-			businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTE_ARTICLE_VENDU_ECHEC);
-			throw businessException;
-		}
-		return articlesVendus;
-	}
-	
-	@Override
-	public List<ArticleVendu> selectMesAchatsEnCours(String recherche, Categorie categorie, int noUtilisateur) throws BusinessException {
-		List<ArticleVendu> articlesVendus = new ArrayList<ArticleVendu>();
-		try (Connection cnx = ConnectionProvider.getConnection()) {
-			String query = SELECT_ACHATS + EN_COURS + COND_UTILISATEUR;
-			
-			PreparedStatement pstmt = cnx.prepareStatement(query);
-			
-			LocalDate now = LocalDate.now();
-			pstmt.setDate(1, Date.valueOf(now));
-			pstmt.setDate(2, Date.valueOf(now));
-			pstmt.setInt(3, noUtilisateur);
-			
-			if((recherche != null) || (!recherche.equals(""))) {
-				query += COND_RECHERCHE;
-			}
-			if(categorie != Categorie.TOUTES) {
-				query += COND_CATEGORIE;
-			}
-			
-			int curParam = 4;
-			
-			if(query.contains(COND_RECHERCHE)) {
-				pstmt.setString(curParam, recherche);
-				curParam++;
-			}
-			if(query.contains(COND_CATEGORIE)) {
-				pstmt.setString(curParam, categorie.getLibelle());
-			}
-			
-			ResultSet rs = pstmt.executeQuery();
-			
-			while (rs.next()) {
-				int noArticle = rs.getInt("a.no_article");
-				String nomArticle = rs.getString("a.nom_article");
-				String description = rs.getString("a.description");
-				LocalDate dateDebutEnchere = rs.getDate("a.date_debut_encheres").toLocalDate();
-				LocalDate dateFinEnchere = rs.getDate("a.date_fin_encheres").toLocalDate();
-				int prixInitial = rs.getInt("a.prix_initial");
-				int prixVente = rs.getInt("a.prix_vente");
-				String pseudo = rs.getString("u.pseudo");
-				String rue = rs.getString("r.rue");
-				String codePostal = rs.getString("r.code_postal");
-				String ville = rs.getString("r.ville");
-				
-				UtilisateurManager utilisateurManager = new UtilisateurManager();
-				Utilisateur utilisateur = utilisateurManager.selectionUtilisateur(pseudo);
-				Adresse adresse = new Adresse(rue, codePostal, ville);
-
-				articlesVendus.add(new ArticleVendu(noArticle, nomArticle, description, dateDebutEnchere,
-						dateFinEnchere, prixInitial, prixVente, adresse, utilisateur, categorie));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			BusinessException businessException = new BusinessException();
-			businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTE_ARTICLE_VENDU_ECHEC);
-			throw businessException;
-		}
-		return articlesVendus;
-	}
-	
-	@Override
-	public List<ArticleVendu> selectMesAchatsRemportes(String recherche, Categorie categorie, int noUtilisateur) throws BusinessException {
-		List<ArticleVendu> articlesVendus = new ArrayList<ArticleVendu>();
-		try (Connection cnx = ConnectionProvider.getConnection()) {
-			String query = SELECT_ACHATS + TERMINE + COND_UTILISATEUR;
-			
-			PreparedStatement pstmt = cnx.prepareStatement(query);
-			
-			LocalDate now = LocalDate.now();
-			pstmt.setDate(1, Date.valueOf(now));
-			pstmt.setInt(2, noUtilisateur);
-			
-			if((recherche != null) || (!recherche.equals(""))) {
-				query += COND_RECHERCHE;
-			}
-			if(categorie != Categorie.TOUTES) {
-				query += COND_CATEGORIE;
-			}
-			
 			int curParam = 3;
 
 			if (query.contains(COND_RECHERCHE)) {
@@ -363,54 +245,58 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		return articlesVendus;
 	}
 
-	public ArticleVendu selectByPseudoAndNom(String pseudo, String nomArticle) throws BusinessException {
-		ArticleVendu articlesVendus = null;
+	@Override
+	public List<ArticleVendu> selectMesAchatsEnCours(String recherche, Categorie categorie, int noUtilisateur)
+			throws BusinessException {
+		List<ArticleVendu> articlesVendus = new ArrayList<ArticleVendu>();
 		try (Connection cnx = ConnectionProvider.getConnection()) {
+			String query = SELECT_ACHATS + EN_COURS + COND_UTILISATEUR;
 
-			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_PSEUDO_ET_NOM);
-			pstmt.setString(1, pseudo);
-			pstmt.setString(2, nomArticle);
+			PreparedStatement pstmt = cnx.prepareStatement(query);
+
+			LocalDate now = LocalDate.now();
+			pstmt.setDate(1, Date.valueOf(now));
+			pstmt.setDate(2, Date.valueOf(now));
+			pstmt.setInt(3, noUtilisateur);
+
+			if ((recherche != null) || (!recherche.equals(""))) {
+				query += COND_RECHERCHE;
+			}
+			if (categorie != Categorie.TOUTES) {
+				query += COND_CATEGORIE;
+			}
+
+			int curParam = 4;
+
+			if (query.contains(COND_RECHERCHE)) {
+				pstmt.setString(curParam, recherche);
+				curParam++;
+			}
+			if (query.contains(COND_CATEGORIE)) {
+				pstmt.setString(curParam, categorie.getLibelle());
+			}
 
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				int noArticle = rs.getInt("a.no_article");
+				String nomArticle = rs.getString("a.nom_article");
 				String description = rs.getString("a.description");
 				LocalDate dateDebutEnchere = rs.getDate("a.date_debut_encheres").toLocalDate();
 				LocalDate dateFinEnchere = rs.getDate("a.date_fin_encheres").toLocalDate();
 				int prixInitial = rs.getInt("a.prix_initial");
 				int prixVente = rs.getInt("a.prix_vente");
+				String pseudo = rs.getString("u.pseudo");
 				String rue = rs.getString("r.rue");
 				String codePostal = rs.getString("r.code_postal");
 				String ville = rs.getString("r.ville");
-				String libelleCategorie = rs.getString("c.libelle");
 
 				UtilisateurManager utilisateurManager = new UtilisateurManager();
-
 				Utilisateur utilisateur = utilisateurManager.selectionUtilisateur(pseudo);
-
 				Adresse adresse = new Adresse(rue, codePostal, ville);
 
-				Categorie categorie = null;
-				switch (libelleCategorie.toUpperCase()) {
-				case "INFORMATIQUE":
-					categorie = Categorie.INFORMATIQUE;
-					break;
-				case "AMEUBLEMENT":
-					categorie = Categorie.AMEUBLEMENT;
-					break;
-				case "VETEMENTS":
-					categorie = Categorie.VETEMENT;
-					break;
-				case "SPORTS&LOISIRS":
-					categorie = Categorie.SPORT_LOISIRS;
-					break;
-				case "TOUTES":
-					categorie = Categorie.TOUTES;
-				}
-
-				articlesVendus = new ArticleVendu(noArticle, nomArticle, description, dateDebutEnchere, dateFinEnchere,
-						prixInitial, prixVente, adresse, utilisateur, categorie);
+				articlesVendus.add(new ArticleVendu(noArticle, nomArticle, description, dateDebutEnchere,
+						dateFinEnchere, prixInitial, prixVente, adresse, utilisateur, categorie));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -421,30 +307,108 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		return articlesVendus;
 	}
 
-	public void updatePrixVente(int prixVente, int noArticle) throws BusinessException {
+	@Override
+	public List<ArticleVendu> selectMesAchatsRemportes(String recherche, Categorie categorie, int noUtilisateur)
+			throws BusinessException {
+		List<ArticleVendu> articlesVendus = new ArrayList<ArticleVendu>();
 		try (Connection cnx = ConnectionProvider.getConnection()) {
-			PreparedStatement pstmt;
+			String query = SELECT_ACHATS + TERMINE + COND_UTILISATEUR;
 
-			pstmt = cnx.prepareStatement(UPDATE_ARTICLE);
-			pstmt.setInt(1,prixVente);
-			pstmt.setInt(2, noArticle);
+			PreparedStatement pstmt = cnx.prepareStatement(query);
 
-			int res = pstmt.executeUpdate();
-			if (res == 0) {
-				BusinessException businessException = new BusinessException();
-				businessException.ajouterErreur(CodesResultatDAL.UPDATE_UTILISATEUR_ECHEC);
-				throw businessException;
+			LocalDate now = LocalDate.now();
+			pstmt.setDate(1, Date.valueOf(now));
+			pstmt.setInt(2, noUtilisateur);
+
+			if ((recherche != null) || (!recherche.equals(""))) {
+				query += COND_RECHERCHE;
 			}
-			
+			if (categorie != Categorie.TOUTES) {
+				query += COND_CATEGORIE;
+			}
 
+			int curParam = 3;
+
+			if (query.contains(COND_RECHERCHE)) {
+				pstmt.setString(curParam, recherche);
+				curParam++;
+			}
+			if (query.contains(COND_CATEGORIE)) {
+				pstmt.setString(curParam, categorie.getLibelle());
+			}
+
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				int noArticle = rs.getInt("a.no_article");
+				String nomArticle = rs.getString("a.nom_article");
+				String description = rs.getString("a.description");
+				LocalDate dateDebutEnchere = rs.getDate("a.date_debut_encheres").toLocalDate();
+				LocalDate dateFinEnchere = rs.getDate("a.date_fin_encheres").toLocalDate();
+				int prixInitial = rs.getInt("a.prix_initial");
+				int prixVente = rs.getInt("a.prix_vente");
+				String pseudo = rs.getString("u.pseudo");
+				String rue = rs.getString("r.rue");
+				String codePostal = rs.getString("r.code_postal");
+				String ville = rs.getString("r.ville");
+
+				UtilisateurManager utilisateurManager = new UtilisateurManager();
+				Utilisateur utilisateur = utilisateurManager.selectionUtilisateur(pseudo);
+				Adresse adresse = new Adresse(rue, codePostal, ville);
+
+				articlesVendus.add(new ArticleVendu(noArticle, nomArticle, description, dateDebutEnchere,
+						dateFinEnchere, prixInitial, prixVente, adresse, utilisateur, categorie));
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
-			businessException.ajouterErreur(CodesResultatDAL.UPDATE_UTILISATEUR_ECHEC);
+			businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTE_ARTICLE_VENDU_ECHEC);
+			throw businessException;
+		}
+		return articlesVendus;
+	}
+
+	public void updatePrixVente(int prixVente, int noArticle, int no_utilisateur, LocalDate date_enchere) throws BusinessException {
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			try {
+				PreparedStatement pstmt;
+
+				pstmt = cnx.prepareStatement(UPDATE_PRIX_DE_VENTE);
+				pstmt.setInt(1, prixVente);
+				pstmt.setInt(2, noArticle);
+				cnx.setAutoCommit(false);
+
+				int res = pstmt.executeUpdate();
+				if (res == 0) {
+					BusinessException businessException = new BusinessException();
+					businessException.ajouterErreur(CodesResultatDAL.UPDATE_ARTICLE_VENDU_ECHEC);
+					throw businessException;
+				}
+				pstmt.close();
+
+				pstmt = cnx.prepareStatement(INSERT_ENCHERE);
+				pstmt.setInt(1, no_utilisateur);
+				pstmt.setInt(2, noArticle);
+				pstmt.setDate(3, Date.valueOf(date_enchere));
+				pstmt.setInt(4, prixVente);
+
+				pstmt.executeUpdate();
+				pstmt.close();
+
+				cnx.commit();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				cnx.rollback();
+				throw e;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
 			throw businessException;
 		}
 	}
-	
+
 	@Override
 	public void update(ArticleVendu articleVendu) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
@@ -462,28 +426,28 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			int res = pstmt.executeUpdate();
 			if (res == 0) {
 				BusinessException businessException = new BusinessException();
-				businessException.ajouterErreur(CodesResultatDAL.UPDATE_UTILISATEUR_ECHEC);
+				businessException.ajouterErreur(CodesResultatDAL.UPDATE_ARTICLE_VENDU_ECHEC);
 				throw businessException;
 			}
-			
+
 			pstmt.close();
-			
+
 			pstmt = cnx.prepareStatement(UPDATE_RETRAIT);
-			pstmt.setString(1,articleVendu.getLieuRetrait().getRue());
-			pstmt.setString(2,articleVendu.getLieuRetrait().getCodePostal());
-			pstmt.setString(3,articleVendu.getLieuRetrait().getVille());
-			
-			 res = pstmt.executeUpdate();
+			pstmt.setString(1, articleVendu.getLieuRetrait().getRue());
+			pstmt.setString(2, articleVendu.getLieuRetrait().getCodePostal());
+			pstmt.setString(3, articleVendu.getLieuRetrait().getVille());
+
+			res = pstmt.executeUpdate();
 			if (res == 0) {
 				BusinessException businessException = new BusinessException();
-				businessException.ajouterErreur(CodesResultatDAL.UPDATE_UTILISATEUR_ECHEC);
+				businessException.ajouterErreur(CodesResultatDAL.UPDATE_ARTICLE_VENDU_ECHEC);
 				throw businessException;
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
-			businessException.ajouterErreur(CodesResultatDAL.UPDATE_UTILISATEUR_ECHEC);
+			businessException.ajouterErreur(CodesResultatDAL.UPDATE_ARTICLE_VENDU_ECHEC);
 			throw businessException;
 		}
 	}
@@ -512,5 +476,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		stm.setInt(6, 1);
 		stm.setInt(7, articleVendu.getCategorie().getNoCategorie());
 	}
+
+
 
 }

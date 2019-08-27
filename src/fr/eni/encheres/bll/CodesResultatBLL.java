@@ -109,5 +109,13 @@ public abstract class CodesResultatBLL {
 	 * Echec le téléphone entré ne respecte pas les règles définies
 	 */
 	public static final int TELEPHONE_NON_RENSEIGNE = 20020;
+	/**
+	 *Echec la proposition d'enchere est inférieure a la mise à prix
+	 */
+	public static final int PRIX_INFERIEUR_AU_PRIX_DE_BASE = 20021;
+	/**
+	 * Echec la proposition d'enchere est inférieure a la plus haute proposition
+	 */
+	public static final int PRIX_NON_VALIDE = 20022;
 
 }

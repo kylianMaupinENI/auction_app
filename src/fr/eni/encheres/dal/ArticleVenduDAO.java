@@ -1,5 +1,6 @@
 package fr.eni.encheres.dal;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import fr.eni.encheres.BusinessException;
@@ -12,7 +13,7 @@ public interface ArticleVenduDAO {
 	public void delete(int id)throws BusinessException;
 	public List<ArticleVendu> selectEncheresOuvertes(String recherche, Categorie categorie) throws BusinessException;
 	public ArticleVendu selectById(int noArticle) throws BusinessException;
-	public void updatePrixVente(int prixVente, int noArticle) throws BusinessException;
+	public void updatePrixVente(int prixVente, int noArticle, int no_utilisateur, LocalDate date_enchere) throws BusinessException;
 	List<ArticleVendu> selectMesAchatsRemportes(String recherche, Categorie categorie, int noUtilisateur)
 			throws BusinessException;
 	List<ArticleVendu> selectMesAchatsEnCours(String recherche, Categorie categorie, int noUtilisateur)

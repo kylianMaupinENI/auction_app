@@ -1,6 +1,7 @@
 package fr.eni.encheres.servlets;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,54 +19,62 @@ import fr.eni.encheres.bo.Utilisateur;
 /**
  * Servlet implementation class EncherirServlet
  */
-@WebServlet("/EncherirServlet")
+@WebServlet("/encherir")
 public class EncherirServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
+
 	private ArticleVenduManager articleVenduManager;
 	private Utilisateur utilisateur;
-	
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public EncherirServlet() {
-        super();
-        articleVenduManager = new ArticleVenduManager();
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public EncherirServlet() {
+		super();
+		articleVenduManager = new ArticleVenduManager();
 		utilisateur = new Utilisateur();
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-
-		
-		
-		
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
 		HttpSession session = request.getSession();
-		 utilisateur = (Utilisateur) session.getAttribute(ServletUtils.ATT_SESSION_USER);
-		 int prixVente = Integer.parseInt(request.getParameter("prixVente"));
-		int id = Integer.parseInt(request.getParameter("idArticle"));
-	
-		ArticleVendu articleVendu = null;
+		if (session != null) {
+			utilisateur = (Utilisateur) session.getAttribute(ServletUtils.ATT_SESSION_USER);
+			
+		}
+
+		int prixVente = Integer.parseInt(request.getParameter("propositionEnchere"));
+		System.out.println(prixVente);
+		String sessionArticle = request.getParameter("article");
+		ArticleVendu article = (ArticleVendu) request.getSession().getAttribute(sessionArticle);
+
+		int idArticle = article.getNoArticle();
+		LocalDate dateEnchere = LocalDate.now();
+		System.out.println(dateEnchere);
+		
 		try {
-			 articleVenduManager.updatePrixVenteEnchere(prixVente, id);
+			articleVenduManager.updatePrixVenteEnchere(prixVente, idArticle,  dateEnchere);
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
 
-		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(ServletUtils.DETAIL_ENCHERE);
+		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(ServletUtils.JSP_ACCUEIL);
 		rd.forward(request, response);
-		
-		
 	}
 
 }

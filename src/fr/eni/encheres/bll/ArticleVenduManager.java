@@ -74,35 +74,55 @@ public class ArticleVenduManager {
 		return articleVendu;
 
 	}
-	public List<ArticleVendu> selectionArticleVendu(String recherche, String categorie, Utilisateur utilisateur, boolean isVente) throws BusinessException {
-		
+
+	public List<ArticleVendu> selectionArticleVendu(String recherche, String categorie, Utilisateur utilisateur,
+			boolean isVente) throws BusinessException {
+
 		Categorie categ = null;
-		
+
 		List<ArticleVendu> articles = new ArrayList<>();
-		
-		//Ventes
+
+		// Ventes
 		if (isVente) {
-			if(utilisateur != null) {
-				
+			if (utilisateur != null) {
+
 			}
-		} 
-		
-		//Achats
+		}
+
+		// Achats
 		else {
-			if(utilisateur != null) {
-				
+			if (utilisateur != null) {
+
 			}
 		}
 
 		return articles;
 	}
-	
-	public ArticleVendu selectById(int id) throws BusinessException{
+
+	public ArticleVendu selectById(int id) throws BusinessException {
 		return articleVenduDAO.selectById(id);
 	}
-	
-	public void updatePrixVenteEnchere(int prixVente,int noArticle) throws BusinessException {
-		  articleVenduDAO.updatePrixVente(prixVente, noArticle);
+
+	public void updatePrixVenteEnchere(int prixVente, int noArticle, LocalDate dateEnchere) throws BusinessException {
+		int no_utilisateur = 1;
+		
+		BusinessException businessException = new BusinessException();
+
+		validerEnchere(noArticle,prixVente, businessException);
+		articleVenduDAO.updatePrixVente(prixVente, noArticle, no_utilisateur, dateEnchere);
+	}
+
+	private void validerEnchere(int noArticle, int prixVente, BusinessException businessException)
+			throws BusinessException {
+		ArticleVendu articleVendu = articleVenduDAO.selectById(noArticle);
+
+		if ((articleVendu.getPrixVente() == 0) && (prixVente <= articleVendu.getMiseAPrix())) {
+			businessException.ajouterErreur(CodesResultatBLL.PRIX_INFERIEUR_AU_PRIX_DE_BASE);
+
+		} else if (prixVente <= articleVendu.getPrixVente()) {
+			businessException.ajouterErreur(CodesResultatBLL.PRIX_NON_VALIDE);
+
+		}
 	}
 
 	private void validerVille(String ville, BusinessException businessException) {

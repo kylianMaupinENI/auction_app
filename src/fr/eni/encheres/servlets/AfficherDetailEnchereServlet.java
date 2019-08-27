@@ -18,9 +18,11 @@ import fr.eni.encheres.bo.Utilisateur;
 /**
  * Servlet implementation class Enchere
  */
-@WebServlet("/Enchere")
+@WebServlet("/enchere")
 public class AfficherDetailEnchereServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private static final String DETAIL_ENCHERE = "/WEB-INF/test_encherir.jsp";
 
 	private ArticleVenduManager articleVenduManager;
 	private Utilisateur utilisateur;
@@ -42,17 +44,19 @@ public class AfficherDetailEnchereServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		 utilisateur = (Utilisateur) session.getAttribute(ServletUtils.ATT_SESSION_USER);
-		 int id = Integer.valueOf(request.getParameter("idArticle"));
+		if(session != null) {
+			utilisateur = (Utilisateur) session.getAttribute(ServletUtils.ATT_SESSION_USER);
+		}
+
 		ArticleVendu articleVendu = null;
 		try {
-			articleVendu = articleVenduManager.selectById(id);
+			articleVendu = articleVenduManager.selectById(18);
 			request.setAttribute("articleVendu", articleVendu);
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
 
-		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(ServletUtils.DETAIL_ENCHERE);
+		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(DETAIL_ENCHERE);
 		rd.forward(request, response);
 	}
 
