@@ -1,4 +1,6 @@
 <%@page import="fr.eni.encheres.bo.ArticleVendu"%>
+<%@page import="fr.eni.encheres.bo.Utilisateur"%>
+<%@page import="fr.eni.encheres.servlets.ServletUtils"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -34,66 +36,68 @@
 			</div>
 			<div class="col-sm-6 text-left">
 				<%
-					ArticleVendu av = (ArticleVendu) request.getAttribute("articleVendu");
-				%>
-				<%
-					if (true) {
+					ArticleVendu av = (ArticleVendu) request.getAttribute(ServletUtils.ATT_ARTICLE_GAGNANT);
+					if (session != null) {
+						Utilisateur utilisateur = (Utilisateur) session.getAttribute(ServletUtils.ATT_REQUEST_USER);
+						Utilisateur gg = (Utilisateur) session.getAttribute(ServletUtils.ATT_USER_GAGNANT);
+						if (utilisateur.getPseudo().equals(gg.getPseudo()) && utilisateur.getPseudo() != null && gg.getPseudo() != null ) {
 				%>
 				<h1 class="text-center" id="titreVente">Vous avez remporté la
 					vente</h1>
 				<%
 					} else {
 				%>
-				<h1 class="text-center" id="titreVente">NomUtilisateur a
-					remporté l'enchère</h1>
+				<h1 class="text-center" id="titreVente"><%=gg.getPseudo()%>
+					a remporté l'enchère
+				</h1>
 				<%
 					}
 				%>
 
 
 				<h3>
-					<%-- <%=av.getNomArticle()%> --%>
+					<%=av.getNomArticle()%>
 					PC
 				</h3>
 				<div>
 					Description :
 					<p>
-						<%-- <%=av.getDescription()%> --%>
+						<%=av.getDescription()%>
 					</p>
 				</div>
 
 				<div>
 					Meilleure offre :
-					<%-- <%=av.getNom()%> --%>
+					<%=av.getPrixVente()%>
 				</div>
 				<div>
 					Mise à prix :
-					<%-- <%=av.getMiseAPrix()%> --%>
+					<%=av.getMiseAPrix()%>
 				</div>
 				<%
-					if (false) {
+					if (!utilisateur.getPseudo().equals(gg.getPseudo())) {
 				%>
 				<div>
 					Date de fin :
-					<%-- <%=av.getDateFinEnchere()%> --%>
+					<%=av.getDateFinEncheres()%>
 				</div>
 				<%
 					}
 				%>
 				<div>
 					Retrait :
-					<%-- <%=av.getLieuRetrait()%> --%>
+					<%=av.getLieuRetrait()%>
 				</div>
 				<div>
 					Vendeur :
-					<%-- <%=av.getProprietaire()%> --%>
+					<%=av.getProprietaire()%>
 				</div>
 				<%
 					if (true) {
 				%>
 				<div>
 					Téléphone :
-					<%-- <%=av.getProprietaire()%> --%>
+					<%=av.getProprietaire()%>
 				</div>
 				<%
 					}
@@ -102,7 +106,7 @@
 				<div class="row content">
 					<div class="col-md-6">
 						<%
-							if (true) {
+							if (utilisateur.getPseudo().equals(gg.getPseudo())) {
 						%>
 						<a href="index.jsp" class="btn btn-primary btn-user btn-block"
 							id="boutonRetourEnchere"> Retour </a>
@@ -112,6 +116,7 @@
 						<a href="index.jsp" class="btn btn-primary btn-user btn-block"
 							id="boutonRetourEnchere"> Retrait effectué </a>
 						<%
+							}
 							}
 						%>
 					</div>

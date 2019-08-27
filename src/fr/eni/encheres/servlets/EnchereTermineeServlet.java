@@ -32,8 +32,8 @@ public class EnchereTermineeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String noArticleStr = request.getParameter(ServletUtils.ID_ARTICLE_PARAM);
-		
+		String noArticleStr = request.getParameter(ServletUtils.ATT_ARTICLE_GAGNANT);
+		System.out.println(noArticleStr);
 		ArticleVenduManager articleVenduManager = new ArticleVenduManager();
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
 		
@@ -52,7 +52,7 @@ public class EnchereTermineeServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		request.setAttribute(ServletUtils.ATT_USER_GAGNANT, gagnant);
-		
+		this.getServletContext().getRequestDispatcher(ServletUtils.JSP_ENCHERE_REMPORTEE).forward(request, response);
 		
 	}
 

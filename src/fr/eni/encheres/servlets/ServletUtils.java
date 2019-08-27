@@ -22,6 +22,7 @@ public class ServletUtils {
 	public static final String BTN_SUPPRIMER = "supprimer";
 
 	public static final String JSP_PROFIL = "/WEB-INF/profilUtilisateur.jsp";
+	public static final String JSP_ENCHERE_REMPORTEE = "/WEB-INF/enchereRemportee.jsp";
 	public static final String JSP_ACCUEIL = "/WEB-INF/index.jsp";
 	public static final String JSP_INSCRIPTION = "/WEB-INF/creationDeCompte.jsp";
 	public static final String JSP_CONNEXION = "/WEB-INF/connexion.jsp";
@@ -67,6 +68,6 @@ public class ServletUtils {
 	public static final String ATT_ARTICLE_REMPORTE = "articleVendu";
 
 	public static final String ATT_USER_GAGNANT = "gagnant";
-	public static final String ATT_ARTICLE_GAGNANT = "article";
+	public static final String ATT_ARTICLE_GAGNANT = "noArticle";
 
 }
