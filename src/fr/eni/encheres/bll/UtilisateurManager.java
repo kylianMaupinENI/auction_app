@@ -56,7 +56,7 @@ public class UtilisateurManager {
 				administrateur);
 
 		utilisateurDAO.insert(utilisateur);
-		
+
 		return utilisateur;
 	}
 
@@ -86,7 +86,8 @@ public class UtilisateurManager {
 
 		Adresse adresse = new Adresse(rue, codePostal, ville);
 		// Nouveaux paramètres de l'utilisateur
-		Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, adresse, motDePasse);
+		Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, adresse,
+				motDePasse);
 
 		utilisateurDAO.update(utilisateur);
 	}
@@ -103,7 +104,7 @@ public class UtilisateurManager {
 
 	private void validerCodePostal(String codePostal, BusinessException businessException) {
 		if ((codePostal != null) && (!codePostal.equals(""))) {
-			if(!codePostal.matches(CODE_POSTAL_PATTERN)) {
+			if (!codePostal.matches(CODE_POSTAL_PATTERN)) {
 				businessException.ajouterErreur(CodesResultatBLL.CODE_POSTAL_INVALIDE);
 			}
 		} else {
@@ -119,7 +120,7 @@ public class UtilisateurManager {
 
 	private void validerTelephone(String telephone, BusinessException businessException) {
 		if ((telephone != null) && (!telephone.equals(""))) {
-			if(!telephone.matches(TELEPHONE_PATTERN)) {
+			if (!telephone.matches(TELEPHONE_PATTERN)) {
 				businessException.ajouterErreur(CodesResultatBLL.TELEPHONE_INVALIDE);
 			}
 		} else {
@@ -164,18 +165,18 @@ public class UtilisateurManager {
 	}
 
 	public boolean seConnecter(String pseudo, String motDePasse) throws BusinessException {
-		
+
 		BusinessException businessException = new BusinessException();
 		Utilisateur utilisateur = utilisateurDAO.selectByPseudo(pseudo);
-		
-		if(utilisateur == null) {
+
+		if (utilisateur == null) {
 			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_INCONNU);
 		} else if (utilisateur.getMotDePasse().equals(motDePasse)) {
 			return true;
 		} else {
 			businessException.ajouterErreur(CodesResultatBLL.MOT_DE_PASSE_INVALIDE);
 		}
-		
+
 		if (businessException.hasErreurs()) {
 			throw businessException;
 		}

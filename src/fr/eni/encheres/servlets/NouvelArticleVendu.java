@@ -76,7 +76,7 @@ public class NouvelArticleVendu extends HttpServlet {
 		String rue = request.getParameter(ServletUtils.CHAMP_RUE_ARTICLE);
 		String codePostal = request.getParameter(ServletUtils.CHAMP_CODE_POSTAL_ARTICLE);
 		String ville = request.getParameter(ServletUtils.CHAMP_VILLE_ARTICLE);
-		
+
 		categorie = Categorie.fromString(categorieStr);
 
 		List<Integer> listeCodeErreur = new ArrayList<>();
@@ -85,24 +85,25 @@ public class NouvelArticleVendu extends HttpServlet {
 			DateTimeFormatter dft = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			dateDebutEnchere = LocalDate.parse(request.getParameter(ServletUtils.CHAMP_DATE_DEBUT_ARTICLE), dft);
 			dateFinEnchere = LocalDate.parse(request.getParameter(ServletUtils.CHAMP_DATE_FIN_ARTICLE), dft);
-			
+
 		} catch (DateTimeException e) {
 			e.printStackTrace();
 			listeCodeErreur.add(CodesResultatServlets.FORMAT_DATE_ERREUR);
-			
-		}  catch (NumberFormatException e) {
+
+		} catch (NumberFormatException e) {
 			e.printStackTrace();
 			listeCodeErreur.add(CodesResultatServlets.FORMAT_DATE_ERREUR);
-		}  
-		
-		//TODO V�rifier si l'article est en cours ou en attente de vente
-		
-		if(!ville.equals("") || ! rue.equals("") || ! codePostal.equals("")) {
-			adresse = new Adresse (rue,codePostal,ville);
-		}else {
-			adresse = new Adresse (proprietaire.getAdresse().getRue(), proprietaire.getAdresse().getCodePostal(), proprietaire.getAdresse().getVille());
 		}
-		
+
+		// TODO V�rifier si l'article est en cours ou en attente de vente
+
+		if (!ville.equals("") || !rue.equals("") || !codePostal.equals("")) {
+			adresse = new Adresse(rue, codePostal, ville);
+		} else {
+			adresse = new Adresse(proprietaire.getAdresse().getRue(), proprietaire.getAdresse().getCodePostal(),
+					proprietaire.getAdresse().getVille());
+		}
+
 		if (listeCodeErreur.size() > 0) {
 			request.setAttribute("lstErreurs", listeCodeErreur);
 			RequestDispatcher rd = request.getRequestDispatcher(ServletUtils.ACCUEIL);
@@ -110,7 +111,8 @@ public class NouvelArticleVendu extends HttpServlet {
 		} else {
 			ArticleVenduManager articleVenduManager = new ArticleVenduManager();
 			try {
-				articleVenduManager.ajouteArticleVendu(nom, description, dateDebutEnchere, dateFinEnchere, prixInitial, prixVente, adresse,  proprietaire, categorie);
+				articleVenduManager.ajouteArticleVendu(nom, description, dateDebutEnchere, dateFinEnchere, prixInitial,
+						prixVente, adresse, proprietaire, categorie);
 				RequestDispatcher rd = request.getRequestDispatcher(ServletUtils.ACCUEIL);
 
 				rd.forward(request, response);

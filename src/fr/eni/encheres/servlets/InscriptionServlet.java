@@ -61,7 +61,7 @@ public class InscriptionServlet extends HttpServlet {
 		String confirmation = request.getParameter(ServletUtils.CHAMP_CONFIRMATION_INSCRIPTION);
 
 		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(ServletUtils.INSCRIPTION);
-		
+
 		System.out.println("servlet " + telephone);
 
 		try {

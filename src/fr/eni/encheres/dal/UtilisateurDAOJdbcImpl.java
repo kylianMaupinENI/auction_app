@@ -84,8 +84,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	@Override
 	public void delete(String pseudo) throws BusinessException {
-		try(Connection cnx = ConnectionProvider.getConnection())
-		{
+		try (Connection cnx = ConnectionProvider.getConnection()) {
 			PreparedStatement pstmt = cnx.prepareStatement(DELETE);
 			pstmt.setString(1, pseudo);
 			pstmt.executeUpdate();
@@ -96,7 +95,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			throw businessException;
 		}
 	}
-	
+
 	@Override
 	public Utilisateur selectByPseudo(String pseudo) throws BusinessException {
 		Utilisateur utilisateur = null;
@@ -117,8 +116,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				int credit = rs.getInt("credit");
 				boolean administrateur = rs.getBoolean("administrateur");
 				Adresse adresse = new Adresse(rue, codePostal, ville);
-				utilisateur = new Utilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, adresse, motDePasse, credit,
-						administrateur);
+				utilisateur = new Utilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, adresse, motDePasse,
+						credit, administrateur);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -128,20 +127,20 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		}
 		return utilisateur;
 	}
-	
+
 	private void setParameter(PreparedStatement stm, Utilisateur utilisateur) throws SQLException {
 		// Paramètres pour la requete d'insertion dans la table ARTICLE_VENDU
 		stm.setString(1, utilisateur.getPseudo());
 		stm.setString(2, utilisateur.getNom());
 		stm.setString(3, utilisateur.getPrenom());
-		stm.setString(4,utilisateur.getEmail());
-		stm.setString(5,utilisateur.getTelephone());
-		stm.setString(6,utilisateur.getAdresse().getRue());
-		stm.setString(7,utilisateur.getAdresse().getCodePostal());
-		stm.setString(8,utilisateur.getAdresse().getVille());
+		stm.setString(4, utilisateur.getEmail());
+		stm.setString(5, utilisateur.getTelephone());
+		stm.setString(6, utilisateur.getAdresse().getRue());
+		stm.setString(7, utilisateur.getAdresse().getCodePostal());
+		stm.setString(8, utilisateur.getAdresse().getVille());
 		stm.setString(9, utilisateur.getMotDePasse());
 		stm.setInt(10, utilisateur.getCredit());
 		stm.setBoolean(11, utilisateur.isAdministrateur());
 	}
-	
+
 }

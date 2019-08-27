@@ -8,9 +8,9 @@ public class Enchere {
 	private int montantEnchere;
 	private Utilisateur emmeteur;
 	private ArticleVendu article;
-	
+
 	public Enchere() {
-		
+
 	}
 
 	public Enchere(int noEnchere, LocalDate dateEnchere, int montantEnchere, Utilisateur emmeteur,
@@ -22,9 +22,8 @@ public class Enchere {
 		this.emmeteur = emmeteur;
 		this.article = article;
 	}
-	
-	public Enchere(LocalDate dateEnchere, int montantEnchere, Utilisateur emmeteur,
-			ArticleVendu article) {
+
+	public Enchere(LocalDate dateEnchere, int montantEnchere, Utilisateur emmeteur, ArticleVendu article) {
 		super();
 		this.dateEnchere = dateEnchere;
 		this.montantEnchere = montantEnchere;
@@ -77,5 +76,5 @@ public class Enchere {
 		return "Enchere [noEnchere=" + noEnchere + ", dateEnchere=" + dateEnchere + ", montantEnchere=" + montantEnchere
 				+ ", emmeteur=" + emmeteur + ", article=" + article + "]";
 	}
-	
+
 }

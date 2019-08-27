@@ -1,9 +1,9 @@
 package fr.eni.encheres.servlets;
 
 public class ServletUtils {
-	
+
 	public final static String ATT_SESSION_USER = "sessionUtilisateur";
-	
+
 	public static final String CHAMP_PSEUDO_INSCRIPTION = "pseudo";
 	public static final String CHAMP_NOM_INSCRIPTION = "nom";
 	public static final String CHAMP_PRENOM_INSCRIPTION = "prenom";
@@ -15,12 +15,12 @@ public class ServletUtils {
 	public static final String CHAMP_MOT_DE_PASSE_INSCRIPTION = "motDePasse";
 	public static final String CHAMP_VILLE_INSCRIPTION = "ville";
 	public static final String CHAMP_CREDIT_INSCRIPTION = "credit";
-	
+
 	public static final String BTN_ANNULER = "annuler";
 	public static final String BTN_INSCRIPTION = "inscription";
 	public static final String BTN_ENREGISTRER = "enregistrer";
 	public static final String BTN_SUPPRIMER = "supprimer";
-	
+
 	public static final String JSP_PROFIL = "/WEB-INF/profilUtilisateur.jsp";
 	public static final String JSP_ACCUEIL = "/WEB-INF/index.jsp";
 	public static final String JSP_INSCRIPTION = "/WEB-INF/creationDeCompte.jsp";
@@ -43,7 +43,7 @@ public class ServletUtils {
 	public static final String ATT_MODIFIABLE = "modifiable";
 	public final static String ATT_REQUEST_USER = "utilisateur";
 	public final static String ATT_LISTE_ARTICLES = "listArticle";
-	
+
 	public static final String CHAMP_NOM_ARTICLE = "nom_vente";
 	public static final String CHAMP_DESCRIPTION_ARTICLE = "description_vente";
 	public static final String CHAMP_CATEGORIE_ARTICLE = "selectCategoriesAccueilDeco";
@@ -53,15 +53,14 @@ public class ServletUtils {
 	public static final String CHAMP_RUE_ARTICLE = "rue_proprietaire";
 	public static final String CHAMP_CODE_POSTAL_ARTICLE = "code_postal_proprietaire";
 	public static final String CHAMP_VILLE_ARTICLE = "ville_proprietaire";
-	
+
 	public static final String CHAMP_MOT_CLE_ACCUEIL = "search";
 	public static final String CHAMP_CATEGORIE_ACCUEIL = "selectCategoriesAccueilDeco";
 
 	public static final String CHAMP_PSEUDO_CONNEXION = "pseudo";
 	public static final String CHAMP_MOT_DE_PASSE_CONNEXION = "motDePasse";
-	
+
 	public static final String ID_ARTICLE_PARAM = "?noArticle=";
 	public static final String PSEUDO_UTILISATEUR_PARAM = "?pseudo=";
-	
-	
+
 }

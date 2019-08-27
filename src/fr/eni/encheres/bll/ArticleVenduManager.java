@@ -74,35 +74,37 @@ public class ArticleVenduManager {
 		return articleVendu;
 
 	}
-	public List<ArticleVendu> selectionArticleVendu(String recherche, String categorie, Utilisateur utilisateur, boolean isVente) throws BusinessException {
-		
+
+	public List<ArticleVendu> selectionArticleVendu(String recherche, String categorie, Utilisateur utilisateur,
+			boolean isVente) throws BusinessException {
+
 		Categorie categ = null;
-		
+
 		List<ArticleVendu> articles = new ArrayList<>();
-		
-		//Ventes
+
+		// Ventes
 		if (isVente) {
-			if(utilisateur != null) {
-				
+			if (utilisateur != null) {
+
 			}
-		} 
-		
-		//Achats
+		}
+
+		// Achats
 		else {
-			if(utilisateur != null) {
-				
+			if (utilisateur != null) {
+
 			}
 		}
 
 		return articles;
 	}
-	
-	public ArticleVendu selectById(int id) throws BusinessException{
+
+	public ArticleVendu selectById(int id) throws BusinessException {
 		return articleVenduDAO.selectById(id);
 	}
-	
-	public void updatePrixVenteEnchere(int prixVente,int noArticle) throws BusinessException {
-		  articleVenduDAO.updatePrixVente(prixVente, noArticle);
+
+	public void updatePrixVenteEnchere(int prixVente, int noArticle) throws BusinessException {
+		articleVenduDAO.updatePrixVente(prixVente, noArticle);
 	}
 
 	private void validerVille(String ville, BusinessException businessException) {

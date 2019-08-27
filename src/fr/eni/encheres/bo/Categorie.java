@@ -1,12 +1,9 @@
 package fr.eni.encheres.bo;
 
 public enum Categorie {
-	INFORMATIQUE(1, "Informatique"),
-	AMEUBLEMENT(2, "Ameublement"),
-	VETEMENT(3, "Vêtement"),
-	SPORT_LOISIRS(4, "Sport & Loisirs"),
-	TOUTES(5, "Toutes");
-	
+	INFORMATIQUE(1, "Informatique"), AMEUBLEMENT(2, "Ameublement"), VETEMENT(3, "Vêtement"), SPORT_LOISIRS(4,
+			"Sport & Loisirs"), TOUTES(5, "Toutes");
+
 	private int noCategorie;
 	private String libelle;
 
@@ -30,14 +27,14 @@ public enum Categorie {
 	public void setLibelle(String libelle) {
 		this.libelle = libelle;
 	}
-	
+
 	public static Categorie fromString(String string) {
-        for (Categorie c : Categorie.values()) {
-            if (c.name().equalsIgnoreCase(string)) {
-                return c;
-            }
-        }
-        return null;
-    }
-	
+		for (Categorie c : Categorie.values()) {
+			if (c.name().equalsIgnoreCase(string)) {
+				return c;
+			}
+		}
+		return null;
+	}
+
 }

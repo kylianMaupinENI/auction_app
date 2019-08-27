@@ -1,15 +1,15 @@
 package fr.eni.encheres.bo;
 
 public class Adresse {
-	
+
 	private String rue;
 	private String codePostal;
 	private String ville;
-	
+
 	public Adresse() {
-		
+
 	}
-	
+
 	public Adresse(String rue, String codePostal, String ville) {
 		this.rue = rue;
 		this.codePostal = codePostal;

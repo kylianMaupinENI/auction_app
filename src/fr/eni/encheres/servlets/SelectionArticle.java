@@ -29,7 +29,6 @@ public class SelectionArticle extends HttpServlet {
 	 */
 	public SelectionArticle() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -40,23 +39,23 @@ public class SelectionArticle extends HttpServlet {
 			throws ServletException, IOException {
 		ArticleVenduManager articleVenduManager = new ArticleVenduManager();
 		List<ArticleVendu> articles = new ArrayList<>();
-		
+
 		Utilisateur utilisateur = null;
-		
+
 		HttpSession session = request.getSession();
-		if(session != null) {
+		if (session != null) {
 			utilisateur = (Utilisateur) session.getAttribute(ServletUtils.ATT_SESSION_USER);
 		}
-		
+
 		try {
 			articles = articleVenduManager.selectionArticleVendu("", "", utilisateur, false);
 			request.setAttribute(ServletUtils.ATT_LISTE_ARTICLES, articles);
-			
+
 		} catch (BusinessException e) {
 			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 			e.printStackTrace();
 		}
-		
+
 		this.getServletContext().getRequestDispatcher(ServletUtils.JSP_ACCUEIL).forward(request, response);
 	}
 
@@ -74,9 +73,9 @@ public class SelectionArticle extends HttpServlet {
 		ArticleVenduManager articleVenduManager = new ArticleVenduManager();
 		List<ArticleVendu> articleVendu = new ArrayList<ArticleVendu>();
 		Utilisateur utilisateur = null;
-		
+
 		HttpSession session = request.getSession();
-		if(session != null) {
+		if (session != null) {
 			utilisateur = (Utilisateur) session.getAttribute(ServletUtils.ATT_SESSION_USER);
 		}
 

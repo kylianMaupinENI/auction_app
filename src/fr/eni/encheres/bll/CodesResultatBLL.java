@@ -104,7 +104,7 @@ public abstract class CodesResultatBLL {
 	 * Echec le code postal entré ne respecte pas les règles définies
 	 */
 	public static final int CODE_POSTAL_NON_RENSEIGNE = 20019;
-	
+
 	/**
 	 * Echec le téléphone entré ne respecte pas les règles définies
 	 */
