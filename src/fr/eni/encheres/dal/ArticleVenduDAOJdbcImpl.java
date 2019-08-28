@@ -196,6 +196,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			if ((categorie != null) && (categorie != Categorie.TOUTES)) {
 				query += COND_CATEGORIE;
 			}
+			
+			System.out.println(query);
 
 			PreparedStatement pstmt = cnx.prepareStatement(query);
 
@@ -216,17 +218,17 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				int noArticle = rs.getInt("a.no_article");
-				String nomArticle = rs.getString("a.nom_article");
-				String description = rs.getString("a.description");
-				LocalDate dateDebutEnchere = rs.getDate("a.date_debut_encheres").toLocalDate();
-				LocalDate dateFinEnchere = rs.getDate("a.date_fin_encheres").toLocalDate();
-				int prixInitial = rs.getInt("a.prix_initial");
-				int prixVente = rs.getInt("a.prix_vente");
-				String pseudo = rs.getString("u.pseudo");
-				String rue = rs.getString("r.rue");
-				String codePostal = rs.getString("r.code_postal");
-				String ville = rs.getString("r.ville");
+				int noArticle = rs.getInt("no_article");
+				String nomArticle = rs.getString("nom_article");
+				String description = rs.getString("description");
+				LocalDate dateDebutEnchere = rs.getDate("date_debut_encheres").toLocalDate();
+				LocalDate dateFinEnchere = rs.getDate("date_fin_encheres").toLocalDate();
+				int prixInitial = rs.getInt("prix_initial");
+				int prixVente = rs.getInt("prix_vente");
+				String pseudo = rs.getString("pseudo");
+				String rue = rs.getString("rue");
+				String codePostal = rs.getString("code_postal");
+				String ville = rs.getString("ville");
 
 				UtilisateurManager utilisateurManager = new UtilisateurManager();
 				Utilisateur utilisateur = utilisateurManager.selectionUtilisateur(pseudo);

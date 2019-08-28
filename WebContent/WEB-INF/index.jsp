@@ -59,8 +59,8 @@
 								</div>
 							</div>
 							<div class="col-sm-6">
-								<a href="#" class="btn btn-primary btn-user btn-block"
-									id="boutonRechercher"> Rechercher </a>
+								<input type="submit" class="btn btn-primary btn-user btn-block"
+									id="boutonRechercher" value="Rechercher">
 							</div>
 						</div>
 					</div>

@@ -89,7 +89,6 @@ public class SelectionArticle extends HttpServlet {
 		if (utilisateur != null) {
 			
 			String type = request.getParameter("radioCategories");
-			System.out.println(type);
 			
 			if(type.equals("radioAchat")) {
 				String typesAchat [] = request.getParameterValues("typesAchat");
