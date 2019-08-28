@@ -1,6 +1,8 @@
 package fr.eni.encheres.servlets;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,9 +41,10 @@ public class EnchereTermineeServlet extends HttpServlet {
 		EnchereManager enchereManager = new EnchereManager();
 		
 		Utilisateur gagnant = null;
+		ArticleVendu article = null;
 		try {
 			int noArticle = Integer.parseInt(noArticleStr);
-			ArticleVendu article = articleVenduManager.selectById(noArticle);
+			article = articleVenduManager.selectById(noArticle);
 			int montant = article.getPrixVente();
 			int noGagnant = enchereManager.selectGagnant(noArticle, montant);
 			gagnant = utilisateurManager.selectById(noGagnant);
@@ -53,8 +56,8 @@ public class EnchereTermineeServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		request.setAttribute(ServletUtils.ATT_USER_GAGNANT, gagnant);
-		this.getServletContext().getRequestDispatcher(ServletUtils.JSP_ENCHERE_REMPORTEE).forward(request, response);
-		
+		request.setAttribute(ServletUtils.ATT_ARTICLE_GAGNANT, article);
+		this.getServletContext().getRequestDispatcher(ServletUtils.JSP_ENCHERE_REMPORTEE).forward(request, response);		
 	}
 
 	/**

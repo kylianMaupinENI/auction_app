@@ -11,7 +11,7 @@ import fr.eni.encheres.bo.Utilisateur;
 
 public class EnchereDAOJdbcImpl implements EnchereDAO {
 	
-	private static final String SELECT_GAGNANT = "SELECT no_utilisateur FROM ENCHERES WHERE no_article = ? and montant = ?";
+	private static final String SELECT_GAGNANT = "SELECT no_utilisateur FROM ENCHERES WHERE no_article = ? and montant_enchere = ?";
 
 	@Override
 	public int selectGagnant(int noArticle, int montant) throws BusinessException {

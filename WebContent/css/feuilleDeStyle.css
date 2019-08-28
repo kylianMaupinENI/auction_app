@@ -1,10 +1,27 @@
 @charset "UTF-8";
 
 /*BODY DEBUT*/
+html {
+  height: 100%;
+}
 body {
 	font-size: 150%;
+	min-height: 100%;
+	margin: 0;
+	padding: 0;
 }
+
+footer {position: absolute; bottom: 0; left: 0; right: 0}
+
 /*BODY FIN*/
+
+/* CSS ENTETE DEBUT */
+@media screen and (max-width: 768px) {
+	#logoPc {
+		display: none;
+	}
+}
+/* CSS ENTETE FIN */
 
 /* CSS PAGE INDEX DEBUT */
 .ombrageTopCotes {
@@ -21,7 +38,7 @@ body {
 	}
 }
 
-.boderRadiusIndex{
+.boderRadiusIndex {
 	border-radius: 15px;
 }
 
@@ -47,30 +64,21 @@ body {
 	margin-left: 5%;
 }
 
-#checkboxVente, #checkboxAchat {
-	margin-left: 5%;
-}
-
 #block3index {
 	padding-bottom: 5%;
 	border-radius: 15px;
-}
-
-#checkboxIndex {
-	margin-left: 15%
-}
-
-#radioVente, #radioAchat {
-	margin-left: 5%;
 }
 
 #blockFiltreIndex {
 	width: 100%;
 }
 
-#container1Index {
-	/* 	padding-right: 10%;	 */
-	
+.blockCheckbox{
+	margin-left: 10%;
+}
+
+#radioAchat,#radioVente{
+	margin-left: 10%;
 }
 /* CSS PAGE INDEX FIN */
 

@@ -34,42 +34,30 @@
 			</div>
 			<div class="col-sm-6 text-left">
 				<h1 class="text-center" id="titreVente">Détail de la vente</h1>
-				<%
-					ArticleVendu av = (ArticleVendu) request.getAttribute("articleVendu");
-				%>
+				
 				<h3>
-					<%=av.getNomArticle()%>
-					PC
+					${noArticle.nomArticle}
 				</h3>
 				<div>
-					Description :
-					<p>
-						<%=av.getDescription()%>
-					</p>
+					Description : ${noArticle.description}
 				</div>
 				<div>
-					Catégorie :
-					<%=av.getCategorie()%>
+					Catégorie : ${noArticle.categorie}
 				</div>
 				<div>
-					Meilleure offre :
-					<%=av.getNom()%>
+					Meilleure offre : ${noArticle.meilleureOffre}
 				</div>
 				<div>
-					Mise à prix :
-					<%=av.getMiseAPrix()%>
+					Mise à prix : ${noArticle.miseAPrix}
 				</div>
 				<div>
-					Fin de l'enchère :
-					<%=av.getDateFinEncheres()%>
+					Fin de l'enchère : ${noArticle.dateFinEncheres}
 				</div>
 				<div>
-					Retrait :
-					<%=av.getLieuRetrait()%>
+					Retrait : ${noArticle.lieuRetrait}
 				</div>
 				<div>
-					Vendeur :
-					<%=av.getProprietaire()%>
+					Vendeur : ${noArticle.proprietaire.pseudo}
 				</div>
 				<div class="form-group">
 					<label for="propositionEnchere">Ma proposition :</label> <input
