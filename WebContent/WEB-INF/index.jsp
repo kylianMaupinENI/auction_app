@@ -77,14 +77,14 @@
 									<div class="form-check">
 										<input class="form-check-input" type="radio"
 											name="radioCategories" value="radioAchat"
-											onclick="clickRadioAchat()"> <label
+											onclick="clickRadioAchat()" checked> <label
 											class="form-check-label" for="radioAchat" id="radioAchat">
 											Achat</label>
 									</div>
 									<div class="blockCheckbox">
 										<div class="form-check">
 											<input type="checkbox" name="typesAchat"
-												value="encheresOuvertes" id="encheresOuvertes"> <label
+												value="encheresOuvertes" id="encheresOuvertes" checked> <label
 												class="form-check-label" for="encheresOuvertes">
 												Enchères ouvertes </label>
 										</div>
@@ -113,19 +113,19 @@
 									<div class="blockCheckbox">
 										<div class="form-check">
 											<input type="checkbox" name="typesVente"
-												value="mesVentesEnCours" id="mesVentesEnCours"> <label
+												value="mesVentesEnCours" id="mesVentesEnCours" disabled> <label
 												class="form-check-label" for="mesVentesEnCours"> Mes
 												ventes en cours </label>
 										</div>
 										<div class="form-check">
 											<input type="checkbox" name="typesVente"
-												value="mesVenetsNonDebutees" id="mesVentesNonDebutees">
+												value="mesVenetsNonDebutees" id="mesVentesNonDebutees" disabled>
 											<label class="form-check-label" for="mesVentesNonDebutees">
 												Ventes non débutées </label>
 										</div>
 										<div class="form-check">
 											<input type="checkbox" name="typesVente"
-												value="mesVentesTerminees" id="mesVentesTerminees"><label
+												value="mesVentesTerminees" id="mesVentesTerminees" disabled><label
 												class="form-check-label" for="mesVentesTerminees">
 												Vente terminées </label>
 										</div>
@@ -210,6 +210,9 @@
 			document.getElementById("mesVentesEnCours").disabled = true;
 			document.getElementById("mesVentesNonDebutees").disabled = true;
 			document.getElementById("mesVentesTerminees").disabled = true;
+			document.getElementById("mesVentesEnCours").checked = false;
+			document.getElementById("mesVentesNonDebutees").checked = false;
+			document.getElementById("mesVentesTerminees").checked = false;
 			document.getElementById("encheresOuvertes").disabled = false;
 			document.getElementById("encheresEnCours").disabled = false;
 			document.getElementById("encheresRemportees").disabled = false;
@@ -218,6 +221,9 @@
 			document.getElementById("encheresOuvertes").disabled = true;
 			document.getElementById("encheresEnCours").disabled = true;
 			document.getElementById("encheresRemportees").disabled = true;
+			document.getElementById("encheresOuvertes").checked = false;
+			document.getElementById("encheresEnCours").checked = false;
+			document.getElementById("encheresRemportees").checked = false;
 			document.getElementById("mesVentesEnCours").disabled = false;
 			document.getElementById("mesVentesNonDebutees").disabled = false;
 			document.getElementById("mesVentesTerminees").disabled = false;
