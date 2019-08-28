@@ -70,22 +70,19 @@ public class ArticleVenduManager {
 		}
 
 		ArticleVendu articleVendu = null;
-
 		return articleVendu;
 
 	}
 
 	public List<ArticleVendu> selectionArticleVendu(String recherche, String categorie, Utilisateur utilisateur,
 			boolean isVente) throws BusinessException {
-
 		Categorie categ = null;
-
 		List<ArticleVendu> articles = new ArrayList<>();
 
 		// Ventes
 		if (isVente) {
 			if (utilisateur != null) {
-
+				
 			}
 		}
 
@@ -179,11 +176,6 @@ public class ArticleVenduManager {
 	private int valeurDerniereEnchere(int noArticle) throws BusinessException {
 		ArticleVendu articleVendu = selectById(noArticle);
 		return articleVendu.getPrixVente();
-	}
-	
-	private Utilisateur recupererGagnant(int noArticle) throws BusinessException {
-		ArticleVendu articleVendu = selectById(noArticle);
-		return articleVendu.getProprietaire();
 	}
 
 }
