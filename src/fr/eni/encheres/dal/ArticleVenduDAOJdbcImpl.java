@@ -30,16 +30,16 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	// Page ventes (vente en cours, vente non debutées, vente_terminee)
 	private static final String SELECT_VENTE = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres, a.date_fin_encheres, "
 			+ "a.prix_initial, a.prix_vente, u.pseudo, r.rue, r.code_postal, r.ville " + "FROM ARTICLES_VENDUS a "
-			+ "INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur"
-			+ "INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie"
-			+ "INNER JOIN RETRAITS r ON r.no_article = a.no_artcle";
+			+ "INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur "
+			+ "INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie "
+			+ "INNER JOIN RETRAITS r ON r.no_article = a.no_article";
 
 	// Page achats en cours
 	// Page enchères remportées
 	private static final String SELECT_ACHATS = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres, a.date_fin_encheres, "
 			+ "a.prix_initial, a.prix_vente, u.pseudo, r.rue, r.code_postal, r.ville " + "FROM ARTICLES_VENDUS a "
-			+ "INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur"
-			+ "INNER JOIN ENCHERES e ON e.no_utilisateur = a.no_utilisateur"
+			+ "INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur "
+			+ "INNER JOIN ENCHERES e ON e.no_utilisateur = a.no_utilisateur "
 			+ "INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie";
 
 	private static final String NON_DEBUTE = " WHERE a.date_debut_encheres > ?";
@@ -190,10 +190,10 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			String query = SELECT_VENTE + EN_COURS;
 
-			if ((recherche != null) || (!recherche.equals(""))) {
+			if ((recherche != null) && (!recherche.equals(""))) {
 				query += COND_RECHERCHE;
 			}
-			if (categorie != null) {
+			if ((categorie != null) && (categorie != Categorie.TOUTES)) {
 				query += COND_CATEGORIE;
 			}
 
@@ -235,6 +235,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				articlesVendus.add(new ArticleVendu(noArticle, nomArticle, description, dateDebutEnchere,
 						dateFinEnchere, prixInitial, prixVente, adresse, utilisateur, categorie));
 			}
+
+			System.out.println(articlesVendus.size());
 		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
@@ -476,6 +478,190 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		stm.setInt(5, articleVendu.getMiseAPrix());
 		stm.setInt(6, articleVendu.getProprietaire().getNoUtilisateur());
 		stm.setInt(7, articleVendu.getCategorie().getNoCategorie());
+	}
+
+	@Override
+	public List<ArticleVendu> selectMesVentesEnCours(String recherche, Categorie categorie, int noUtilisateur)
+			throws BusinessException {
+		List<ArticleVendu> articlesVendus = new ArrayList<ArticleVendu>();
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			String query = SELECT_VENTE + EN_COURS + COND_UTILISATEUR;
+
+			PreparedStatement pstmt = cnx.prepareStatement(query);
+
+			LocalDate now = LocalDate.now();
+			pstmt.setDate(1, Date.valueOf(now));
+			pstmt.setDate(2, Date.valueOf(now));
+			pstmt.setInt(3, noUtilisateur);
+
+			if ((recherche != null) || (!recherche.equals(""))) {
+				query += COND_RECHERCHE;
+			}
+			if (categorie != Categorie.TOUTES) {
+				query += COND_CATEGORIE;
+			}
+
+			int curParam = 4;
+
+			if (query.contains(COND_RECHERCHE)) {
+				pstmt.setString(curParam, recherche);
+				curParam++;
+			}
+			if (query.contains(COND_CATEGORIE)) {
+				pstmt.setString(curParam, categorie.getLibelle());
+			}
+
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				int noArticle = rs.getInt("a.no_article");
+				String nomArticle = rs.getString("a.nom_article");
+				String description = rs.getString("a.description");
+				LocalDate dateDebutEnchere = rs.getDate("a.date_debut_encheres").toLocalDate();
+				LocalDate dateFinEnchere = rs.getDate("a.date_fin_encheres").toLocalDate();
+				int prixInitial = rs.getInt("a.prix_initial");
+				int prixVente = rs.getInt("a.prix_vente");
+				String pseudo = rs.getString("u.pseudo");
+				String rue = rs.getString("r.rue");
+				String codePostal = rs.getString("r.code_postal");
+				String ville = rs.getString("r.ville");
+
+				UtilisateurManager utilisateurManager = new UtilisateurManager();
+				Utilisateur utilisateur = utilisateurManager.selectionUtilisateur(pseudo);
+				Adresse adresse = new Adresse(rue, codePostal, ville);
+
+				articlesVendus.add(new ArticleVendu(noArticle, nomArticle, description, dateDebutEnchere,
+						dateFinEnchere, prixInitial, prixVente, adresse, utilisateur, categorie));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTE_ARTICLE_VENDU_ECHEC);
+			throw businessException;
+		}
+		return articlesVendus;
+	}
+
+	@Override
+	public List<ArticleVendu> selectMesVentesTerminees(String recherche, Categorie categorie, int noUtilisateur)
+			throws BusinessException {
+		List<ArticleVendu> articlesVendus = new ArrayList<ArticleVendu>();
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			String query = SELECT_VENTE + TERMINE + COND_UTILISATEUR;
+
+			PreparedStatement pstmt = cnx.prepareStatement(query);
+
+			LocalDate now = LocalDate.now();
+			pstmt.setDate(1, Date.valueOf(now));
+			pstmt.setInt(2, noUtilisateur);
+
+			if ((recherche != null) || (!recherche.equals(""))) {
+				query += COND_RECHERCHE;
+			}
+			if (categorie != Categorie.TOUTES) {
+				query += COND_CATEGORIE;
+			}
+
+			int curParam = 3;
+
+			if (query.contains(COND_RECHERCHE)) {
+				pstmt.setString(curParam, recherche);
+				curParam++;
+			}
+			if (query.contains(COND_CATEGORIE)) {
+				pstmt.setString(curParam, categorie.getLibelle());
+			}
+
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				int noArticle = rs.getInt("a.no_article");
+				String nomArticle = rs.getString("a.nom_article");
+				String description = rs.getString("a.description");
+				LocalDate dateDebutEnchere = rs.getDate("a.date_debut_encheres").toLocalDate();
+				LocalDate dateFinEnchere = rs.getDate("a.date_fin_encheres").toLocalDate();
+				int prixInitial = rs.getInt("a.prix_initial");
+				int prixVente = rs.getInt("a.prix_vente");
+				String pseudo = rs.getString("u.pseudo");
+				String rue = rs.getString("r.rue");
+				String codePostal = rs.getString("r.code_postal");
+				String ville = rs.getString("r.ville");
+
+				UtilisateurManager utilisateurManager = new UtilisateurManager();
+				Utilisateur utilisateur = utilisateurManager.selectionUtilisateur(pseudo);
+				Adresse adresse = new Adresse(rue, codePostal, ville);
+
+				articlesVendus.add(new ArticleVendu(noArticle, nomArticle, description, dateDebutEnchere,
+						dateFinEnchere, prixInitial, prixVente, adresse, utilisateur, categorie));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTE_ARTICLE_VENDU_ECHEC);
+			throw businessException;
+		}
+		return articlesVendus;
+	}
+
+	@Override
+	public List<ArticleVendu> selectionMesVentesNonDebutees(String recherche, Categorie categorie, int noUtilisateur)
+			throws BusinessException {
+		List<ArticleVendu> articlesVendus = new ArrayList<ArticleVendu>();
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			String query = SELECT_VENTE + NON_DEBUTE + COND_UTILISATEUR;
+
+			PreparedStatement pstmt = cnx.prepareStatement(query);
+
+			LocalDate now = LocalDate.now();
+			pstmt.setDate(1, Date.valueOf(now));
+			pstmt.setInt(2, noUtilisateur);
+
+			if ((recherche != null) || (!recherche.equals(""))) {
+				query += COND_RECHERCHE;
+			}
+			if (categorie != Categorie.TOUTES) {
+				query += COND_CATEGORIE;
+			}
+
+			int curParam = 3;
+
+			if (query.contains(COND_RECHERCHE)) {
+				pstmt.setString(curParam, recherche);
+				curParam++;
+			}
+			if (query.contains(COND_CATEGORIE)) {
+				pstmt.setString(curParam, categorie.getLibelle());
+			}
+
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				int noArticle = rs.getInt("a.no_article");
+				String nomArticle = rs.getString("a.nom_article");
+				String description = rs.getString("a.description");
+				LocalDate dateDebutEnchere = rs.getDate("a.date_debut_encheres").toLocalDate();
+				LocalDate dateFinEnchere = rs.getDate("a.date_fin_encheres").toLocalDate();
+				int prixInitial = rs.getInt("a.prix_initial");
+				int prixVente = rs.getInt("a.prix_vente");
+				String pseudo = rs.getString("u.pseudo");
+				String rue = rs.getString("r.rue");
+				String codePostal = rs.getString("r.code_postal");
+				String ville = rs.getString("r.ville");
+
+				UtilisateurManager utilisateurManager = new UtilisateurManager();
+				Utilisateur utilisateur = utilisateurManager.selectionUtilisateur(pseudo);
+				Adresse adresse = new Adresse(rue, codePostal, ville);
+
+				articlesVendus.add(new ArticleVendu(noArticle, nomArticle, description, dateDebutEnchere,
+						dateFinEnchere, prixInitial, prixVente, adresse, utilisateur, categorie));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.LECTURE_LISTE_ARTICLE_VENDU_ECHEC);
+			throw businessException;
+		}
+		return articlesVendus;
 	}
 
 }

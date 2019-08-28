@@ -20,9 +20,18 @@ public interface ArticleVenduDAO {
 
 	public void updatePrixVente(int prixVente, int noArticle, int no_utilisateur, LocalDate date_enchere) throws BusinessException;
 
-	List<ArticleVendu> selectMesAchatsRemportes(String recherche, Categorie categorie, int noUtilisateur)
+	public List<ArticleVendu> selectMesAchatsRemportes(String recherche, Categorie categorie, int noUtilisateur)
 			throws BusinessException;
 
-	List<ArticleVendu> selectMesAchatsEnCours(String recherche, Categorie categorie, int noUtilisateur)
+	public List<ArticleVendu> selectMesAchatsEnCours(String recherche, Categorie categorie, int noUtilisateur)
+			throws BusinessException;
+
+	public List<ArticleVendu> selectMesVentesEnCours(String recherche, Categorie categorie, int noUtilisateur)
+			throws BusinessException;
+
+	public List<ArticleVendu> selectMesVentesTerminees(String recherche, Categorie categorie, int noUtilisateur)
+			throws BusinessException;
+
+	public List<ArticleVendu> selectionMesVentesNonDebutees(String recherche, Categorie categorie, int noUtilisateur)
 			throws BusinessException;
 }
