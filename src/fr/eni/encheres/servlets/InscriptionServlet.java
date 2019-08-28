@@ -62,8 +62,6 @@ public class InscriptionServlet extends HttpServlet {
 
 		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(ServletUtils.INSCRIPTION);
 
-		System.out.println("servlet " + telephone);
-
 		try {
 			Utilisateur utilisateur = utilisateurManager.ajouteUtilisateur(pseudo, nom, prenom, email, telephone, rue,
 					codePostal, ville, motDePasse, confirmation);
@@ -71,6 +69,7 @@ public class InscriptionServlet extends HttpServlet {
 			rd = this.getServletContext().getRequestDispatcher(ServletUtils.ACCUEIL);
 		} catch (BusinessException e) {
 			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+			rd = this.getServletContext().getRequestDispatcher(ServletUtils.INSCRIPTION);
 			e.printStackTrace();
 		}
 

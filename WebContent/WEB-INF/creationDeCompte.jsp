@@ -32,7 +32,7 @@
 	<!-- DEBUT ENTETE -->
 	<!-- Outer Row -->
 	<form class="user" id="formCreationDeCompte" method="post"
-		action="signin">
+		action="<%= request.getContextPath() + ServletUtils.INSCRIPTION %>">
 		<div class="row justify-content-center">
 			<div class="col-xl-10 col-lg-12 col-md-9">
 				<div class="card o-hidden border-0 shadow-lg my-5">
@@ -144,6 +144,21 @@
 							<div class="col-sm-2"></div>
 							<div class="col-sm-4">
 								<% if (u == null) {%>
+								<div class="text-left form-group"
+									id="<%=ServletUtils.BTN_ANNULER%>">
+									<a href="<%= request.getContextPath() + ServletUtils.ACCUEIL %>" class="btn btn-danger btn-user btn-block">Annuler
+									</a>
+								</div>
+								<%} else { %>
+								<div class="text-left form-group"
+									id="<%=ServletUtils.BTN_SUPPRIMER%>">
+									<a href="<%= request.getContextPath() + ServletUtils.ACCUEIL %>" class="btn btn-danger btn-user btn-block">Supprimer
+										mon compte </a>
+								</div>
+								<%} %>
+							</div>
+							<div class="col-sm-4">
+								<% if (u == null) {%>
 								<div class="text-right form-group"
 									id="<%=ServletUtils.BTN_INSCRIPTION%>">
 									<input type="submit" class="btn btn-primary btn-user btn-block"
@@ -152,23 +167,8 @@
 								<% }else{ %>
 								<div class="text-right form-group"
 									id="<%=ServletUtils.BTN_ENREGISTRER%>">
-									<a href="index.jsp" class="btn btn-primary btn-user btn-block">
-										Enregistrer </a>
-								</div>
-								<%} %>
-							</div>
-							<div class="col-sm-4">
-								<% if (u == null) {%>
-								<div class="text-left form-group"
-									id="<%=ServletUtils.BTN_ANNULER%>">
-									<a href="index.jsp" class="btn btn-primary btn-user btn-block">Annuler
-									</a>
-								</div>
-								<%} else { %>
-								<div class="text-left form-group"
-									id="<%=ServletUtils.BTN_SUPPRIMER%>">
-									<a href="index.jsp" class="btn btn-primary btn-user btn-block">Supprimer
-										mon compte </a>
+									<input type="submit" class="btn btn-primary btn-user btn-block"
+										value="Enregistrer">
 								</div>
 								<%} %>
 							</div>
