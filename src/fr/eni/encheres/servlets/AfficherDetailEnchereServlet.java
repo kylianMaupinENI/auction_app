@@ -21,8 +21,6 @@ import fr.eni.encheres.bo.Utilisateur;
 @WebServlet("/enchere")
 public class AfficherDetailEnchereServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	private static final String DETAIL_ENCHERE = "/WEB-INF/test_encherir.jsp";
 
 	private ArticleVenduManager articleVenduManager;
 	private Utilisateur utilisateur;
@@ -43,20 +41,22 @@ public class AfficherDetailEnchereServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		int idArticle;
 		HttpSession session = request.getSession();
-		if(session != null) {
+		if (session != null) {
 			utilisateur = (Utilisateur) session.getAttribute(ServletUtils.ATT_SESSION_USER);
 		}
-
 		ArticleVendu articleVendu = null;
 		try {
-			articleVendu = articleVenduManager.selectById(18);
+			idArticle = Integer.parseInt(request.getParameter("idArticle")); //noArticle a passer en parametre			
+			System.out.println(request.getAttribute("idArticle"));
+			articleVendu = articleVenduManager.selectById(idArticle);
 			request.setAttribute("articleVendu", articleVendu);
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
 
-		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(DETAIL_ENCHERE);
+		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(ServletUtils.JSP_DETAIL_ENCHERE);
 		rd.forward(request, response);
 	}
 
@@ -66,6 +66,8 @@ public class AfficherDetailEnchereServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		doGet(request, response);
 
 	}
 

@@ -111,6 +111,9 @@ public class ArticleVenduManager {
 
 		validerEnchere(noArticle,prixVente, businessException);
 		articleVenduDAO.updatePrixVente(prixVente, noArticle, no_utilisateur, dateEnchere);
+		if (businessException.hasErreurs()) {
+			throw businessException;
+		}
 	}
 
 	private void validerEnchere(int noArticle, int prixVente, BusinessException businessException)

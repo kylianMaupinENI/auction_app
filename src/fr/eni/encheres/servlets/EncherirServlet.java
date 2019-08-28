@@ -24,7 +24,6 @@ public class EncherirServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private ArticleVenduManager articleVenduManager;
-	private Utilisateur utilisateur;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -32,7 +31,7 @@ public class EncherirServlet extends HttpServlet {
 	public EncherirServlet() {
 		super();
 		articleVenduManager = new ArticleVenduManager();
-		utilisateur = new Utilisateur();
+
 	}
 
 	/**
@@ -41,7 +40,6 @@ public class EncherirServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -51,30 +49,31 @@ public class EncherirServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+		Utilisateur utilisateur = null;
 		HttpSession session = request.getSession();
 		if (session != null) {
 			utilisateur = (Utilisateur) session.getAttribute(ServletUtils.ATT_SESSION_USER);
-			
 		}
 
 		int prixVente = Integer.parseInt(request.getParameter("propositionEnchere"));
-		System.out.println(prixVente);
-		String sessionArticle = request.getParameter("article");
-		ArticleVendu article = (ArticleVendu) request.getSession().getAttribute(sessionArticle);
 
-		int idArticle = article.getNoArticle();
+		int idArticle = Integer.parseInt(request.getParameter("noArticle"));
+		System.out.println(idArticle);
 		LocalDate dateEnchere = LocalDate.now();
 		System.out.println(dateEnchere);
-		
+
 		try {
-			articleVenduManager.updatePrixVenteEnchere(prixVente, idArticle,  dateEnchere,utilisateur);
+			articleVenduManager.updatePrixVenteEnchere(prixVente, idArticle, dateEnchere, utilisateur);
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
+		idArticle = 18;
+		request.setAttribute("idArticle", idArticle);
+		this.getServletContext()
+				.getRequestDispatcher(ServletUtils.DETAIL_ENCHERE + ServletUtils.ID_ARTICLE_PARAM + idArticle)
+				.forward(request, response);
+		;
 
-		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(ServletUtils.JSP_ACCUEIL);
-		rd.forward(request, response);
 	}
 
 }

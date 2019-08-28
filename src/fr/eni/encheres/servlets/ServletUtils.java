@@ -29,7 +29,7 @@ public class ServletUtils {
 	public static final String JSP_NOUVELLE_VENTE = "/WEB-INF/nouvelle_vente.jsp";
 	public static final String JSP_403 = "/WEB-INF/403.jsp";
 	public static final String JSP_404 = "/WEB-INF/404.jsp";
-	public static final String DETAIL_ENCHERE = "/WEB-INF/detailEnchere.jsp";
+	public static final String JSP_DETAIL_ENCHERE = "/WEB-INF/test_encherir.jsp";
 
 	public static final String ACCUEIL = "/accueil";
 	public static final String NOUVELLE_VENTE = "/nouveau";
@@ -40,6 +40,8 @@ public class ServletUtils {
 	public static final String DETAILS_PROFIL = "/profil";
 	public static final String MODIFIER_PROFIL = "/modifier_profil";
 	public static final String MODIFIER_ARTICLE = "/modifier_article";
+	public static final String ENCHERIR = "/encherir";
+	public static final String DETAIL_ENCHERE = "/enchere";
 
 	public static final String ATT_LISTE_ERREURS = "listeCodesErreur";
 	public static final String ATT_MODIFIABLE = "modifiable";

@@ -25,81 +25,82 @@
 	<!-- DEBUT HAUT DE PAGE -->
 	<%@include file="entete.jsp"%>
 	<!-- FIN HAUT DE PAGE -->
-		<form method="post"	action="/Auction_app/encherir">
-	<div class="container-fluid text-center">
-		<div class="row content">
-			<div class="col-sm-4 sidenav">
-				<img src="imageDuProduit.jpg" class="img-thumbnail"
-					alt="Photos produit">
-			</div>
-			<div class="col-sm-6 text-left">
-				<h1 class="text-center" id="titreVente">Détail de la vente</h1>
-				<%
-					ArticleVendu av = (ArticleVendu) request.getAttribute("articleVendu");
-				%>
-				<% session.setAttribute("article",av); %>
-				<h3>
-					 <%=av.getNomArticle()%> 
-					PC
-				</h3>
-				<div>
-					Description :
-					<p>
-						 <%=av.getDescription()%> 
-					</p>
+	<form method="post" action="encherir">
+		<div class="container-fluid text-center">
+			<div class="row content">
+				<div class="col-sm-4 sidenav">
+					<img src="imageDuProduit.jpg" class="img-thumbnail"
+						alt="Photos produit">
 				</div>
-				<div>
-					Catégorie :
-					<%=av.getCategorie()%> 
-				</div>
-				<div>
-					Meilleure offre :
-					<%=av.getMiseAPrix()%> 
-				</div>
-				<div>
-					Mise à prix :
-					 <%=av.getMiseAPrix()%> 
-				</div>
-				<div>
-					Fin de l'enchère :
-					 <%=av.getDateFinEncheres()%> 
-				</div>
-				<div>
-				Retrait <br><br>
-					 Rue :
-					 <%=av.getLieuRetrait().getRue()%> <br>
-					 Code postal :
-					 <%=av.getLieuRetrait().getCodePostal()%> 
-					 Ville :
-					 <%=av.getLieuRetrait().getVille()%> 
-				</div>
-				<div>
-					Vendeur :
-					 <%=av.getProprietaire().getPseudo()%> 
-				</div>
-				<div class="form-group">
-					<label for="propositionEnchere">Ma proposition :</label> <input
-						type="text" class="form-control form-control-user"
-						id="propositionEnchere" name="propositionEnchere">
-				</div>
-				<hr>
-				<div class="row content">
-					<div class="col-md-6">
-						<input type="submit" name = "Encherir" value = "Encherir">
+				<div class="col-sm-6 text-left">
+					<h1 class="text-center" id="titreVente">Détail de la vente</h1>
+					<%
+						ArticleVendu av = (ArticleVendu) request.getAttribute("articleVendu");
+	
+					%>
+					<h3>
+						<%=av.getNomArticle()%>
+						PC
+					</h3>
+					<div>
+						Description :
+						<p>
+							<%=av.getDescription()%>
+						</p>
 					</div>
-					<div class="col-md-6">
+					<div>
+						Catégorie :
+						<%=av.getCategorie()%>
+					</div>
+					<div>
+						Meilleure offre :
+						<%=av.getPrixVente()%>
+					</div>
+					<div>
+						Mise à prix :
+						<%=av.getMiseAPrix()%>
+					</div>
+					<div>
+						Fin de l'enchère :
+						<%=av.getDateFinEncheres()%>
+					</div>
+					<div>
+						Retrait <br>
+						<br> Rue :
+						<%=av.getLieuRetrait().getRue()%>
+						<br> Code postal :
+						<%=av.getLieuRetrait().getCodePostal()%>
+						Ville :
+						<%=av.getLieuRetrait().getVille()%>
+					</div>
+					<div>
+						Vendeur :
+						<%=av.getProprietaire().getPseudo()%>
+					</div>
+					<div class="form-group">
+						<label for="propositionEnchere">Ma proposition :</label> <input
+							type="text" class="form-control form-control-user"
+							id="propositionEnchere" name="propositionEnchere">
+					</div>
+					<hr>
+					<div class="row content">
+						<div class="col-md-6">
+						<input type="hidden" value="<%= av.getNoArticle() %>" name="noArticle">
+						<input type="submit" name="encherir"  class="btn btn-primary btn-user btn-block" value="Encherir">
+						</div>
+						<div class="col-md-6">
 							<a href="index.jsp" class="btn btn-primary btn-user btn-block"
 								id="boutonAnnulerEnchere"> Annuler </a>
 						</div>
+					</div>
 				</div>
+				<div class="col-sm-2 sidenav"></div>
 			</div>
-			<div class="col-sm-2 sidenav"></div>
 		</div>
-	</div>
 
-	<!-- DEBUT BAS DE PAGE -->
-	<%@include file="basDePage.jsp"%>
-	<!-- FIN BAS DE PAGE -->
+		<!-- DEBUT BAS DE PAGE -->
+		<%@include file="basDePage.jsp"%>
+		<!-- FIN BAS DE PAGE -->
 	</form>
 </body>
 </html>
