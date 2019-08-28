@@ -8,6 +8,7 @@ import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bo.Adresse;
 import fr.eni.encheres.bo.ArticleVendu;
 import fr.eni.encheres.bo.Categorie;
+import fr.eni.encheres.bo.EtatVente;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.ArticleVenduDAO;
 import fr.eni.encheres.dal.DAOFactory;
@@ -70,33 +71,8 @@ public class ArticleVenduManager {
 		}
 
 		ArticleVendu articleVendu = null;
-
 		return articleVendu;
 
-	}
-
-	public List<ArticleVendu> selectionArticleVendu(String recherche, String categorie, Utilisateur utilisateur,
-			boolean isVente) throws BusinessException {
-
-		Categorie categ = null;
-
-		List<ArticleVendu> articles = new ArrayList<>();
-
-		// Ventes
-		if (isVente) {
-			if (utilisateur != null) {
-
-			}
-		}
-
-		// Achats
-		else {
-			if (utilisateur != null) {
-
-			}
-		}
-
-		return articles;
 	}
 
 	public ArticleVendu selectById(int id) throws BusinessException {
@@ -183,10 +159,30 @@ public class ArticleVenduManager {
 		ArticleVendu articleVendu = selectById(noArticle);
 		return articleVendu.getPrixVente();
 	}
-	
-	private Utilisateur recupererGagnant(int noArticle) throws BusinessException {
-		ArticleVendu articleVendu = selectById(noArticle);
-		return articleVendu.getProprietaire();
+
+	public List<ArticleVendu> selectEncheresOuvertes(String recherche, Categorie categorie) throws BusinessException {
+		return articleVenduDAO.selectEncheresOuvertes(recherche, categorie);
+	}
+
+	public List<ArticleVendu> selectMesAchatsEnCours(String recherche, Categorie categorie, Utilisateur utilisateur) throws BusinessException {
+		return articleVenduDAO.selectMesAchatsEnCours(recherche, categorie, utilisateur.getNoUtilisateur());
+	}
+
+	public List<ArticleVendu> selectMesVentesEnCours(String recherche, Categorie categorie, Utilisateur utilisateur) throws BusinessException {
+		return articleVenduDAO.selectMesVentesEnCours(recherche, categorie, utilisateur.getNoUtilisateur());
+	}
+
+	public List<ArticleVendu> selectMesAchatsRemportes(String recherche, Categorie categorie, Utilisateur utilisateur) throws BusinessException {
+		return articleVenduDAO.selectMesAchatsRemportes(recherche, categorie, utilisateur.getNoUtilisateur());
+	}
+
+	public List<ArticleVendu> selectionVentesNonDebutees(String recherche, Categorie categorie,
+			Utilisateur utilisateur) throws BusinessException {
+		return articleVenduDAO.selectionMesVentesNonDebutees(recherche, categorie, utilisateur.getNoUtilisateur());
+	}
+
+	public List<ArticleVendu> selectionVentesTerminees(String recherche, Categorie categorie, Utilisateur utilisateur) throws BusinessException {
+		return articleVenduDAO.selectMesVentesTerminees(recherche, categorie, utilisateur.getNoUtilisateur());
 	}
 
 }

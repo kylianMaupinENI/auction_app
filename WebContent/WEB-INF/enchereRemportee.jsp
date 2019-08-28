@@ -22,107 +22,81 @@
 	rel="stylesheet">
 <!-- Custom styles for this template-->
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 </head>
-<body>
+<body class="text-lg">
 	<!-- DEBUT HAUT DE PAGE -->
 	<%@include file="entete.jsp"%>
 	<!-- FIN HAUT DE PAGE -->
 
 	<div class="container-fluid text-center">
 		<div class="row content">
-			<div class="col-sm-4 sidenav">
-				<img src="imageDuProduit.jpg" class="img-thumbnail"
-					alt="Photos produit">
+			<div class="col-sm-3 sidenav">
+<!-- 				<img src="imageDuProduit.jpg" class="img-thumbnail" -->
+<!-- 					alt="Photos produit"> -->
 			</div>
-			<div class="col-sm-6 text-left">
-				<%
-					ArticleVendu av = (ArticleVendu) request.getAttribute(ServletUtils.ATT_ARTICLE_GAGNANT);
-					if (session != null) {
-						Utilisateur utilisateur = (Utilisateur) session.getAttribute(ServletUtils.ATT_REQUEST_USER);
-						Utilisateur gg = (Utilisateur) session.getAttribute(ServletUtils.ATT_USER_GAGNANT);
-						if (utilisateur.getPseudo().equals(gg.getPseudo()) && utilisateur.getPseudo() != null && gg.getPseudo() != null ) {
-				%>
-				<h1 class="text-center" id="titreVente">Vous avez remporté la
-					vente</h1>
-				<%
-					} else {
-				%>
-				<h1 class="text-center" id="titreVente"><%=gg.getPseudo()%>
-					a remporté l'enchère
-				</h1>
-				<%
-					}
-				%>
-
-
-				<h3>
-					<%=av.getNomArticle()%>
-					PC
-				</h3>
+			<div class="col-sm-6 text-left bg-gray-100">
+			
+			<c:if test="${sessionScope.sessionUtilisateur.pseudo == gagnant.pseudo}">
+				<h1 class="text-center" id="titreVente">Vous avez remporté la vente</h1>
+			</c:if>
+			<c:if test="${sessionScope.sessionUtilisateur.pseudo != gagnant.pseudo}">
+				<h1 class="text-center" id="titreVente">${gagnant.pseudo} a remporté l'enchère</h1>
+			</c:if>
+				<br><br>
+				<h2>
+					${noArticle.nomArticle}
+				</h2>
+				<br><br>
 				<div>
-					Description :
-					<p>
-						<%=av.getDescription()%>
-					</p>
+					Description : ${noArticle.description}
 				</div>
-
+<br>
 				<div>
-					Meilleure offre :
-					<%=av.getPrixVente()%>
+					Meilleure offre : ${noArticle.prixVente} point(s)
 				</div>
+				<br>
 				<div>
-					Mise à prix :
-					<%=av.getMiseAPrix()%>
+					Mise à prix : ${noArticle.miseAPrix} point(s)
 				</div>
-				<%
-					if (!utilisateur.getPseudo().equals(gg.getPseudo())) {
-				%>
+				
+				<c:if test="${sessionScope.sessionUtilisateur.pseudo != gagnant.pseudo}">
+				<br>
+					<div>
+					Date de fin : ${noArticle.dateFinEncheres}
+					</div>
+				</c:if>
+				<br>
 				<div>
-					Date de fin :
-					<%=av.getDateFinEncheres()%>
+					Retrait : ${noArticle.lieuRetrait.rue} ${noArticle.lieuRetrait.codePostal} ${noArticle.lieuRetrait.ville}
 				</div>
-				<%
-					}
-				%>
+				<br>
 				<div>
-					Retrait :
-					<%=av.getLieuRetrait()%>
+					Vendeur : ${noArticle.proprietaire.pseudo}
 				</div>
+				<c:if test="${sessionScope.sessionUtilisateur.pseudo == gagnant.pseudo}">
+				<br>
 				<div>
-					Vendeur :
-					<%=av.getProprietaire()%>
+					Téléphone : ${noArticle.proprietaire.telephone}
 				</div>
-				<%
-					if (true) {
-				%>
-				<div>
-					Téléphone :
-					<%=av.getProprietaire()%>
-				</div>
-				<%
-					}
-				%>
+				</c:if>		
 				<hr>
+				<br>
 				<div class="row content">
 					<div class="col-md-6">
-						<%
-							if (utilisateur.getPseudo().equals(gg.getPseudo())) {
-						%>
+					
+					<c:if test="${sessionScope.sessionUtilisateur.pseudo == gagnant.pseudo}">
 						<a href="index.jsp" class="btn btn-primary btn-user btn-block"
 							id="boutonRetourEnchere"> Retour </a>
-						<%
-							} else {
-						%>
+					</c:if>
+					<c:if test="${sessionScope.sessionUtilisateur.pseudo != gagnant.pseudo}">
 						<a href="index.jsp" class="btn btn-primary btn-user btn-block"
 							id="boutonRetourEnchere"> Retrait effectué </a>
-						<%
-							}
-							}
-						%>
+					</c:if>
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-2 sidenav"></div>
+			<div class="col-sm-3 sidenav"></div>
 		</div>
 	</div>
 

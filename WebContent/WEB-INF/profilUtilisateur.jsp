@@ -22,7 +22,7 @@
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
 </head>
 
-<body id="bodyIndex">
+<body>
 	<!-- DEBUT HAUT DE PAGE -->
 	<%@include file="entete.jsp"%>
 	<!-- FIN HAUT DE PAGE -->
@@ -44,32 +44,23 @@
 							</div>
 							<div class="col-lg-6">
 								<div class="p-5">
-									<%
-										Utilisateur u = (Utilisateur) request.getAttribute("utilisateur");
-									%>
-									<div>
-										Pseudo :
-										<%=u.getPseudo()%></div>
+									<div>Pseudo : ${sessionScope.sessionUtilisateur.pseudo}</div>
 									<br>
 									<div>
-										Nom :
-										<%=u.getNom()%></div>
+										Nom : ${sessionScope.sessionUtilisateur.nom}</div>
 									<br>
 									<div>
-										Prénom :
-										<%=u.getPrenom()%></div>
+										Prénom : ${sessionScope.sessionUtilisateur.prenom}</div>
 									<br>
 									<div>
-										Email :
-										<%=u.getEmail()%></div>
+										Email : ${sessionScope.sessionUtilisateur.email}</div>
 									<br>
 									<div>
-										Téléphone :
-										<%=u.getTelephone()%></div>
+										Téléphone : ${sessionScope.sessionUtilisateur.telephone}</div>
 									<br>
 									<div>
-										Adresse :
-										<%=u.getAdresse().getRue() + " " + u.getAdresse().getCodePostal() + " " + u.getAdresse().getVille()%></div>
+										Adresse : ${sessionScope.sessionUtilisateur.adresse.rue}  ${sessionScope.sessionUtilisateur.adresse.codePostal}  ${sessionScope.sessionUtilisateur.adresse.ville}</div>								
+									
 									<%
 										if (Boolean.getBoolean(request.getParameter("modifiable"))) {
 									%>

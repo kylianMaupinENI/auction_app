@@ -23,6 +23,7 @@
 	rel="stylesheet">
 <!-- Custom styles for this template-->
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 </head>
 <body>
 	<!-- DEBUT HAUT DE PAGE -->
@@ -66,74 +67,71 @@
 				</div>
 				<div class="col-sm-2 sidenav"></div>
 
-				<%
-					
-					if (session != null) {
-						Utilisateur utilisateur = (Utilisateur) session.getAttribute(ServletUtils.ATT_REQUEST_USER);
-						if (utilisateur != null) {
-				%>
+
 				<div class="col-sm-2 sidenav"></div>
 				<div class="col-sm-8 text-left ">
-					<div>
-						<div class="row">
-							<div class="col-sm-6  bg-gray-100">
-								<div class="form-check">
-									<input class="form-check-input" type="radio"
-										name="radioCategories" value="option1" checked> <label
-										class="form-check-label" for="exampleRadios1" id="radioAchat">
-										Achat</label>
-								</div>
-								<div id="checkboxAchat">
+					<c:if test="${sessionScope.sessionUtilisateur != null}">
+						<div>
+							<div class="row">
+								<div class="col-sm-6  bg-gray-100">
 									<div class="form-check">
-										<input type="checkbox" value="" id="checkboxVente"> <label
-											class="form-check-label" id="checkboxVenteLabel"
-											for="defaultCheck1"> Enchères ouvertes </label>
+										<input class="form-check-input" type="radio"
+											ame="radioCategories" value="radioAchat"> <label
+											class="form-check-label" for="radioAchat" id="radioAchat">
+											Achat</label>
 									</div>
-									<div class="form-check">
-										<input type="checkbox" value="" id="checkboxVente"> <label
-											class="form-check-label" id="checkboxVenteLabel "
-											for="defaultCheck1"> Mes enchères en cours </label>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" value="" id="checkboxVente"> <label
-											class="form-check-label" id="checkboxVenteLabel "
-											for="defaultCheck1"> Mes enchères remportées </label>
+									<div class="blockCheckbox">
+										<div class="form-check">
+											<input type="checkbox" name="typesAchat" value="encheresOuvertes"> <label
+												class="form-check-label"											
+												for="encheresOuvertes">
+												Enchères ouvertes </label>
+										</div>
+										<div class="form-check">
+											<input type="checkbox" name="typesAchat" value="mesEncheresEnCours"> <label
+												class="form-check-label" for="mesEncheresEnCours"> Mes
+												enchères en cours </label>
+										</div>
+										<div class="form-check">
+											<input type="checkbox" name="typesAchat" value="mesEncheresRemportees"> <label
+												class="form-check-label" for="mesEncheresRemportees"> Mes
+												enchères remportées </label>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="col-sm-6  bg-gray-100">
-								<div class="form-check">
-									<input class="form-check-input" type="radio"
-										name="radioCategories" value="option2" checked> <label
-										class="form-check-label" for="exampleRadios1" id="radioVente">
-										Mes vente</label>
-								</div>
-								<div id="checkboxVente">
+								<div class="col-sm-6  bg-gray-100">
+									<div class="form-check">
+										<input class="form-check-input" type="radio"
+											name="radioCategories" value="radioVente" > <label
+											class="form-check-label" for="radioVente" id="radioVente">
+											Mes vente</label>
+									</div>
+									<div class="blockCheckbox">
 
-									<div class="form-check">
-										<input type="checkbox" value="" id="checkboxVente"> <label
-											class="form-check-label" id="checkboxVenteLabel "
-											for="defaultCheck1"> Mes ventes en cours </label>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" value="" id="checkboxVente"> <label
-											class="form-check-label" id="checkboxVenteLabel "
-											for="defaultCheck1"> Ventes non débutées </label>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" value="" id="checkboxVente"><label
-											class="form-check-label" id="checkboxVenteLabel"
-											for="defaultCheck1"> Vente terminées </label>
+										<div class="form-check">
+											<input type="checkbox" name="typesVente" value="mesVentesEnCours"> <label
+												class="form-check-label" for="mesVentesEnCours"> Mes
+												ventes en cours </label>
+										</div>
+										<div class="form-check">
+											<input type="checkbox" name="typesVente" value="mesVenetsNonDebutees"> <label
+												class="form-check-label" for="mesVenetsNonDebutees"> Ventes
+												non débutées </label>
+										</div>
+										<div class="form-check">
+											<input type="checkbox" name="typesVente" value="mesVentesTerminees"><label
+												class="form-check-label" for="mesVentesTerminees"> Vente
+												terminées </label>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
+					</c:if>
 				</div>
 				<div class="col-sm-2 sidenav"></div>
-				<%
-					}}
-				%>
+
+
 
 				<div class="col-sm-2 sidenav"></div>
 				<div class="col-sm-8 ">

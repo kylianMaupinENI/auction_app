@@ -1,4 +1,5 @@
 
+<%@page import="fr.eni.encheres.servlets.ServletUtils"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -11,7 +12,7 @@
 <body>
 	<h1>CREATION</h1>
 
-	<form action="nouvellevente" method="post">
+	<form action="<%= ServletUtils.NOUVELLE_VENTE %>" method="post">
 		<label>Article : </label> <input type="text" name="nom_vente"
 			id="nom_vente" placeholder="Fauteuil" /> <br>
 		<br> <label>Description : </label> <input type="text"

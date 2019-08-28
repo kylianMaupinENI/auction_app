@@ -1,6 +1,8 @@
 package fr.eni.encheres.servlets;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bll.ArticleVenduManager;
+import fr.eni.encheres.bll.EnchereManager;
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.ArticleVendu;
 import fr.eni.encheres.bo.Utilisateur;
@@ -33,17 +36,18 @@ public class EnchereTermineeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String noArticleStr = request.getParameter(ServletUtils.ATT_ARTICLE_GAGNANT);
-		System.out.println(noArticleStr);
 		ArticleVenduManager articleVenduManager = new ArticleVenduManager();
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
+		EnchereManager enchereManager = new EnchereManager();
 		
-		ArticleVendu article;
 		Utilisateur gagnant = null;
+		ArticleVendu article = null;
 		try {
 			int noArticle = Integer.parseInt(noArticleStr);
 			article = articleVenduManager.selectById(noArticle);
-			int noUtilisateur = article.getProprietaire().getNoUtilisateur();
-			gagnant = utilisateurManager.selectById(noUtilisateur);
+			int montant = article.getPrixVente();
+			int noGagnant = enchereManager.selectGagnant(noArticle, montant);
+			gagnant = utilisateurManager.selectById(noGagnant);
 			
 		} catch (BusinessException e) {
 			e.printStackTrace();
@@ -52,8 +56,8 @@ public class EnchereTermineeServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		request.setAttribute(ServletUtils.ATT_USER_GAGNANT, gagnant);
-		this.getServletContext().getRequestDispatcher(ServletUtils.JSP_ENCHERE_REMPORTEE).forward(request, response);
-		
+		request.setAttribute(ServletUtils.ATT_ARTICLE_GAGNANT, article);
+		this.getServletContext().getRequestDispatcher(ServletUtils.JSP_ENCHERE_REMPORTEE).forward(request, response);		
 	}
 
 	/**
