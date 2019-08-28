@@ -82,7 +82,7 @@
 									</div>
 									<div class="blockCheckbox">
 										<div class="form-check">
-											<input type="checkbox" vname="typesAchat" value="encheresOuvertes"> <label
+											<input type="checkbox" name="typesAchat" value="encheresOuvertes"> <label
 												class="form-check-label"											
 												for="encheresOuvertes">
 												Enchères ouvertes </label>
