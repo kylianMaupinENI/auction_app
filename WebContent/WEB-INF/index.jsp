@@ -76,7 +76,7 @@
 								<div class="col-sm-6  bg-gray-100">
 									<div class="form-check">
 										<input class="form-check-input" type="radio"
-											ame="radioCategories" value="radioAchat"> <label
+											name="radioCategories" value="radioAchat"> <label
 											class="form-check-label" for="radioAchat" id="radioAchat">
 											Achat</label>
 									</div>
