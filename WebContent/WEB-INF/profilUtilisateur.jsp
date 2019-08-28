@@ -38,9 +38,6 @@
 						<!-- Nested Row within Card Body -->
 						<div class="row">
 							<div class="col-lg-3">
-								<div class="text-left">
-									<h1 class="h4 text-gray-900 mb-4">ENI-Enchères</h1>
-								</div>
 							</div>
 							<div class="col-lg-6">
 								<div class="p-5">

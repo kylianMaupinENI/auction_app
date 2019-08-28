@@ -23,6 +23,7 @@
 	rel="stylesheet">
 <!-- Custom styles for this template-->
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 </head>
 
 <body>
@@ -40,9 +41,7 @@
 
 						<div class="row">
 							<div class="col-lg-6 ">
-								<div class="text-left">
-									<h1 class="h4 text-gray-900 mb-4">ENI-Enchères</h1>
-								</div>
+
 								<div class="text-right">
 									<h4 class="h4 text-gray-900 mb-4" id="titreProfil">Création
 										de compte</h4>
@@ -143,34 +142,36 @@
 						<div class="row" id="blockBoutonCreationDeCompte">
 							<div class="col-sm-2"></div>
 							<div class="col-sm-4">
-								<% if (u == null) {%>
+								<c:if test="${sessionScope.sessionUtilisateur == null}">
 								<div class="text-left form-group"
 									id="<%=ServletUtils.BTN_ANNULER%>">
 									<a href="<%= request.getContextPath() + ServletUtils.ACCUEIL %>" class="btn btn-danger btn-user btn-block">Annuler
 									</a>
 								</div>
-								<%} else { %>
+								</c:if>
+								<c:if test="${sessionScope.sessionUtilisateur != null}">
 								<div class="text-left form-group"
 									id="<%=ServletUtils.BTN_SUPPRIMER%>">
 									<a href="<%= request.getContextPath() + ServletUtils.ACCUEIL %>" class="btn btn-danger btn-user btn-block">Supprimer
 										mon compte </a>
 								</div>
-								<%} %>
+								</c:if>
 							</div>
 							<div class="col-sm-4">
-								<% if (u == null) {%>
+								<c:if test="${sessionScope.sessionUtilisateur == null}">
 								<div class="text-right form-group"
 									id="<%=ServletUtils.BTN_INSCRIPTION%>">
 									<input type="submit" class="btn btn-primary btn-user btn-block"
 										value="S'inscrire">
 								</div>
-								<% }else{ %>
+								</c:if>
+								<c:if test="${sessionScope.sessionUtilisateur != null}">
 								<div class="text-right form-group"
 									id="<%=ServletUtils.BTN_ENREGISTRER%>">
 									<input type="submit" class="btn btn-primary btn-user btn-block"
 										value="Enregistrer">
 								</div>
-								<%} %>
+								</c:if>
 							</div>
 							<div class="col-sm-2"></div>
 						</div>
