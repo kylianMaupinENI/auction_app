@@ -76,52 +76,58 @@
 								<div class="col-sm-6  bg-gray-100">
 									<div class="form-check">
 										<input class="form-check-input" type="radio"
-											name="radioCategories" value="radioAchat"> <label
+											name="radioCategories" value="radioAchat"
+											onclick="clickRadioAchat()"> <label
 											class="form-check-label" for="radioAchat" id="radioAchat">
 											Achat</label>
 									</div>
 									<div class="blockCheckbox">
 										<div class="form-check">
-											<input type="checkbox" name="typesAchat" value="encheresOuvertes"> <label
-												class="form-check-label"											
-												for="encheresOuvertes">
+											<input type="checkbox" name="typesAchat"
+												value="encheresOuvertes" id="encheresOuvertes"> <label
+												class="form-check-label" for="encheresOuvertes">
 												Enchères ouvertes </label>
 										</div>
 										<div class="form-check">
-											<input type="checkbox" name="typesAchat" value="mesEncheresEnCours"> <label
-												class="form-check-label" for="mesEncheresEnCours"> Mes
-												enchères en cours </label>
+											<input type="checkbox" name="typesAchat"
+												value="mesEncheresEnCours" id="encheresEnCours"> <label
+												class="form-check-label" for="mesEncheresEnCours">
+												Mes enchères en cours </label>
 										</div>
 										<div class="form-check">
-											<input type="checkbox" name="typesAchat" value="mesEncheresRemportees"> <label
-												class="form-check-label" for="mesEncheresRemportees"> Mes
-												enchères remportées </label>
+											<input type="checkbox" name="typesAchat"
+												value="mesEncheresRemportees" id="encheresRemportees">
+											<label class="form-check-label" for="mesEncheresRemportees">
+												Mes enchères remportées </label>
 										</div>
 									</div>
 								</div>
 								<div class="col-sm-6  bg-gray-100">
 									<div class="form-check">
 										<input class="form-check-input" type="radio"
-											name="radioCategories" value="radioVente" > <label
+											name="radioCategories" value="radioVente"
+											onclick="clickRadioVente()"> <label
 											class="form-check-label" for="radioVente" id="radioVente">
 											Mes vente</label>
 									</div>
 									<div class="blockCheckbox">
-
 										<div class="form-check">
-											<input type="checkbox" name="typesVente" value="mesVentesEnCours"> <label
+											<input type="checkbox" name="typesVente"
+												value="mesVentesEnCours" id="mesVentesEnCours"> <label
 												class="form-check-label" for="mesVentesEnCours"> Mes
 												ventes en cours </label>
 										</div>
 										<div class="form-check">
-											<input type="checkbox" name="typesVente" value="mesVenetsNonDebutees"> <label
-												class="form-check-label" for="mesVenetsNonDebutees"> Ventes
-												non débutées </label>
+											<input type="checkbox" name="typesVente"
+												value="mesVenetsNonDebutees" id="mesVentesNonDebutees">
+											<label class="form-check-label" for="mesVentesNonDebutees">
+												Ventes non débutées </label>
 										</div>
 										<div class="form-check">
-											<input type="checkbox" name="typesVente" value="mesVentesTerminees"><label
-												class="form-check-label" for="mesVentesTerminees"> Vente
-												terminées </label>
+											<input type="checkbox" name="typesVente"
+												value="mesVentesTerminees" id="mesVentesTerminees"><label
+												class="form-check-label" for="mesVentesTerminees">
+												Vente terminées </label>
 										</div>
 									</div>
 								</div>
@@ -198,5 +204,24 @@
 	<!-- DEBUT BAS DE PAGE -->
 	<%@include file="basDePage.jsp"%>
 	<!-- FIN BAS DE PAGE -->
+
+	<script>
+		function clickRadioAchat() {
+			document.getElementById("mesVentesEnCours").disabled = true;
+			document.getElementById("mesVentesNonDebutees").disabled = true;
+			document.getElementById("mesVentesTerminees").disabled = true;
+			document.getElementById("encheresOuvertes").disabled = false;
+			document.getElementById("encheresEnCours").disabled = false;
+			document.getElementById("encheresRemportees").disabled = false;
+		}
+		function clickRadioVente() {
+			document.getElementById("encheresOuvertes").disabled = true;
+			document.getElementById("encheresEnCours").disabled = true;
+			document.getElementById("encheresRemportees").disabled = true;
+			document.getElementById("mesVentesEnCours").disabled = false;
+			document.getElementById("mesVentesNonDebutees").disabled = false;
+			document.getElementById("mesVentesTerminees").disabled = false;
+		}
+	</script>
 </body>
 </html>
