@@ -38,38 +38,38 @@
 					ArticleVendu av = (ArticleVendu) request.getAttribute("articleVendu");
 				%>
 				<h3>
-					<%-- <%=av.getNomArticle()%> --%>
+					<%=av.getNomArticle()%>
 					PC
 				</h3>
 				<div>
 					Description :
 					<p>
-						<%-- <%=av.getDescription()%> --%>
+						<%=av.getDescription()%>
 					</p>
 				</div>
 				<div>
 					Catégorie :
-					<%-- <%=av.getCategorie()%> --%>
+					<%=av.getCategorie()%>
 				</div>
 				<div>
 					Meilleure offre :
-					<%-- <%=av.getNom()%> --%>
+					<%=av.getNom()%>
 				</div>
 				<div>
 					Mise à prix :
-					<%-- <%=av.getMiseAPrix()%> --%>
+					<%=av.getMiseAPrix()%>
 				</div>
 				<div>
 					Fin de l'enchère :
-					<%-- <%=av.getDateFinEncheres()%> --%>
+					<%=av.getDateFinEncheres()%>
 				</div>
 				<div>
 					Retrait :
-					<%-- <%=av.getLieuRetrait()%> --%>
+					<%=av.getLieuRetrait()%>
 				</div>
 				<div>
 					Vendeur :
-					<%-- <%=av.getProprietaire()%> --%>
+					<%=av.getProprietaire()%>
 				</div>
 				<div class="form-group">
 					<label for="propositionEnchere">Ma proposition :</label> <input

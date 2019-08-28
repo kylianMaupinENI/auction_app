@@ -26,7 +26,7 @@ public class ServletUtils {
 	public static final String JSP_ACCUEIL = "/WEB-INF/index.jsp";
 	public static final String JSP_INSCRIPTION = "/WEB-INF/creationDeCompte.jsp";
 	public static final String JSP_CONNEXION = "/WEB-INF/connexion.jsp";
-	public static final String JSP_NOUVELLE_VENTE = "/WEB-INF/nouvelle_vente.jsp";
+	public static final String JSP_NOUVELLE_VENTE = "/WEB-INF/vente.jsp";
 	public static final String JSP_403 = "/WEB-INF/403.jsp";
 	public static final String JSP_404 = "/WEB-INF/404.jsp";
 	public static final String DETAIL_ENCHERE = "/WEB-INF/detailEnchere.jsp";

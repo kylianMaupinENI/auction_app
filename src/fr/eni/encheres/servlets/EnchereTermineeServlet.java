@@ -33,7 +33,6 @@ public class EnchereTermineeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String noArticleStr = request.getParameter(ServletUtils.ATT_ARTICLE_GAGNANT);
-		System.out.println(noArticleStr);
 		ArticleVenduManager articleVenduManager = new ArticleVenduManager();
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
 		
