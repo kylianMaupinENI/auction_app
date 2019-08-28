@@ -103,8 +103,9 @@ public class ArticleVenduManager {
 		return articleVenduDAO.selectById(id);
 	}
 
-	public void updatePrixVenteEnchere(int prixVente, int noArticle, LocalDate dateEnchere) throws BusinessException {
-		int no_utilisateur = 1;
+	public void updatePrixVenteEnchere(int prixVente, int noArticle, LocalDate dateEnchere, Utilisateur utilisateur) throws BusinessException {
+		
+		int no_utilisateur = utilisateur.getNoUtilisateur();
 		
 		BusinessException businessException = new BusinessException();
 

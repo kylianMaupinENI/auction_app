@@ -474,7 +474,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		stm.setDate(3, Date.valueOf(articleVendu.getDateDebutEncheres()));
 		stm.setDate(4, Date.valueOf(articleVendu.getDateFinEncheres()));
 		stm.setInt(5, articleVendu.getMiseAPrix());
-		stm.setInt(6, 1);
+		stm.setInt(6, articleVendu.getProprietaire().getNoUtilisateur());
 		stm.setInt(7, articleVendu.getCategorie().getNoCategorie());
 	}
 

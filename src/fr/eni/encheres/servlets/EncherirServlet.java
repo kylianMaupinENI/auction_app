@@ -68,7 +68,7 @@ public class EncherirServlet extends HttpServlet {
 		System.out.println(dateEnchere);
 		
 		try {
-			articleVenduManager.updatePrixVenteEnchere(prixVente, idArticle,  dateEnchere);
+			articleVenduManager.updatePrixVenteEnchere(prixVente, idArticle,  dateEnchere,utilisateur);
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
