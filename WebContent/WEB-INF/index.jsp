@@ -79,51 +79,51 @@
 							<div class="col-sm-6  bg-gray-100">
 								<div class="form-check">
 									<input class="form-check-input" type="radio"
-										name="radioCategories" value="option1" checked> <label
-										class="form-check-label" for="exampleRadios1" id="radioAchat">
+										name="radioCategories" value="radioAchat" id="radioAchat" checked> <label
+										class="form-check-label" for="radioAchat" id="radioAchatLabel">
 										Achat</label>
 								</div>
 								<div id="checkboxAchat">
 									<div class="form-check">
-										<input type="checkbox" value="" id="checkboxVente"> <label
-											class="form-check-label" id="checkboxVenteLabel"
-											for="defaultCheck1"> Enchères ouvertes </label>
+										<input type="checkbox" name="typesAchat" value="encheresOuvertes" id="encheresOuvertes"> <label
+											class="form-check-label" id="encheresOuvertesLabel"
+											for="encheresOuvertes"> Enchères ouvertes </label>
 									</div>
 									<div class="form-check">
-										<input type="checkbox" value="" id="checkboxVente"> <label
-											class="form-check-label" id="checkboxVenteLabel "
-											for="defaultCheck1"> Mes enchères en cours </label>
+										<input type="checkbox" name="typesAchat" value="mesEncheresEnCours" id="mesEncheresEnCours"> <label
+											class="form-check-label" id="mesEncheresEnCoursLabel "
+											for="mesEncheresEnCours"> Mes enchères en cours </label>
 									</div>
 									<div class="form-check">
-										<input type="checkbox" value="" id="checkboxVente"> <label
-											class="form-check-label" id="checkboxVenteLabel "
-											for="defaultCheck1"> Mes enchères remportées </label>
+										<input type="checkbox" name="typesAchat" value="mesEncheresRemportees" id="mesEncheresRemportees"> <label
+											class="form-check-label" id="mesEncheresRemportesLabel "
+											for="mesEncheresRemportees"> Mes enchères remportées </label>
 									</div>
 								</div>
 							</div>
 							<div class="col-sm-6  bg-gray-100">
 								<div class="form-check">
-									<input class="form-check-input" type="radio"
-										name="radioCategories" value="option2" checked> <label
-										class="form-check-label" for="exampleRadios1" id="radioVente">
+									<input class="form-check-input" type="radio" id="radioVente"
+										name="radioCategories" value="radioVente" checked> <label
+										class="form-check-label" for="radioVente" id="radioVenteLabel">
 										Mes vente</label>
 								</div>
 								<div id="checkboxVente">
 
 									<div class="form-check">
-										<input type="checkbox" value="" id="checkboxVente"> <label
-											class="form-check-label" id="checkboxVenteLabel "
-											for="defaultCheck1"> Mes ventes en cours </label>
+										<input type="checkbox" name="typesVente" value="mesVentesEnCours" id="mesVentesEnCours"> <label
+											class="form-check-label" id="mesVentesEnCoursLabel "
+											for="mesVentesEnCours"> Mes ventes en cours </label>
 									</div>
 									<div class="form-check">
-										<input type="checkbox" value="" id="checkboxVente"> <label
-											class="form-check-label" id="checkboxVenteLabel "
-											for="defaultCheck1"> Ventes non débutées </label>
+										<input type="checkbox" name="typesVente" value="mesVenetsNonDebutees" id="mesVenetsNonDebutees"> <label
+											class="form-check-label" id="mesVenetsNonDebuteesLabel "
+											for="mesVenetsNonDebutees"> Ventes non débutées </label>
 									</div>
 									<div class="form-check">
-										<input type="checkbox" value="" id="checkboxVente"><label
-											class="form-check-label" id="checkboxVenteLabel"
-											for="defaultCheck1"> Vente terminées </label>
+										<input type="checkbox" name="typesVente" value="mesVentesTerminees" id="mesVentesTerminees"><label
+											class="form-check-label" id="mesVentesTermineesLabel"
+											for="mesVentesTerminees"> Vente terminées </label>
 									</div>
 								</div>
 							</div>
