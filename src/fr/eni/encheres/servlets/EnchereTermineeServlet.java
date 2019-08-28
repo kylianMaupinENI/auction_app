@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bll.ArticleVenduManager;
+import fr.eni.encheres.bll.EnchereManager;
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.ArticleVendu;
 import fr.eni.encheres.bo.Utilisateur;
@@ -35,14 +36,15 @@ public class EnchereTermineeServlet extends HttpServlet {
 		String noArticleStr = request.getParameter(ServletUtils.ATT_ARTICLE_GAGNANT);
 		ArticleVenduManager articleVenduManager = new ArticleVenduManager();
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
+		EnchereManager enchereManager = new EnchereManager();
 		
-		ArticleVendu article;
 		Utilisateur gagnant = null;
 		try {
 			int noArticle = Integer.parseInt(noArticleStr);
-			article = articleVenduManager.selectById(noArticle);
-			int noUtilisateur = article.getProprietaire().getNoUtilisateur();
-			gagnant = utilisateurManager.selectById(noUtilisateur);
+			ArticleVendu article = articleVenduManager.selectById(noArticle);
+			int montant = article.getPrixVente();
+			int noGagnant = enchereManager.selectGagnant(noArticle, montant);
+			gagnant = utilisateurManager.selectById(noGagnant);
 			
 		} catch (BusinessException e) {
 			e.printStackTrace();
