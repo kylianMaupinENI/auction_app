@@ -44,7 +44,6 @@ public class ServletUtils {
 	public static final String MODIFIER_ARTICLE = "/modifier_article";
 	public static final String ENCHERIR = "/encherir";
 	public static final String DETAIL_ENCHERE = "/enchere";
-	public static final String SUPPRIMER = "/supprimer";
 
 	public static final String ATT_LISTE_ERREURS = "listeCodesErreur";
 	public static final String ATT_MODIFIABLE = "modifiable";
@@ -76,6 +75,5 @@ public class ServletUtils {
 	public static final String ATT_ARTICLE_GAGNANT = "noArticle";
 	
 	public static final String SERVLET_MODIFIER_PROFIL = "/modificationProfil";
-	public static final String SERVLET_SUPPRIMER_PROFIL = "/ServletSuppressionCompte";
 
 }

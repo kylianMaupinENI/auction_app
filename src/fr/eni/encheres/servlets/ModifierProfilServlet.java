@@ -12,7 +12,6 @@ import javax.servlet.http.HttpSession;
 
 import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bll.UtilisateurManager;
-import fr.eni.encheres.bo.ArticleVendu;
 import fr.eni.encheres.bo.Utilisateur;
 
 /**
@@ -65,68 +64,51 @@ public class ModifierProfilServlet extends HttpServlet {
 		String confirmation = request.getParameter(ServletUtils.CHAMP_CONFIRMATION_INSCRIPTION);
 
 		int noUtilisateur = utilisateur.getNoUtilisateur();
-		String choixUtilisateur = request.getParameter("ChoixBouton");
-		System.out.println("choix u : " + choixUtilisateur);
-		String pseudoUtilisateur;
-		ArticleVendu articleVendu = null;
 
-		if(choixUtilisateur.equals("Supprimer mon compte")) {
-			try {
-				pseudoUtilisateur = request.getParameter("pseudoUtilisateur"); //pseudo a passer en parametre
-				System.out.println("pseudo : " + pseudoUtilisateur);
-				utilisateurManager.supprimerUtilisateur(pseudoUtilisateur);
-//				request.setAttribute("articleVendu", articleVendu);
-			} catch (BusinessException e) {
-				e.printStackTrace();
-			}
-			
-			RequestDispatcher rd = this.getServletContext().getRequestDispatcher(ServletUtils.DECONNEXION);
-			rd.forward(request, response);
-		}else if (choixUtilisateur.equals("Enregistrer")) {
-			if ((pseudo == null) || pseudo.equals("")) {
-				pseudo = utilisateur.getPseudo();
-			}
-			if ((nom == null) || nom.equals("")) {
-				nom = utilisateur.getNom();
-			}
-			if ((prenom == null) || prenom.equals("")) {
-				prenom = utilisateur.getPrenom();
-			}
-			if ((email == null) || email.equals("")) {
-				email = utilisateur.getEmail();
-			}
-			if ((telephone == null) || telephone.equals("")) {
-				telephone = utilisateur.getTelephone();
-			}
-			if ((rue == null) || rue.equals("")) {
-				rue = utilisateur.getAdresse().getRue();
-			}
-			if ((codePostal == null) || codePostal.equals("")) {
-				codePostal = utilisateur.getAdresse().getCodePostal();
-			}
-			if ((ville == null) || ville.equals("")) {
-				ville = utilisateur.getAdresse().getVille();
-			}
-			if ((motDePasse == null) || motDePasse.equals("")) {
-				motDePasse = utilisateur.getMotDePasse();
-			}
-	
-			RequestDispatcher rd = this.getServletContext().getRequestDispatcher(ServletUtils.ACCUEIL);
-	
-			int credit = utilisateur.getCredit();
-			boolean administrateur = utilisateur.isAdministrateur();
-	
-			try {
-				utilisateurManager.modifieUtilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal,
-						ville, motDePasse, confirmation, credit, administrateur);
-				rd = this.getServletContext().getRequestDispatcher(ServletUtils.DETAILS_PROFIL);
-	
-			} catch (BusinessException e) {
-				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
-				e.printStackTrace();
-			}
-			rd.forward(request, response);
+		if ((pseudo == null) || pseudo.equals("")) {
+			pseudo = utilisateur.getPseudo();
 		}
+		if ((nom == null) || nom.equals("")) {
+			nom = utilisateur.getNom();
+		}
+		if ((prenom == null) || prenom.equals("")) {
+			prenom = utilisateur.getPrenom();
+		}
+		if ((email == null) || email.equals("")) {
+			email = utilisateur.getEmail();
+		}
+		if ((telephone == null) || telephone.equals("")) {
+			telephone = utilisateur.getTelephone();
+		}
+		if ((rue == null) || rue.equals("")) {
+			rue = utilisateur.getAdresse().getRue();
+		}
+		if ((codePostal == null) || codePostal.equals("")) {
+			codePostal = utilisateur.getAdresse().getCodePostal();
+		}
+		if ((ville == null) || ville.equals("")) {
+			ville = utilisateur.getAdresse().getVille();
+		}
+		if ((motDePasse == null) || motDePasse.equals("")) {
+			motDePasse = utilisateur.getMotDePasse();
+		}
+
+		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(ServletUtils.ACCUEIL);
+
+		int credit = utilisateur.getCredit();
+		boolean administrateur = utilisateur.isAdministrateur();
+
+		try {
+			utilisateurManager.modifieUtilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal,
+					ville, motDePasse, confirmation, credit, administrateur);
+			rd = this.getServletContext().getRequestDispatcher(ServletUtils.DETAILS_PROFIL);
+
+		} catch (BusinessException e) {
+			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+			e.printStackTrace();
+		}
+
+		rd.forward(request, response);
 	}
 
 }
