@@ -48,7 +48,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 	private static final String TERMINE = " WHERE a.date_fin_encheres < ?";
 
-	private static final String COND_RECHERCHE = " AND a.nom_article LIKE '%?%'";
+	private static final String COND_RECHERCHE = " AND a.nom_article LIKE ?";
 
 	private static final String COND_CATEGORIE = " AND c.libelle = ?";
 
@@ -70,11 +70,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 	private static final String DELETE_ARTICLE_VENDU = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?;";
 
-	private static final String SELECT_BY_PSEUDO_ET_NOM = "SELECT a.no_article, a.nom_article, a.description, a.date_debut_encheres, a.date_fin_encheres, "
-			+ "a.prix_initial, a.prix_vente,c.no_categorie, c.libelle, u.pseudo, r.rue, r.code_postal, r.ville "
-			+ "FROM ARTICLES_VENDUS a " + "INNER JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur"
-			+ "INNER JOIN CATEGORIES c ON c.no_categorie = a.no_categorie"
-			+ "INNER JOIN RETRAITS r ON r.no_article = a.no_artcle" + "WHERE u.pseudo = ? AND a.nom_article = ?";
 
 	@Override
 	public void insert(ArticleVendu articleVendu) throws BusinessException {
@@ -208,7 +203,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			int curParam = 3;
 
 			if (query.contains(COND_RECHERCHE)) {
-				pstmt.setString(curParam, recherche);
+				pstmt.setString(curParam, "%" + recherche + "%");
+				
 				curParam++;
 			}
 			if (query.contains(COND_CATEGORIE)) {
@@ -272,7 +268,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			int curParam = 4;
 
 			if (query.contains(COND_RECHERCHE)) {
-				pstmt.setString(curParam, recherche);
+				pstmt.setString(curParam, "%" + recherche + "%");
+
 				curParam++;
 			}
 			if (query.contains(COND_CATEGORIE)) {
@@ -333,7 +330,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			int curParam = 3;
 
 			if (query.contains(COND_RECHERCHE)) {
-				pstmt.setString(curParam, recherche);
+				pstmt.setString(curParam, "%" + recherche + "%");
+
 				curParam++;
 			}
 			if (query.contains(COND_CATEGORIE)) {
@@ -506,7 +504,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			int curParam = 4;
 
 			if (query.contains(COND_RECHERCHE)) {
-				pstmt.setString(curParam, recherche);
+				pstmt.setString(curParam, "%" + recherche + "%");
+
 				curParam++;
 			}
 			if (query.contains(COND_CATEGORIE)) {
@@ -567,7 +566,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			int curParam = 3;
 
 			if (query.contains(COND_RECHERCHE)) {
-				pstmt.setString(curParam, recherche);
+				pstmt.setString(curParam, "%" + recherche + "%");
+
 				curParam++;
 			}
 			if (query.contains(COND_CATEGORIE)) {
@@ -628,7 +628,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			int curParam = 3;
 
 			if (query.contains(COND_RECHERCHE)) {
-				pstmt.setString(curParam, recherche);
+				pstmt.setString(curParam, "%" + recherche + "%");
+
 				curParam++;
 			}
 			if (query.contains(COND_CATEGORIE)) {

@@ -176,7 +176,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		stm.setString(7, utilisateur.getAdresse().getCodePostal());
 		stm.setString(8, utilisateur.getAdresse().getVille());
 		stm.setString(9, utilisateur.getMotDePasse());
-		stm.setInt(10, utilisateur.getCredit());
+		stm.setInt(10, 1000);
 		stm.setBoolean(11, utilisateur.isAdministrateur());
 	}
 

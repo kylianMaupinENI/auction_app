@@ -50,7 +50,7 @@
 									</button>
 									<div class="form-group" id="blockCategorieIndex">
 										<label for="categorieIndex" id="categorieIndex">Catégories</label>
-										<select class="form-control" id="SelectIndex">
+										<select class="form-control" name = "selectCategoriesAccueil" id="SelectIndex">
 											<option>Toutes</option>
 											<option>Informatique</option>
 											<option>Ameublement</option>

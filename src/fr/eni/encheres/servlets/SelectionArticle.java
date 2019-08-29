@@ -16,7 +16,6 @@ import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bll.ArticleVenduManager;
 import fr.eni.encheres.bo.ArticleVendu;
 import fr.eni.encheres.bo.Categorie;
-import fr.eni.encheres.bo.EtatVente;
 import fr.eni.encheres.bo.Utilisateur;
 
 /**
@@ -74,6 +73,10 @@ public class SelectionArticle extends HttpServlet {
 		
 		Categorie categorie = Categorie.fromString(categorieStr);
 
+		System.out.println(recherche);
+		System.out.println(categorie);
+		
+		
 		RequestDispatcher rd;
 
 		ArticleVenduManager articleVenduManager = new ArticleVenduManager();
@@ -174,10 +177,8 @@ public class SelectionArticle extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-
 		request.setAttribute(ServletUtils.ATT_LISTE_ARTICLES, articles);
 		this.getServletContext().getRequestDispatcher(ServletUtils.JSP_ACCUEIL).forward(request, response);
 
 	}
-
 }
