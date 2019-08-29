@@ -37,4 +37,8 @@ public abstract class CodesResultatDAL {
 	 * Echec suppression de l'utilisateur
 	 */
 	public static final int DELETE_UTILISATEUR_ECHEC = 10007;
+	/**
+	 * Echec de la lecture de l'utilisateur
+	 */
+	public static final int LECTURE_UTILISATEUR_ECHEC = 10008;
 }
