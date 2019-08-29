@@ -92,8 +92,38 @@ public class UtilisateurManager {
 		utilisateurDAO.update(utilisateur);
 	}
 
+	public void modifieSoldeUtilisateur(int noUtilisateur, int prixVente, boolean isGagnant) throws BusinessException {
+		BusinessException businessException = new BusinessException();
+		Utilisateur utilisateur = utilisateurDAO.selectById(noUtilisateur);
+		validerSolde(noUtilisateur, prixVente, businessException);
+
+		if (businessException.hasErreurs()) {
+			throw businessException;
+		}
+		int solde = 0;
+
+		if(isGagnant == false) {
+			solde = utilisateur.getCredit() + prixVente;
+		} else {
+			solde = utilisateur.getCredit() - prixVente;
+		}
+		
+		utilisateurDAO.updateSolde(utilisateur, prixVente);
+	}
+
 	public Utilisateur selectionUtilisateur(String pseudo) throws BusinessException {
 		return utilisateurDAO.selectByPseudo(pseudo);
+	}
+
+	private void validerSolde(int noUtilisateur, int prixVente, BusinessException businessException)
+			throws BusinessException {
+
+		Utilisateur utilisateur = utilisateurDAO.selectById(noUtilisateur);
+		int solde = utilisateur.getCredit();
+
+		if (prixVente > solde) {
+			businessException.ajouterErreur(CodesResultatBLL.CREDIT_INSUFFISANT);
+		}
 	}
 
 	private void validerVille(String ville, BusinessException businessException) {

@@ -24,29 +24,36 @@ public class ArticleVenduManager {
 	}
 
 	public ArticleVendu ajouteArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAPrix, int prixVente, Adresse lieuRetrait, Utilisateur proprietaire,
+			LocalDate dateFinEncheres, int miseAPrix, int prixVente, String rue, String codePostal, String ville, Utilisateur proprietaire,
 			Categorie categorie) throws BusinessException {
 
 		ArticleVendu articleVendu = null;
 
 		BusinessException businessException = new BusinessException();
-		if (!businessException.hasErreurs()) {
-			articleVendu = new ArticleVendu();
-
-			articleVendu.setNomArticle(nomArticle);
-			articleVendu.setDescription(description);
-			articleVendu.setCategorie(categorie);
-			articleVendu.setMiseAPrix(miseAPrix);
-			articleVendu.setDateDebutEncheres(dateDebutEncheres);
-			articleVendu.setDateFinEncheres(dateFinEncheres);
-			articleVendu.setPrixVente(prixVente);
-			articleVendu.setLieuRetrait(lieuRetrait);
-			articleVendu.setProprietaire(proprietaire);
-			articleVenduDAO.insert(articleVendu);
-
-		} else {
+		validerNomArticle(nomArticle, businessException);
+		validerDescription(description, businessException);
+		validerDateDebut(dateDebutEncheres, businessException);
+		validerDateFin(dateFinEncheres, dateDebutEncheres, businessException);
+		validerMiseAPrix(miseAPrix, businessException);
+		validerRue(rue, businessException);
+		validerCodePostal(codePostal, businessException);
+		validerVille(ville, businessException);
+		
+		if (businessException.hasErreurs()) {
 			throw businessException;
 		}
+		articleVendu = new ArticleVendu();
+		Adresse lieuRetrait = new Adresse(rue,codePostal,ville);
+		articleVendu.setNomArticle(nomArticle);
+		articleVendu.setDescription(description);
+		articleVendu.setCategorie(categorie);
+		articleVendu.setMiseAPrix(miseAPrix);
+		articleVendu.setDateDebutEncheres(dateDebutEncheres);
+		articleVendu.setDateFinEncheres(dateFinEncheres);
+		articleVendu.setPrixVente(prixVente);
+		articleVendu.setLieuRetrait(lieuRetrait);
+		articleVendu.setProprietaire(proprietaire);
+		articleVenduDAO.insert(articleVendu);
 
 		return articleVendu;
 	}
@@ -70,7 +77,12 @@ public class ArticleVenduManager {
 			throw businessException;
 		}
 
-		ArticleVendu articleVendu = null;
+
+		Adresse lieuRetrait = new Adresse(rue,codePostal,ville);
+		ArticleVendu articleVendu = new ArticleVendu(noArticle,nomArticle,description,dateDebutEncheres,dateFinEncheres,
+		miseAPrix,prixVente,lieuRetrait,proprietaire,categorie);
+		
+		articleVenduDAO.update(articleVendu);
 		return articleVendu;
 
 	}
@@ -79,13 +91,14 @@ public class ArticleVenduManager {
 		return articleVenduDAO.selectById(id);
 	}
 
-	public void updatePrixVenteEnchere(int prixVente, int noArticle, LocalDate dateEnchere, Utilisateur utilisateur) throws BusinessException {
+	public void updatePrixVenteEnchere(int prixVente, int noArticle, LocalDate dateEnchere, Utilisateur utilisateur)
+			throws BusinessException {
 		
 		int no_utilisateur = utilisateur.getNoUtilisateur();
-		
+
 		BusinessException businessException = new BusinessException();
 
-		validerEnchere(noArticle,prixVente, businessException);
+		validerEnchere(noArticle, prixVente, businessException);
 		articleVenduDAO.updatePrixVente(prixVente, noArticle, no_utilisateur, dateEnchere);
 		if (businessException.hasErreurs()) {
 			throw businessException;
@@ -94,6 +107,8 @@ public class ArticleVenduManager {
 
 	private void validerEnchere(int noArticle, int prixVente, BusinessException businessException)
 			throws BusinessException {
+		
+
 		ArticleVendu articleVendu = articleVenduDAO.selectById(noArticle);
 
 		if ((articleVendu.getPrixVente() == 0) && (prixVente <= articleVendu.getMiseAPrix())) {
@@ -164,24 +179,28 @@ public class ArticleVenduManager {
 		return articleVenduDAO.selectEncheresOuvertes(recherche, categorie);
 	}
 
-	public List<ArticleVendu> selectMesAchatsEnCours(String recherche, Categorie categorie, Utilisateur utilisateur) throws BusinessException {
+	public List<ArticleVendu> selectMesAchatsEnCours(String recherche, Categorie categorie, Utilisateur utilisateur)
+			throws BusinessException {
 		return articleVenduDAO.selectMesAchatsEnCours(recherche, categorie, utilisateur.getNoUtilisateur());
 	}
 
-	public List<ArticleVendu> selectMesVentesEnCours(String recherche, Categorie categorie, Utilisateur utilisateur) throws BusinessException {
+	public List<ArticleVendu> selectMesVentesEnCours(String recherche, Categorie categorie, Utilisateur utilisateur)
+			throws BusinessException {
 		return articleVenduDAO.selectMesVentesEnCours(recherche, categorie, utilisateur.getNoUtilisateur());
 	}
 
-	public List<ArticleVendu> selectMesAchatsRemportes(String recherche, Categorie categorie, Utilisateur utilisateur) throws BusinessException {
+	public List<ArticleVendu> selectMesAchatsRemportes(String recherche, Categorie categorie, Utilisateur utilisateur)
+			throws BusinessException {
 		return articleVenduDAO.selectMesAchatsRemportes(recherche, categorie, utilisateur.getNoUtilisateur());
 	}
 
-	public List<ArticleVendu> selectionVentesNonDebutees(String recherche, Categorie categorie,
-			Utilisateur utilisateur) throws BusinessException {
+	public List<ArticleVendu> selectionVentesNonDebutees(String recherche, Categorie categorie, Utilisateur utilisateur)
+			throws BusinessException {
 		return articleVenduDAO.selectionMesVentesNonDebutees(recherche, categorie, utilisateur.getNoUtilisateur());
 	}
 
-	public List<ArticleVendu> selectionVentesTerminees(String recherche, Categorie categorie, Utilisateur utilisateur) throws BusinessException {
+	public List<ArticleVendu> selectionVentesTerminees(String recherche, Categorie categorie, Utilisateur utilisateur)
+			throws BusinessException {
 		return articleVenduDAO.selectMesVentesTerminees(recherche, categorie, utilisateur.getNoUtilisateur());
 	}
 

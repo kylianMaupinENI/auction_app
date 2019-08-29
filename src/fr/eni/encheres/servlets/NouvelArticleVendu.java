@@ -95,13 +95,12 @@ public class NouvelArticleVendu extends HttpServlet {
 			listeCodeErreur.add(CodesResultatServlets.FORMAT_DATE_ERREUR);
 		}
 
-		// TODO Vï¿½rifier si l'article est en cours ou en attente de vente
+		// TODO Vérifier si l'article est en cours ou en attente de vente
 
-		if (!ville.equals("") || !rue.equals("") || !codePostal.equals("")) {
-			adresse = new Adresse(rue, codePostal, ville);
-		} else {
-			adresse = new Adresse(proprietaire.getAdresse().getRue(), proprietaire.getAdresse().getCodePostal(),
-					proprietaire.getAdresse().getVille());
+		if (ville.equals("") || rue.equals("") || codePostal.equals("")) {
+			rue = proprietaire.getAdresse().getRue();
+			codePostal = proprietaire.getAdresse().getCodePostal();
+			ville = proprietaire.getAdresse().getVille();
 		}
 
 		if (listeCodeErreur.size() > 0) {
@@ -112,14 +111,14 @@ public class NouvelArticleVendu extends HttpServlet {
 			ArticleVenduManager articleVenduManager = new ArticleVenduManager();
 			try {
 				articleVenduManager.ajouteArticleVendu(nom, description, dateDebutEnchere, dateFinEnchere, prixInitial,
-						prixVente, adresse, proprietaire, categorie);
+						prixVente, rue, codePostal, ville, proprietaire, categorie);
 				RequestDispatcher rd = request.getRequestDispatcher(ServletUtils.ACCUEIL);
 
 				rd.forward(request, response);
 			} catch (BusinessException e) {
 				e.printStackTrace();
 				request.setAttribute("lstErreurs", e.getListeCodesErreur());
-				RequestDispatcher rd = request.getRequestDispatcher(ServletUtils.ACCUEIL);
+				RequestDispatcher rd = request.getRequestDispatcher(ServletUtils.JSP_NOUVELLE_VENTE);
 				rd.forward(request, response);
 			}
 		}

@@ -3,7 +3,6 @@ package fr.eni.encheres.servlets;
 import java.io.IOException;
 import java.time.LocalDate;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bll.ArticleVenduManager;
-import fr.eni.encheres.bo.ArticleVendu;
+import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Utilisateur;
 
 /**
@@ -50,6 +49,7 @@ public class EncherirServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Utilisateur utilisateur = null;
+		UtilisateurManager utilisateurManager = new UtilisateurManager();
 		HttpSession session = request.getSession();
 		if (session != null) {
 			utilisateur = (Utilisateur) session.getAttribute(ServletUtils.ATT_SESSION_USER);
@@ -64,6 +64,10 @@ public class EncherirServlet extends HttpServlet {
 
 		try {
 			articleVenduManager.updatePrixVenteEnchere(prixVente, idArticle, dateEnchere, utilisateur);
+			
+			int idUtilisateur = utilisateur.getNoUtilisateur();
+			utilisateurManager.modifieSoldeUtilisateur(idUtilisateur, prixVente, true);
+		
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
@@ -72,7 +76,6 @@ public class EncherirServlet extends HttpServlet {
 		this.getServletContext()
 				.getRequestDispatcher(ServletUtils.DETAIL_ENCHERE + ServletUtils.ID_ARTICLE_PARAM + idArticle)
 				.forward(request, response);
-		;
 
 	}
 
