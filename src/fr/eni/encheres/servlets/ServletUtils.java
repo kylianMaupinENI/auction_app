@@ -61,7 +61,7 @@ public class ServletUtils {
 	public static final String CHAMP_VILLE_ARTICLE = "ville_proprietaire";
 
 	public static final String CHAMP_MOT_CLE_ACCUEIL = "search";
-	public static final String CHAMP_CATEGORIE_ACCUEIL = "selectCategoriesAccueilDeco";
+	public static final String CHAMP_CATEGORIE_ACCUEIL = "selectCategoriesAccueil";
 
 	public static final String CHAMP_PSEUDO_CONNEXION = "pseudo";
 	public static final String CHAMP_MOT_DE_PASSE_CONNEXION = "motDePasse";

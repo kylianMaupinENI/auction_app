@@ -49,7 +49,6 @@ public class InscriptionServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		System.out.println("bla");
 		String pseudo = request.getParameter(ServletUtils.CHAMP_PSEUDO_INSCRIPTION);
 		String nom = request.getParameter(ServletUtils.CHAMP_NOM_INSCRIPTION);
 		String prenom = request.getParameter(ServletUtils.CHAMP_PRENOM_INSCRIPTION);
@@ -61,7 +60,7 @@ public class InscriptionServlet extends HttpServlet {
 		String motDePasse = request.getParameter(ServletUtils.CHAMP_MOT_DE_PASSE_INSCRIPTION);
 		String confirmation = request.getParameter(ServletUtils.CHAMP_CONFIRMATION_INSCRIPTION);
 
-		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(ServletUtils.INSCRIPTION);
+		RequestDispatcher rd = this.getServletContext().getRequestDispatcher(ServletUtils.JSP_INSCRIPTION);
 
 		try {
 			Utilisateur utilisateur = utilisateurManager.ajouteUtilisateur(pseudo, nom, prenom, email, telephone, rue,

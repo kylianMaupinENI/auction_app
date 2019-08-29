@@ -176,6 +176,8 @@ public class ArticleVenduManager {
 	}
 
 	public List<ArticleVendu> selectEncheresOuvertes(String recherche, Categorie categorie) throws BusinessException {
+		System.out.println(recherche);
+		System.out.println(categorie);
 		return articleVenduDAO.selectEncheresOuvertes(recherche, categorie);
 	}
 
