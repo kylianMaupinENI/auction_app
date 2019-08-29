@@ -69,6 +69,7 @@ public class EncherirServlet extends HttpServlet {
 			utilisateurManager.modifieSoldeUtilisateur(idUtilisateur, prixVente, true);
 		
 		} catch (BusinessException e) {
+			request.setAttribute("listeCodesErreur", e.getListeCodesErreur()); 
 			e.printStackTrace();
 		}
 		idArticle = 18;
@@ -76,7 +77,5 @@ public class EncherirServlet extends HttpServlet {
 		this.getServletContext()
 				.getRequestDispatcher(ServletUtils.DETAIL_ENCHERE + ServletUtils.ID_ARTICLE_PARAM + idArticle)
 				.forward(request, response);
-
 	}
-
 }
