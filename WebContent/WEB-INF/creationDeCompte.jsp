@@ -28,12 +28,27 @@
 
 <body>
 
-	<%HttpSession sess = request.getSession();
-			Utilisateur u = (Utilisateur) sess.getAttribute("sessionUtilisateur");%>
+	<%
+		HttpSession sess = request.getSession();
+		Utilisateur u = (Utilisateur) sess.getAttribute("sessionUtilisateur");
+	%>
 	<!-- DEBUT ENTETE -->
 	<!-- Outer Row -->
+	<%
+		String actionAFaire = null;
+	%>
+	<c:if test="${sessionScope.sessionUtilisateur == null}">
+		<%
+			actionAFaire = ServletUtils.INSCRIPTION;
+		%>
+	</c:if>
+	<c:if test="${sessionScope.sessionUtilisateur != null}">
+		<%
+			actionAFaire = ServletUtils.MODIFIER_PROFIL;
+		%>
+	</c:if>
 	<form class="user" id="formCreationDeCompte" method="post"
-		action="<%= request.getContextPath() + ServletUtils.INSCRIPTION %>">
+		action="<%=request.getContextPath() + actionAFaire%>">
 		<div class="row justify-content-center">
 			<div class="col-xl-10 col-lg-12 col-md-9">
 				<div class="card o-hidden border-0 shadow-lg my-5">
@@ -43,8 +58,15 @@
 							<div class="col-lg-6 ">
 
 								<div class="text-right">
-									<h4 class="h4 text-gray-900 mb-4" id="titreProfil">Création
-										de compte</h4>
+									<c:if test="${sessionScope.sessionUtilisateur == null}">
+										<h4 class="h4 text-gray-900 mb-4 titreProfil">Création de
+											compte</h4>
+									</c:if>
+									<c:if test="${sessionScope.sessionUtilisateur != null}">
+										<h4 class="h4 text-gray-900 mb-4 titreProfil">Modification
+											de compte</h4>
+									</c:if>
+
 								</div>
 								<%
 									List<Integer> listeCodesErreur = (List<Integer>) request.getAttribute("listeCodesErreur");
@@ -93,11 +115,6 @@
 											id="<%=ServletUtils.CHAMP_TELEPHONE_INSCRIPTION%>"
 											name="<%=ServletUtils.CHAMP_TELEPHONE_INSCRIPTION%>">
 									</div>
-									<% if (u != null) {%>
-									<div id=<%=ServletUtils.CHAMP_CREDIT_INSCRIPTION%>>Crédit
-										:</div>
-									<br>
-									<% } %>
 								</div>
 							</div>
 							<div class="col-lg-6" id="block2CreationDeCompte">
@@ -121,6 +138,15 @@
 											id="<%=ServletUtils.CHAMP_VILLE_INSCRIPTION%>"
 											name="<%=ServletUtils.CHAMP_VILLE_INSCRIPTION%>">
 									</div>
+									<c:if test="${sessionScope.sessionUtilisateur != null}">
+										<div class="form-group">
+											<label for="<%=ServletUtils.CHAMP_MOT_DE_PASSE_ACTUEL%>">
+												Mot de passe actuel :</label> <input type="password"
+												class="form-control form-control-user"
+												id="<%=ServletUtils.CHAMP_MOT_DE_PASSE_INSCRIPTION%>"
+												name="<%=ServletUtils.CHAMP_MOT_DE_PASSE_INSCRIPTION%>">
+										</div>
+									</c:if>
 									<div class="form-group">
 										<label for="<%=ServletUtils.CHAMP_MOT_DE_PASSE_INSCRIPTION%>">
 											Mot de passe :</label> <input type="password"
@@ -136,41 +162,54 @@
 											name="<%=ServletUtils.CHAMP_CONFIRMATION_INSCRIPTION%>">
 									</div>
 								</div>
+								<%
+									if (u != null) {
+								%>
+								<div class="text-center"
+									id=<%=ServletUtils.CHAMP_CREDIT_INSCRIPTION%>>Crédit :
+									${sessionScope.sessionUtilisateur.credit}</div>
+								<br>
+								<%
+									}
+								%>
 							</div>
 						</div>
+
 
 						<div class="row" id="blockBoutonCreationDeCompte">
 							<div class="col-sm-2"></div>
 							<div class="col-sm-4">
 								<c:if test="${sessionScope.sessionUtilisateur == null}">
-								<div class="text-left form-group"
-									id="<%=ServletUtils.BTN_ANNULER%>">
-									<a href="<%= request.getContextPath() + ServletUtils.ACCUEIL %>" class="btn btn-danger btn-user btn-block">Annuler
-									</a>
-								</div>
+									<div class="text-left form-group"
+										id="<%=ServletUtils.BTN_ANNULER%>">
+										<a href="<%=request.getContextPath() + ServletUtils.ACCUEIL%>"
+											class="btn btn-danger btn-user btn-block">Annuler </a>
+									</div>
 								</c:if>
 								<c:if test="${sessionScope.sessionUtilisateur != null}">
-								<div class="text-left form-group"
-									id="<%=ServletUtils.BTN_SUPPRIMER%>">
-									<a href="<%= request.getContextPath() + ServletUtils.ACCUEIL %>" class="btn btn-danger btn-user btn-block">Supprimer
-										mon compte </a>
-								</div>
+									<div class="text-left form-group"
+										id="<%=ServletUtils.BTN_SUPPRIMER%>">
+										<a href="<%=request.getContextPath() + ServletUtils.ACCUEIL%>"
+											class="btn btn-danger btn-user btn-block">Supprimer mon
+											compte </a>
+									</div>
 								</c:if>
 							</div>
 							<div class="col-sm-4">
 								<c:if test="${sessionScope.sessionUtilisateur == null}">
-								<div class="text-right form-group"
-									id="<%=ServletUtils.BTN_INSCRIPTION%>">
-									<input type="submit" class="btn btn-primary btn-user btn-block"
-										value="S'inscrire">
-								</div>
+									<div class="text-right form-group"
+										id="<%=ServletUtils.BTN_INSCRIPTION%>">
+										<input type="submit"
+											class="btn btn-primary btn-user btn-block" value="S'inscrire">
+									</div>
 								</c:if>
 								<c:if test="${sessionScope.sessionUtilisateur != null}">
-								<div class="text-right form-group"
-									id="<%=ServletUtils.BTN_ENREGISTRER%>">
-									<input type="submit" class="btn btn-primary btn-user btn-block"
-										value="Enregistrer">
-								</div>
+									<div class="text-right form-group"
+										id="<%=ServletUtils.BTN_ENREGISTRER%>">
+										<input type="submit"
+											class="btn btn-primary btn-user btn-block"
+											value="Enregistrer">
+									</div>
 								</c:if>
 							</div>
 							<div class="col-sm-2"></div>

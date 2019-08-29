@@ -2,8 +2,6 @@
 
 /*BODY DEBUT*/
 
-
-
 /*BODY FIN*/
 
 /* CSS ENTETE DEBUT */
@@ -101,7 +99,7 @@
 	}
 }
 
-#titreProfil {
+.titreProfil {
 	margin-top: 10%;
 }
 
