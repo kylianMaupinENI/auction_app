@@ -11,11 +11,11 @@ public class UtilisateurManager {
 
 	private static final String EMAIL_PATTERN = "^(.+)@(.+)$";
 	/*
-	 * Expression régulière permettant la validation du mot de passe.
+	 * Expression rï¿½guliï¿½re permettant la validation du mot de passe.
 	 * 
-	 * Pour être valide, le mot de passe doit: - Être composé d'au moins 8
-	 * caractères. - Contenir au moins une lettre miniscule, une lettre majuscule,
-	 * un chiffre et un caractère spécial. - Ne contenir aucun espace ou
+	 * Pour ï¿½tre valide, le mot de passe doit: - ï¿½tre composï¿½ d'au moins 8
+	 * caractï¿½res. - Contenir au moins une lettre miniscule, une lettre majuscule,
+	 * un chiffre et un caractï¿½re spï¿½cial. - Ne contenir aucun espace ou
 	 * tabulations.
 	 */
 	private static final String MOT_DE_PASSE_PATTERN = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}";
@@ -70,7 +70,7 @@ public class UtilisateurManager {
 
 		BusinessException businessException = new BusinessException();
 
-		validerPseudo(pseudo, businessException);
+		validerPseudoModification(pseudo, businessException);
 		validerNom(nom, businessException);
 		validerPrenom(prenom, businessException);
 		validerEmail(email, businessException);
@@ -85,7 +85,7 @@ public class UtilisateurManager {
 		}
 
 		Adresse adresse = new Adresse(rue, codePostal, ville);
-		// Nouveaux paramètres de l'utilisateur
+		// Nouveaux paramï¿½tres de l'utilisateur
 		Utilisateur utilisateur = new Utilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, adresse,
 				motDePasse);
 
@@ -170,6 +170,15 @@ public class UtilisateurManager {
 		}
 	}
 
+	private void validerPseudoModification(String pseudo, BusinessException businessException) throws BusinessException {
+		if (utilisateurDAO.selectByPseudo(pseudo) != null) {
+			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_UTILISE);
+		}
+		if ((pseudo == null) || (pseudo.equals(""))) {
+			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_INVALIDE);
+		}
+	}
+	
 	private void validerPseudo(String pseudo, BusinessException businessException) throws BusinessException {
 		if (utilisateurDAO.selectByPseudo(pseudo) != null) {
 			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_UTILISE);

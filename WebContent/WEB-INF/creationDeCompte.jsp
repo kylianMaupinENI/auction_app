@@ -59,12 +59,11 @@
 
 								<div class="text-right">
 									<c:if test="${sessionScope.sessionUtilisateur == null}">
-										<h4 class="h4 text-gray-900 mb-4 titreProfil">Création de
+										<h4 class="h4 text-center text-gray-900 mb-4 titreProfil">Création de
 											compte</h4>
 									</c:if>
 									<c:if test="${sessionScope.sessionUtilisateur != null}">
-										<h4 class="h4 text-gray-900 mb-4 titreProfil">Modification
-											de compte - ${sessionScope.sessionUtilisateur.pseudo}</h4>
+										<h4 class="h4 text-center text-gray-900 mb-4 titreProfil">Modification de compte</h4>
 									</c:if>
 
 								</div>
