@@ -30,7 +30,7 @@ public class ServletUtils {
 	public static final String JSP_NOUVELLE_VENTE = "/WEB-INF/vente.jsp";
 	public static final String JSP_403 = "/WEB-INF/403.jsp";
 	public static final String JSP_404 = "/WEB-INF/404.jsp";
-	public static final String JSP_DETAIL_ENCHERE = "/WEB-INF/detailEnchere.jsp";
+	public static final String JSP_DETAIL_ENCHERE = "/WEB-INF/encherir.jsp";
 	public static final String JSP_VISUALISER_ARTICLE = "/WEB-INF/visualiserAnnonce.jsp";
 
 	public static final String ACCUEIL = "/accueil";

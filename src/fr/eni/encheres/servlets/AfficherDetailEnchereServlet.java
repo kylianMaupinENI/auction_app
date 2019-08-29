@@ -18,7 +18,7 @@ import fr.eni.encheres.bo.Utilisateur;
 /**
  * Servlet implementation class Enchere
  */
-@WebServlet("/enchere")
+@WebServlet("/article")
 public class AfficherDetailEnchereServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -48,8 +48,7 @@ public class AfficherDetailEnchereServlet extends HttpServlet {
 		}
 		ArticleVendu articleVendu = null;
 		try {
-			idArticle = Integer.parseInt(request.getParameter("idArticle")); //noArticle a passer en parametre			
-			System.out.println(request.getAttribute("idArticle"));
+			idArticle = Integer.parseInt(request.getParameter("noArticle")); //noArticle a passer en parametre			
 			articleVendu = articleVenduManager.selectById(idArticle);
 			request.setAttribute("articleVendu", articleVendu);
 		} catch (BusinessException e) {
