@@ -17,7 +17,7 @@ import fr.eni.encheres.bo.Utilisateur;
 /**
  * Servlet implementation class InscriptionServlet
  */
-@WebServlet("/inscription")
+@WebServlet(urlPatterns = { "/inscription", "/modificationProfil"})
 public class InscriptionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -37,6 +37,7 @@ public class InscriptionServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		System.out.println("blablabla");
 		this.getServletContext().getRequestDispatcher(ServletUtils.JSP_INSCRIPTION).forward(request, response);
 	}
 
@@ -48,7 +49,7 @@ public class InscriptionServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-
+		System.out.println("bla");
 		String pseudo = request.getParameter(ServletUtils.CHAMP_PSEUDO_INSCRIPTION);
 		String nom = request.getParameter(ServletUtils.CHAMP_NOM_INSCRIPTION);
 		String prenom = request.getParameter(ServletUtils.CHAMP_PRENOM_INSCRIPTION);
@@ -69,7 +70,6 @@ public class InscriptionServlet extends HttpServlet {
 			rd = this.getServletContext().getRequestDispatcher(ServletUtils.ACCUEIL);
 		} catch (BusinessException e) {
 			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
-			rd = this.getServletContext().getRequestDispatcher(ServletUtils.INSCRIPTION);
 			e.printStackTrace();
 		}
 

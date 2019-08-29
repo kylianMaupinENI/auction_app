@@ -13,6 +13,7 @@ public class ServletUtils {
 	public static final String CHAMP_RUE_INSCRIPTION = "rue";
 	public static final String CHAMP_CONFIRMATION_INSCRIPTION = "confirmation";
 	public static final String CHAMP_MOT_DE_PASSE_INSCRIPTION = "motDePasse";
+	public static final String CHAMP_MOT_DE_PASSE_ACTUEL = "ancienMotDePasse";
 	public static final String CHAMP_VILLE_INSCRIPTION = "ville";
 	public static final String CHAMP_CREDIT_INSCRIPTION = "credit";
 
@@ -36,10 +37,10 @@ public class ServletUtils {
 	public static final String NOUVELLE_VENTE = "/nouveau";
 	public static final String CONNEXION = "/connexion";
 	public static final String DECONNEXION = "/deconnexion";
-	public static final String INSCRIPTION = "/auction_app/inscription";
+	public static final String INSCRIPTION = "/inscription";
 	public static final String DETAILS_ARTICLE = "/article";
 	public static final String DETAILS_PROFIL = "/profil";
-	public static final String MODIFIER_PROFIL = "/modifier_profil";
+	public static final String MODIFIER_PROFIL = "/modifier";
 	public static final String MODIFIER_ARTICLE = "/modifier_article";
 	public static final String ENCHERIR = "/encherir";
 	public static final String DETAIL_ENCHERE = "/enchere";
@@ -72,5 +73,7 @@ public class ServletUtils {
 
 	public static final String ATT_USER_GAGNANT = "gagnant";
 	public static final String ATT_ARTICLE_GAGNANT = "noArticle";
+	
+	public static final String SERVLET_MODIFIER_PROFIL = "/modificationProfil";
 
 }
