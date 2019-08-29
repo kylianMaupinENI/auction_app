@@ -29,7 +29,7 @@
 	<!-- DEBUT HAUT DE PAGE -->
 	<%@include file="entete.jsp"%>
 	<!-- FIN HAUT DE PAGE -->
-	
+
 
 	<form action="accueil" method="post">
 		<div class="container-fluid text-center">
@@ -226,5 +226,12 @@
 			document.getElementById("mesVentesTerminees").disabled = false;
 		}
 	</script>
+
+	<!-- Bootstrap core JavaScript-->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+	<!-- Core plugin JavaScript-->
+	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 </body>
 </html>

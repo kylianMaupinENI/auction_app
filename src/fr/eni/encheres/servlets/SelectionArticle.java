@@ -89,9 +89,16 @@ public class SelectionArticle extends HttpServlet {
 		if (utilisateur != null) {
 			
 			String type = request.getParameter("radioCategories");
-			
+			if(type == null) {
+				type = "radioAchat";
+			}
 			if(type.equals("radioAchat")) {
-				String typesAchat [] = request.getParameterValues("typesAchat");
+				String [] typesAchat;
+				if(request.getParameterValues("typesAchat") == null) {
+					typesAchat  = new String []{"encheresOuvertes"};
+				}else {
+					typesAchat  = request.getParameterValues("typesAchat");
+				}
 				
 				for (int i = 0; i < typesAchat.length; i++) {
 					List<ArticleVendu> l = new ArrayList<>();
