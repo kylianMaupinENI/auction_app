@@ -90,7 +90,7 @@
 							id="boutonRetourEnchere"> Retour </a>
 					</c:if>
 					<c:if test="${sessionScope.sessionUtilisateur.pseudo != gagnant.pseudo}">
-						<a href="index.jsp" class="btn btn-primary btn-user btn-block"
+						<a href="<%=request.getContextPath() + ServletUtils.ACCUEIL%>" class="btn btn-primary btn-user btn-block"
 							id="boutonRetourEnchere"> Retrait effectué </a>
 					</c:if>
 					</div>
