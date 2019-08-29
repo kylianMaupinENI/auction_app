@@ -64,7 +64,7 @@
 									</c:if>
 									<c:if test="${sessionScope.sessionUtilisateur != null}">
 										<h4 class="h4 text-gray-900 mb-4 titreProfil">Modification
-											de compte</h4>
+											de compte - ${sessionScope.sessionUtilisateur.pseudo}</h4>
 									</c:if>
 
 								</div>
@@ -116,9 +116,8 @@
 											name="<%=ServletUtils.CHAMP_TELEPHONE_INSCRIPTION%>">
 									</div>
 									<c:if test="${sessionScope.sessionUtilisateur != null}">
-										<div
-											id=<%=ServletUtils.CHAMP_CREDIT_INSCRIPTION%>>Crédit :
-											${sessionScope.sessionUtilisateur.credit}</div>
+										<div id=<%=ServletUtils.CHAMP_CREDIT_INSCRIPTION%>>Crédit
+											: ${sessionScope.sessionUtilisateur.credit}</div>
 										<br>
 									</c:if>
 								</div>
@@ -185,9 +184,11 @@
 								<c:if test="${sessionScope.sessionUtilisateur != null}">
 									<div class="text-left form-group"
 										id="<%=ServletUtils.BTN_SUPPRIMER%>">
-										<a href="<%=request.getContextPath() + ServletUtils.ACCUEIL%>"
-											class="btn btn-danger btn-user btn-block">Supprimer mon
-											compte </a>
+										<input type="hidden"
+											value="${sessionScope.sessionUtilisateur.pseudo}"
+											name="pseudoUtilisateur"> <input type="submit"
+											class="btn  btn-danger  btn-user btn-block"
+											value="Supprimer mon compte" name="ChoixBouton">
 									</div>
 								</c:if>
 							</div>
@@ -195,14 +196,14 @@
 								<c:if test="${sessionScope.sessionUtilisateur == null}">
 									<div class="text-right form-group"
 										id="<%=ServletUtils.BTN_INSCRIPTION%>">
-										<input type="submit"
+										<input type="submit" name="ChoixBouton"
 											class="btn btn-primary btn-user btn-block" value="S'inscrire">
 									</div>
 								</c:if>
 								<c:if test="${sessionScope.sessionUtilisateur != null}">
-									<div class="text-right form-group"
+									<div class="text-right form-group" name=""
 										id="<%=ServletUtils.BTN_ENREGISTRER%>">
-										<input type="submit"
+										<input type="submit" name="ChoixBouton"
 											class="btn btn-primary btn-user btn-block"
 											value="Enregistrer">
 									</div>
@@ -228,5 +229,6 @@
 	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
 	<!-- Custom scripts for all pages-->
+
 </body>
 </html>
