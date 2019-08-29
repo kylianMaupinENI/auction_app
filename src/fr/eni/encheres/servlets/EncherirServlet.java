@@ -71,7 +71,6 @@ public class EncherirServlet extends HttpServlet {
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
-		idArticle = 18;
 		request.setAttribute("idArticle", idArticle);
 		this.getServletContext()
 				.getRequestDispatcher(ServletUtils.DETAIL_ENCHERE + ServletUtils.ID_ARTICLE_PARAM + idArticle)
