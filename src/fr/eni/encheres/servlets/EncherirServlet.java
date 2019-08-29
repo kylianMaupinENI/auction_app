@@ -72,7 +72,6 @@ public class EncherirServlet extends HttpServlet {
 			request.setAttribute("listeCodesErreur", e.getListeCodesErreur()); 
 			e.printStackTrace();
 		}
-		idArticle = 18;
 		request.setAttribute("idArticle", idArticle);
 		this.getServletContext()
 				.getRequestDispatcher(ServletUtils.DETAIL_ENCHERE + ServletUtils.ID_ARTICLE_PARAM + idArticle)
