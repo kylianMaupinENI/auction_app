@@ -72,10 +72,6 @@ public class SelectionArticle extends HttpServlet {
 		String categorieStr = request.getParameter(ServletUtils.CHAMP_CATEGORIE_ACCUEIL);
 		
 		Categorie categorie = Categorie.fromString(categorieStr);
-
-		System.out.println(recherche);
-		System.out.println(categorie);
-		
 		
 		RequestDispatcher rd;
 

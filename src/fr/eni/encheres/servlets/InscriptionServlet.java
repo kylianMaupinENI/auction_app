@@ -37,6 +37,7 @@ public class InscriptionServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		System.out.println("blablabla");
 		this.getServletContext().getRequestDispatcher(ServletUtils.JSP_INSCRIPTION).forward(request, response);
 	}
 
