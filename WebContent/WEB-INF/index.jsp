@@ -29,6 +29,8 @@
 	<!-- DEBUT HAUT DE PAGE -->
 	<%@include file="entete.jsp"%>
 	<!-- FIN HAUT DE PAGE -->
+	
+
 	<form action="accueil" method="post">
 		<div class="container-fluid text-center">
 			<div class="row content">
@@ -84,8 +86,8 @@
 									<div class="blockCheckbox">
 										<div class="form-check">
 											<input type="checkbox" name="typesAchat"
-												value="encheresOuvertes" id="encheresOuvertes" checked> <label
-												class="form-check-label" for="encheresOuvertes">
+												value="encheresOuvertes" id="encheresOuvertes" checked>
+											<label class="form-check-label" for="encheresOuvertes">
 												Enchères ouvertes </label>
 										</div>
 										<div class="form-check">
@@ -113,15 +115,15 @@
 									<div class="blockCheckbox">
 										<div class="form-check">
 											<input type="checkbox" name="typesVente"
-												value="mesVentesEnCours" id="mesVentesEnCours" disabled> <label
-												class="form-check-label" for="mesVentesEnCours"> Mes
-												ventes en cours </label>
+												value="mesVentesEnCours" id="mesVentesEnCours" disabled>
+											<label class="form-check-label" for="mesVentesEnCours">
+												Mes ventes en cours </label>
 										</div>
 										<div class="form-check">
 											<input type="checkbox" name="typesVente"
-												value="mesVenetsNonDebutees" id="mesVentesNonDebutees" disabled>
-											<label class="form-check-label" for="mesVentesNonDebutees">
-												Ventes non débutées </label>
+												value="mesVenetsNonDebutees" id="mesVentesNonDebutees"
+												disabled> <label class="form-check-label"
+												for="mesVentesNonDebutees"> Ventes non débutées </label>
 										</div>
 										<div class="form-check">
 											<input type="checkbox" name="typesVente"
@@ -148,53 +150,48 @@
 
 				<!-- 				ON AFFICHE SELON LE CRITERE SELECTIONNE -->
 				<div class="col-sm-2 sidenav"></div>
-				<div class="col-sm-8 text-left bg-gray-100" id="block3index">
-					<div class="containerIndex">
-						<div class="row">
-							<div class="col-sm-4" id="Block3Article">
-								<%
-									List<ArticleVendu> articles = (List<ArticleVendu>) request.getAttribute(ServletUtils.ATT_LISTE_ARTICLES);
-									if ((articles != null) && (articles.size() > 0)) {
-										for (ArticleVendu article : articles) {
-								%>
-								<div
-									class="row no-gutters border-left-primary shadow h-100 py-2">
-									<div class="col-md-4">
-										<img src="imageDuProduit.jpg" id="imageProduit"
-											class="card-img" alt="Photo du produit">
-									</div>
-									<div class="col-md-8">
-										<div class="card-body">
-											<h5 class="card-title">
-												<a
-													href="<%=request.getContextPath() + ServletUtils.DETAILS_ARTICLE + ServletUtils.ID_ARTICLE_PARAM
+				<div class="col-sm-8" id="block3index">
+					<%
+						List<ArticleVendu> articles = (List<ArticleVendu>) request.getAttribute(ServletUtils.ATT_LISTE_ARTICLES);
+						if ((articles != null) && (articles.size() > 0)) {
+							for (ArticleVendu article : articles) {
+					%>
+					<div class="col-xl-3 col-md-6 mb-4">
+						<div class="row no-gutters border-left-primary shadow py-2">
+							<div class="col-md-4">
+								<img src="./imageDuProduit.jpg" class="card-img"
+									alt="Photo du produit" width="150px">
+							</div>
+							<div class="col-md-8">
+								<div class="card-body">
+									<h5 class="card-title">
+										<a
+											href="<%=request.getContextPath() + ServletUtils.DETAILS_ARTICLE + ServletUtils.ID_ARTICLE_PARAM
 							+ article.getNoArticle()%>">
-													<%=article.getNomArticle()%>
-												</a>
-											</h5>
-											<p class="card-text">
-												Prix :
-												<%=article.getPrixVente()%></p>
-											<p class="card-text">
-												Fin de l'enchére :
-												<%=article.getDateFinEncheres().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))%></p>
-											</br> <a
-												href="<%=request.getContextPath() + ServletUtils.DETAILS_PROFIL
+											<%=article.getNomArticle()%>
+										</a>
+									</h5>
+									<p class="card-text">
+										Prix :
+										<%=article.getPrixVente()%></p>
+									<p class="card-text">
+										Fin de l'enchére :
+										<%=article.getDateFinEncheres().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))%></p>
+									</br> <a
+										href="<%=request.getContextPath() + ServletUtils.DETAILS_PROFIL
 							+ ServletUtils.PSEUDO_UTILISATEUR_PARAM + article.getProprietaire().getPseudo()%>">
-												<p class="card-text">
-													Vendeur :<%=article.getProprietaire().getNom()%></p>
-											</a>
+										<p class="card-text">
+											Vendeur :<%=article.getProprietaire().getNom()%></p>
+									</a>
 
-										</div>
-									</div>
 								</div>
-								<%
-									}
-									}
-								%>
 							</div>
 						</div>
 					</div>
+					<%
+						}
+						}
+					%>
 				</div>
 				<div class="col-sm-2 sidenav"></div>
 			</div>
