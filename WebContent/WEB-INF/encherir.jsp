@@ -1,6 +1,8 @@
 <%@page import="fr.eni.encheres.bo.ArticleVendu"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@page import="fr.eni.encheres.messages.LecteurMessage"%>
+<%@page import="java.util.List"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -68,6 +70,18 @@
 				<div class="col-sm-2 sidenav"></div>
 			</div>
 		</div>
+										<%
+									List<Integer> listeCodesErreur = (List<Integer>) request.getAttribute("listeCodesErreur");
+									if (listeCodesErreur != null) {
+								%>
+								<%
+									for (int codeErreur : listeCodesErreur) {
+								%>
+								<p style="color: red";><%=LecteurMessage.getMessageErreur(codeErreur)%></p>
+								<%
+									}
+									}
+								%>
 	</form>
 
 	<!-- DEBUT BAS DE PAGE -->

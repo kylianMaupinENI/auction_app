@@ -93,8 +93,10 @@ public class UtilisateurManager {
 	}
 
 	public void modifieSoldeUtilisateur(int noUtilisateur, int prixVente, boolean isGagnant) throws BusinessException {
+
 		BusinessException businessException = new BusinessException();
 		Utilisateur utilisateur = utilisateurDAO.selectById(noUtilisateur);
+
 		validerSolde(noUtilisateur, prixVente, businessException);
 
 		if (businessException.hasErreurs()) {

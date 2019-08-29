@@ -64,17 +64,24 @@ public class EncherirServlet extends HttpServlet {
 
 		try {
 			articleVenduManager.updatePrixVenteEnchere(prixVente, idArticle, dateEnchere, utilisateur);
-			
-			int idUtilisateur = utilisateur.getNoUtilisateur();
-			utilisateurManager.modifieSoldeUtilisateur(idUtilisateur, prixVente, true);
-		
 		} catch (BusinessException e) {
-			request.setAttribute("listeCodesErreur", e.getListeCodesErreur()); 
-			e.printStackTrace();
+			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+			System.err.println(e.getListeCodesErreur());
 		}
+		int idUtilisateur = utilisateur.getNoUtilisateur();
+		try {
+			System.out.println(idUtilisateur);
+			System.out.println(prixVente);
+			
+			utilisateurManager.modifieSoldeUtilisateur(idUtilisateur, prixVente, true);
+		} catch (BusinessException e) {
+			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+			System.err.println(e.getListeCodesErreur());
+		}
+
 		request.setAttribute("idArticle", idArticle);
 		this.getServletContext()
-				.getRequestDispatcher(ServletUtils.DETAIL_ENCHERE + ServletUtils.ID_ARTICLE_PARAM + idArticle)
+				.getRequestDispatcher(ServletUtils.DETAILS_ARTICLE + ServletUtils.ID_ARTICLE_PARAM + idArticle)
 				.forward(request, response);
 	}
 }
