@@ -115,6 +115,12 @@
 											id="<%=ServletUtils.CHAMP_TELEPHONE_INSCRIPTION%>"
 											name="<%=ServletUtils.CHAMP_TELEPHONE_INSCRIPTION%>">
 									</div>
+									<c:if test="${sessionScope.sessionUtilisateur != null}">
+										<div
+											id=<%=ServletUtils.CHAMP_CREDIT_INSCRIPTION%>>Crédit :
+											${sessionScope.sessionUtilisateur.credit}</div>
+										<br>
+									</c:if>
 								</div>
 							</div>
 							<div class="col-lg-6" id="block2CreationDeCompte">
@@ -162,16 +168,6 @@
 											name="<%=ServletUtils.CHAMP_CONFIRMATION_INSCRIPTION%>">
 									</div>
 								</div>
-								<%
-									if (u != null) {
-								%>
-								<div class="text-center"
-									id=<%=ServletUtils.CHAMP_CREDIT_INSCRIPTION%>>Crédit :
-									${sessionScope.sessionUtilisateur.credit}</div>
-								<br>
-								<%
-									}
-								%>
 							</div>
 						</div>
 

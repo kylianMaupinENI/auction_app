@@ -197,7 +197,12 @@ public class UtilisateurManager {
 	public boolean seConnecter(String pseudo, String motDePasse) throws BusinessException {
 
 		BusinessException businessException = new BusinessException();
-		Utilisateur utilisateur = utilisateurDAO.selectByPseudo(pseudo);
+		Utilisateur utilisateur;
+		if(!pseudo.matches(EMAIL_PATTERN)) {
+			utilisateur = utilisateurDAO.selectByPseudo(pseudo);
+		} else {
+			utilisateur = utilisateurDAO.selectByEmail(pseudo);
+		}
 
 		if (utilisateur == null) {
 			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_INCONNU);

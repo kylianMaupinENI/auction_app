@@ -89,7 +89,7 @@
 											</div>
 										</div>
 										<hr>
-										<a href="<%= ServletUtils.INSCRIPTION %>" class="btn btn-primary btn-user btn-block"
+										<a href="<%= request.getContextPath() + ServletUtils.INSCRIPTION %>" class="btn btn-primary btn-user btn-block"
 											id="boutonCreerCompte"> Creer un compte </a>
 									</div>
 								</div>

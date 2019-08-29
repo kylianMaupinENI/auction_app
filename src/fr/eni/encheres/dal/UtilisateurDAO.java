@@ -16,4 +16,6 @@ public interface UtilisateurDAO {
 
 	public void updateSolde(Utilisateur Utilisateur, int prixVente) throws BusinessException;
 
+	public Utilisateur selectByEmail(String pseudo) throws BusinessException;
+
 }

@@ -63,7 +63,7 @@ public class ConnexionServlet extends HttpServlet {
 		} catch (BusinessException e) {
 			request.setAttribute(ServletUtils.ATT_LISTE_ERREURS, e.getListeCodesErreur());
 			e.printStackTrace();
-			rd = this.getServletContext().getRequestDispatcher(ServletUtils.CONNEXION);
+			rd = this.getServletContext().getRequestDispatcher(ServletUtils.JSP_CONNEXION);
 
 		} finally {
 			rd.forward(request, response);
