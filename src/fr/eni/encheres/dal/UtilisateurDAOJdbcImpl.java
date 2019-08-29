@@ -25,6 +25,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	public static final String SELECT_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal,"
 			+ " ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE no_utilisateur = ?";
 
+	public static final String UPDATE_SOLDE = "UPDATE UTILISATEURS SET credit = ? WHERE no_utilisateur = ?";
+
 	@Override
 	public void insert(Utilisateur utilisateur) throws BusinessException {
 		// INSERTION D'UN ARTICLE_VENDU
@@ -130,7 +132,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		}
 		return utilisateur;
 	}
-	
+
 	@Override
 	public Utilisateur selectById(int noUtilisateur) throws BusinessException {
 		Utilisateur utilisateur = null;
@@ -164,7 +166,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 
 	private void setParameter(PreparedStatement stm, Utilisateur utilisateur) throws SQLException {
-		// Paramètres pour la requete d'insertion dans la table ARTICLE_VENDU
+		// Paramï¿½tres pour la requete d'insertion dans la table ARTICLE_VENDU
 		stm.setString(1, utilisateur.getPseudo());
 		stm.setString(2, utilisateur.getNom());
 		stm.setString(3, utilisateur.getPrenom());
@@ -176,6 +178,34 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		stm.setString(9, utilisateur.getMotDePasse());
 		stm.setInt(10, utilisateur.getCredit());
 		stm.setBoolean(11, utilisateur.isAdministrateur());
+	}
+
+	@Override
+	public void updateSolde(Utilisateur utilisateur, int solde) throws BusinessException {
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			
+			int noUtilisateur = utilisateur.getNoUtilisateur();
+			PreparedStatement pstmt;
+
+			
+			pstmt = cnx.prepareStatement(UPDATE_SOLDE);
+			pstmt.setInt(1, solde);
+			pstmt.setInt(2, noUtilisateur);
+
+			int res = pstmt.executeUpdate();
+			if (res == 0) {
+				BusinessException businessException = new BusinessException();
+				businessException.ajouterErreur(CodesResultatDAL.UPDATE_UTILISATEUR_ECHEC);
+				throw businessException;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.UPDATE_UTILISATEUR_ECHEC);
+			throw businessException;
+		}
+
 	}
 
 }

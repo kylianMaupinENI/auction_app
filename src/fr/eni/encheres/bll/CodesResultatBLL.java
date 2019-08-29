@@ -117,5 +117,9 @@ public abstract class CodesResultatBLL {
 	 * Echec la proposition d'enchere est inférieure a la plus haute proposition
 	 */
 	public static final int PRIX_NON_VALIDE = 20022;
+	/**
+	 * Echec le credit restant de l'utilisateur ne permet pas d'encherir
+	 */
+	public static final int CREDIT_INSUFFISANT = 20023;
 
 }

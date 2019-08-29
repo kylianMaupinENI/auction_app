@@ -14,4 +14,6 @@ public interface UtilisateurDAO {
 
 	public Utilisateur selectById(int noUtilisateur) throws BusinessException;
 
+	public void updateSolde(Utilisateur Utilisateur, int prixVente) throws BusinessException;
+
 }
