@@ -57,6 +57,8 @@ public class NouvelArticleVendu extends HttpServlet {
 		String description = null;
 		Categorie categorie = null;
 		int prix_initial = 0;
+		String dateDebutStr;
+		String dateFinStr;
 		LocalDate dateDebutEnchere = null;
 		LocalDate dateFinEnchere = null;
 		Utilisateur proprietaire = null;
@@ -71,56 +73,54 @@ public class NouvelArticleVendu extends HttpServlet {
 		nom = request.getParameter(ServletUtils.CHAMP_NOM_ARTICLE);
 		description = request.getParameter(ServletUtils.CHAMP_DESCRIPTION_ARTICLE);
 		String categorieStr = request.getParameter(ServletUtils.CHAMP_CATEGORIE_ARTICLE);
-		int prixInitial = Integer.parseInt(request.getParameter(ServletUtils.CHAMP_PRIX_INITIAL_ARTICLE));
 		int prixVente = 0;
+		int prixInitial = 0;
+		String prixInitialStr = request.getParameter(ServletUtils.CHAMP_PRIX_INITIAL_ARTICLE);
 		String rue = request.getParameter(ServletUtils.CHAMP_RUE_ARTICLE);
 		String codePostal = request.getParameter(ServletUtils.CHAMP_CODE_POSTAL_ARTICLE);
 		String ville = request.getParameter(ServletUtils.CHAMP_VILLE_ARTICLE);
-
-		categorie = Categorie.fromString(categorieStr);
+		categorie = Categorie.valueOf(categorieStr);
+		dateDebutStr = request.getParameter(ServletUtils.CHAMP_DATE_DEBUT_ARTICLE);
+		dateFinStr = request.getParameter(ServletUtils.CHAMP_DATE_FIN_ARTICLE);
 
 		List<Integer> listeCodeErreur = new ArrayList<>();
+
 		try {
-			prixInitial = Integer.parseInt(request.getParameter(ServletUtils.CHAMP_PRIX_INITIAL_ARTICLE));
+			prixInitial = Integer.parseInt(prixInitialStr);
 			DateTimeFormatter dft = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-			dateDebutEnchere = LocalDate.parse(request.getParameter(ServletUtils.CHAMP_DATE_DEBUT_ARTICLE), dft);
-			dateFinEnchere = LocalDate.parse(request.getParameter(ServletUtils.CHAMP_DATE_FIN_ARTICLE), dft);
+			dateDebutEnchere = LocalDate.parse(dateDebutStr, dft);
+			dateFinEnchere = LocalDate.parse(dateFinStr, dft);
+			// TODO Vï¿½rifier si l'article est en cours ou en attente de vente
+
+			if (ville.equals("") || rue.equals("") || codePostal.equals("")) {
+				rue = proprietaire.getAdresse().getRue();
+				codePostal = proprietaire.getAdresse().getCodePostal();
+				ville = proprietaire.getAdresse().getVille();
+			}
+
+			ArticleVenduManager articleVenduManager = new ArticleVenduManager();
+			articleVenduManager.ajouteArticleVendu(nom, description, dateDebutEnchere, dateFinEnchere, prixInitial,
+					prixVente, rue, codePostal, ville, proprietaire, categorie);
+			RequestDispatcher rd = request.getRequestDispatcher(ServletUtils.ACCUEIL);
+
+			rd.forward(request, response);
 
 		} catch (DateTimeException e) {
 			e.printStackTrace();
 			listeCodeErreur.add(CodesResultatServlets.FORMAT_DATE_ERREUR);
-
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
+			listeCodeErreur.add(CodesResultatServlets.FORMAT_PRIX_ERREUR);
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			listeCodeErreur.add(CodesResultatServlets.FORMAT_PRIX_ERREUR);
 			listeCodeErreur.add(CodesResultatServlets.FORMAT_DATE_ERREUR);
-		}
-
-		// TODO Vérifier si l'article est en cours ou en attente de vente
-
-		if (ville.equals("") || rue.equals("") || codePostal.equals("")) {
-			rue = proprietaire.getAdresse().getRue();
-			codePostal = proprietaire.getAdresse().getCodePostal();
-			ville = proprietaire.getAdresse().getVille();
-		}
-
-		if (listeCodeErreur.size() > 0) {
-			request.setAttribute("lstErreurs", listeCodeErreur);
-			RequestDispatcher rd = request.getRequestDispatcher(ServletUtils.ACCUEIL);
+		} catch (BusinessException e) {
+			e.printStackTrace();
+			request.setAttribute("lstErreurs", e.getListeCodesErreur());
+			RequestDispatcher rd = request.getRequestDispatcher(ServletUtils.JSP_NOUVELLE_VENTE);
 			rd.forward(request, response);
-		} else {
-			ArticleVenduManager articleVenduManager = new ArticleVenduManager();
-			try {
-				articleVenduManager.ajouteArticleVendu(nom, description, dateDebutEnchere, dateFinEnchere, prixInitial,
-						prixVente, rue, codePostal, ville, proprietaire, categorie);
-				RequestDispatcher rd = request.getRequestDispatcher(ServletUtils.ACCUEIL);
 
-				rd.forward(request, response);
-			} catch (BusinessException e) {
-				e.printStackTrace();
-				request.setAttribute("lstErreurs", e.getListeCodesErreur());
-				RequestDispatcher rd = request.getRequestDispatcher(ServletUtils.JSP_NOUVELLE_VENTE);
-				rd.forward(request, response);
-			}
 		}
 	}
 }
