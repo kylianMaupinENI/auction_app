@@ -121,5 +121,9 @@ public abstract class CodesResultatBLL {
 	 * Echec le credit restant de l'utilisateur ne permet pas d'encherir
 	 */
 	public static final int CREDIT_INSUFFISANT = 20023;
+	/**
+	 * Echec, l'e-mail est déjà utilisé par un autre utilisateur
+	 */
+	public static int EMAIL_UTILISEE = 20024;
 
 }

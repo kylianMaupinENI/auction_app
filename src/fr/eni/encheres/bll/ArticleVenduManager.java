@@ -93,26 +93,30 @@ public class ArticleVenduManager {
 
 	public void updatePrixVenteEnchere(int prixVente, int noArticle, LocalDate dateEnchere, Utilisateur utilisateur)
 			throws BusinessException {
-		
+		BusinessException businessException = new BusinessException();
 		int no_utilisateur = utilisateur.getNoUtilisateur();
 
-		validerEnchere(noArticle, prixVente);
+		
+		validerEnchere(noArticle, prixVente, businessException);
+		
+		if (businessException.hasErreurs()) {
+			throw businessException;
+		}
 		
 		articleVenduDAO.updatePrixVente(prixVente, noArticle, no_utilisateur, dateEnchere);
 	}
 
-	private void validerEnchere(int noArticle, int prixVente)
+	private void validerEnchere(int noArticle, int prixVente, BusinessException businessException)
 			throws BusinessException {
-		BusinessException businessException = new BusinessException();
+		
 
 		ArticleVendu articleVendu = articleVenduDAO.selectById(noArticle);
 
-		if ((articleVendu.getPrixVente() == 0) && (prixVente <= articleVendu.getMiseAPrix())) {
+		if ((articleVendu.getPrixVente() == 0) && (prixVente <= articleVendu.getMiseAPrix() )) {
 			businessException.ajouterErreur(CodesResultatBLL.PRIX_INFERIEUR_AU_PRIX_DE_BASE);
-			throw businessException;
-		} else if (prixVente <= articleVendu.getPrixVente()) {
+			
+		} else if (prixVente <= articleVendu.getPrixVente() && prixVente <= articleVendu.getMiseAPrix()) {
 			businessException.ajouterErreur(CodesResultatBLL.PRIX_NON_VALIDE);
-			throw businessException;
 		}
 	}
 

@@ -12,7 +12,6 @@ import javax.servlet.http.HttpSession;
 
 import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bll.UtilisateurManager;
-import fr.eni.encheres.bo.ArticleVendu;
 import fr.eni.encheres.bo.Utilisateur;
 
 /**
@@ -39,7 +38,7 @@ public class ModifierProfilServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		this.getServletContext().getRequestDispatcher(ServletUtils.JSP_INSCRIPTION).forward(request, response);
+		//this.getServletContext().getRequestDispatcher(ServletUtils.JSP_INSCRIPTION).forward(request, response);
 	}
 
 	/**
@@ -61,14 +60,15 @@ public class ModifierProfilServlet extends HttpServlet {
 		String rue = request.getParameter(ServletUtils.CHAMP_RUE_INSCRIPTION);
 		String codePostal = request.getParameter(ServletUtils.CHAMP_CODE_POSTAL_INSCRIPTION);
 		String ville = request.getParameter(ServletUtils.CHAMP_VILLE_INSCRIPTION);
-		String motDePasse = request.getParameter(ServletUtils.CHAMP_MOT_DE_PASSE_INSCRIPTION);
+		String motDePasse = request.getParameter(ServletUtils.CHAMP_MOT_DE_PASSE_ACTUEL);
+		String nouveauMotDePasse =  request.getParameter(ServletUtils.CHAMP_MOT_DE_PASSE_INSCRIPTION);
 		String confirmation = request.getParameter(ServletUtils.CHAMP_CONFIRMATION_INSCRIPTION);
 
 		int noUtilisateur = utilisateur.getNoUtilisateur();
 		String choixUtilisateur = request.getParameter("ChoixBouton");
 		System.out.println("choix u : " + choixUtilisateur);
 		String pseudoUtilisateur;
-		ArticleVendu articleVendu = null;
+
 
 		if(choixUtilisateur.equals("Supprimer mon compte")) {
 			try {
@@ -109,15 +109,21 @@ public class ModifierProfilServlet extends HttpServlet {
 			if ((motDePasse == null) || motDePasse.equals("")) {
 				motDePasse = utilisateur.getMotDePasse();
 			}
+			if((nouveauMotDePasse == null) || nouveauMotDePasse.equals("")){
+				nouveauMotDePasse = utilisateur.getMotDePasse();
+			}
+			if((confirmation == null) || confirmation.equals("")){
+				confirmation = utilisateur.getMotDePasse();
+			}
 	
-			RequestDispatcher rd = this.getServletContext().getRequestDispatcher(ServletUtils.ACCUEIL);
 	
 			int credit = utilisateur.getCredit();
 			boolean administrateur = utilisateur.isAdministrateur();
-	
+			RequestDispatcher rd = this.getServletContext().getRequestDispatcher(ServletUtils.ACCUEIL);
+
 			try {
 				utilisateurManager.modifieUtilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal,
-						ville, motDePasse, confirmation, credit, administrateur);
+						ville, nouveauMotDePasse, confirmation, credit, administrateur);
 				rd = this.getServletContext().getRequestDispatcher(ServletUtils.DETAILS_PROFIL);
 	
 			} catch (BusinessException e) {

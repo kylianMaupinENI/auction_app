@@ -70,7 +70,7 @@ public class UtilisateurManager {
 
 		BusinessException businessException = new BusinessException();
 
-		validerPseudoModification(pseudo, businessException);
+		validerPseudo(pseudo, businessException);
 		validerNom(nom, businessException);
 		validerPrenom(prenom, businessException);
 		validerEmail(email, businessException);
@@ -104,13 +104,13 @@ public class UtilisateurManager {
 		}
 		int solde = 0;
 
-		if(isGagnant == false) {
+		if (isGagnant == false) {
 			solde = utilisateur.getCredit() + prixVente;
 		} else {
 			solde = utilisateur.getCredit() - prixVente;
 		}
-		
-		utilisateurDAO.updateSolde(utilisateur, prixVente);
+
+		utilisateurDAO.updateSolde(utilisateur, solde);
 	}
 
 	public Utilisateur selectionUtilisateur(String pseudo) throws BusinessException {
@@ -172,15 +172,7 @@ public class UtilisateurManager {
 		}
 	}
 
-	private void validerPseudoModification(String pseudo, BusinessException businessException) throws BusinessException {
-		if (utilisateurDAO.selectByPseudo(pseudo) != null) {
-			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_UTILISE);
-		}
-		if ((pseudo == null) || (pseudo.equals(""))) {
-			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_INVALIDE);
-		}
-	}
-	
+
 	private void validerPseudo(String pseudo, BusinessException businessException) throws BusinessException {
 		if (utilisateurDAO.selectByPseudo(pseudo) != null) {
 			businessException.ajouterErreur(CodesResultatBLL.PSEUDO_UTILISE);
@@ -190,7 +182,11 @@ public class UtilisateurManager {
 		}
 	}
 
-	private void validerEmail(String email, BusinessException businessException) {
+	private void validerEmail(String email, BusinessException businessException) throws BusinessException {
+
+		if (utilisateurDAO.selectByEmail(email) != null) {
+			businessException.ajouterErreur(CodesResultatBLL.EMAIL_UTILISEE);
+		}
 		if (!email.matches(EMAIL_PATTERN)) {
 			businessException.ajouterErreur(CodesResultatBLL.EMAIL_INVALIDE);
 		}
@@ -209,7 +205,7 @@ public class UtilisateurManager {
 
 		BusinessException businessException = new BusinessException();
 		Utilisateur utilisateur;
-		if(!pseudo.matches(EMAIL_PATTERN)) {
+		if (!pseudo.matches(EMAIL_PATTERN)) {
 			utilisateur = utilisateurDAO.selectByPseudo(pseudo);
 		} else {
 			utilisateur = utilisateurDAO.selectByEmail(pseudo);

@@ -147,8 +147,8 @@
 											<label for="<%=ServletUtils.CHAMP_MOT_DE_PASSE_ACTUEL%>">
 												Mot de passe actuel :</label> <input type="password"
 												class="form-control form-control-user"
-												id="<%=ServletUtils.CHAMP_MOT_DE_PASSE_INSCRIPTION%>"
-												name="<%=ServletUtils.CHAMP_MOT_DE_PASSE_INSCRIPTION%>">
+												id="<%=ServletUtils.CHAMP_MOT_DE_PASSE_ACTUEL%>"
+												name="<%=ServletUtils.CHAMP_MOT_DE_PASSE_ACTUEL%>">
 										</div>
 									</c:if>
 									<div class="form-group">

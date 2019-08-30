@@ -57,6 +57,12 @@
 										${sessionScope.sessionUtilisateur.adresse.rue}
 										${sessionScope.sessionUtilisateur.adresse.codePostal}
 										${sessionScope.sessionUtilisateur.adresse.ville}</div>
+									<br>
+									<c:if test="${sessionScope.sessionUtilisateur != null}">
+										<div id=<%=ServletUtils.CHAMP_CREDIT_INSCRIPTION%>>Crédit
+											: ${sessionScope.sessionUtilisateur.credit}</div>
+										<br>
+									</c:if>
 
 									<c:if
 										test="${sessionScope.sessionUtilisateur.pseudo != null}">
