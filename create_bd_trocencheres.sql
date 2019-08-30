@@ -44,6 +44,8 @@ CREATE TABLE UTILISATEURS (
 )
 
 ALTER TABLE UTILISATEURS ADD constraint utilisateur_pk PRIMARY KEY (no_utilisateur)
+ALTER TABLE UTILISATEURS ADD constraint utilisateur_pseudo_uq UNIQUE (pseudo)
+ALTER TABLE UTILISATEURS ADD constraint utilisateur_email_uq UNIQUE (email)
 
 
 CREATE TABLE ARTICLES_VENDUS (
