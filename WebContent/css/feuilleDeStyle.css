@@ -121,10 +121,6 @@
 	width: 30%;
 }
 
-#descriptionVente {
-	height: 10%;
-}
-
 #boutonEnregistrerVente {
 	margin-right: 0;
 	margin-left: auto;
@@ -135,9 +131,6 @@
 	margin-left: 0;
 }
 
-#descriptionVente {
-	height: auto;
-}
 /* CSS VENTE FIN */
 
 /* CSS ENCHERE DEBUT */

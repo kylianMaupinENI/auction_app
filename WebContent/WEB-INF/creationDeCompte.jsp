@@ -200,7 +200,7 @@
 									</div>
 								</c:if>
 								<c:if test="${sessionScope.sessionUtilisateur != null}">
-									<div class="text-right form-group" name=""
+									<div class="text-right form-group"
 										id="<%=ServletUtils.BTN_ENREGISTRER%>">
 										<input type="submit" name="ChoixBouton"
 											class="btn btn-primary btn-user btn-block"

@@ -163,7 +163,7 @@ public class ArticleVenduManager {
 		if (dateFinEncheres.isBefore(LocalDate.now())) {
 			businessException.ajouterErreur(CodesResultatBLL.DATE_FIN_ANTERIEURE_INVALIDE);
 		}
-		// TODO Ajouter la vérification de la durée (inférieure à deux mois)
+		// TODO Ajouter la vï¿½rification de la durï¿½e (infï¿½rieure ï¿½ deux mois)
 	}
 
 	private int valeurDerniereEnchere(int noArticle) throws BusinessException {
@@ -172,8 +172,6 @@ public class ArticleVenduManager {
 	}
 
 	public List<ArticleVendu> selectEncheresOuvertes(String recherche, Categorie categorie) throws BusinessException {
-		System.out.println(recherche);
-		System.out.println(categorie);
 		return articleVenduDAO.selectEncheresOuvertes(recherche, categorie);
 	}
 

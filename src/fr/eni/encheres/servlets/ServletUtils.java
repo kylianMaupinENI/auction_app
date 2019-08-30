@@ -50,15 +50,15 @@ public class ServletUtils {
 	public final static String ATT_REQUEST_USER = "utilisateur";
 	public final static String ATT_LISTE_ARTICLES = "listArticle";
 
-	public static final String CHAMP_NOM_ARTICLE = "nom_vente";
-	public static final String CHAMP_DESCRIPTION_ARTICLE = "description_vente";
+	public static final String CHAMP_NOM_ARTICLE = "nomVente";
+	public static final String CHAMP_DESCRIPTION_ARTICLE = "descriptionente";
 	public static final String CHAMP_CATEGORIE_ARTICLE = "selectCategoriesAccueilDeco";
-	public static final String CHAMP_PRIX_INITIAL_ARTICLE = "prix_initial";
-	public static final String CHAMP_DATE_DEBUT_ARTICLE = "date_debut_enchere";
-	public static final String CHAMP_DATE_FIN_ARTICLE = "date_fin_enchere";
-	public static final String CHAMP_RUE_ARTICLE = "rue_proprietaire";
-	public static final String CHAMP_CODE_POSTAL_ARTICLE = "code_postal_proprietaire";
-	public static final String CHAMP_VILLE_ARTICLE = "ville_proprietaire";
+	public static final String CHAMP_PRIX_INITIAL_ARTICLE = "prixInitial";
+	public static final String CHAMP_DATE_DEBUT_ARTICLE = "dateDebutEnchere";
+	public static final String CHAMP_DATE_FIN_ARTICLE = "dateFinEnchere";
+	public static final String CHAMP_RUE_ARTICLE = "rueProprietaire";
+	public static final String CHAMP_CODE_POSTAL_ARTICLE = "codePostalProprietaire";
+	public static final String CHAMP_VILLE_ARTICLE = "villeProprietaire";
 
 	public static final String CHAMP_MOT_CLE_ACCUEIL = "search";
 	public static final String CHAMP_CATEGORIE_ACCUEIL = "selectCategoriesAccueil";
