@@ -1,7 +1,7 @@
 <%@page import="fr.eni.encheres.bo.ArticleVendu"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@page import="fr.eni.encheres.messages.LecteurMessage"%>
+<%@page import="fr.eni.encheres.messages.LecteurMessage"%>
 <%@page import="java.util.List"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -22,6 +22,7 @@
 	rel="stylesheet">
 <!-- Custom styles for this template-->
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 </head>
 <body class="text-lg">
 	<!-- DEBUT HAUT DE PAGE -->
@@ -48,40 +49,44 @@
 						${articleVendu.lieuRetrait.codePostal}
 						${articleVendu.lieuRetrait.ville}</div>
 					<div>Vendeur : ${articleVendu.proprietaire.pseudo}</div>
-					<div class="form-group">
-						<label for="propositionEnchere">Ma proposition :</label> <input
-							type="text" class="form-control form-control-user"
-							id="propositionEnchere" name="propositionEnchere">
-					</div>
+					<c:if test="${sessionScope.sessionUtilisateur != null}">
+						<div class="form-group">
+							<label for="propositionEnchere">Ma proposition :</label> <input
+								type="text" class="form-control form-control-user"
+								id="propositionEnchere" name="propositionEnchere">
+						</div>
+					</c:if>
 					<hr>
-					<div class="row content">
-						<div class="col-md-6">
-							<input type="hidden" value="${articleVendu.noArticle }" name="noArticle">
-							<input type="submit" name="encherir"
-								class="btn btn-primary btn-user btn-block"
-								id="boutonEncherirVente" value="Encherir">
+					<c:if test="${sessionScope.sessionUtilisateur != null}">
+						<div class="row content">
+							<div class="col-md-6">
+								<input type="hidden" value="${articleVendu.noArticle }"
+									name="noArticle"> <input type="submit" name="encherir"
+									class="btn btn-primary btn-user btn-block"
+									id="boutonEncherirVente" value="Encherir">
+							</div>
+							<div class="col-md-6">
+								<a href="index.jsp" class="btn btn-primary btn-user btn-block"
+									id="boutonAnnulerEnchere"> Annuler </a>
+							</div>
 						</div>
-						<div class="col-md-6">
-							<a href="index.jsp" class="btn btn-primary btn-user btn-block"
-								id="boutonAnnulerEnchere"> Annuler </a>
-						</div>
-					</div>
+					</c:if>
 				</div>
 				<div class="col-sm-2 sidenav"></div>
 			</div>
 		</div>
-										<%
-									List<Integer> listeCodesErreur = (List<Integer>) request.getAttribute("listeCodesErreur");
-									if (listeCodesErreur != null) {
-								%>
-								<%
-									for (int codeErreur : listeCodesErreur) {
-								%>
-								<p style="color: red";><%=LecteurMessage.getMessageErreur(codeErreur)%></p>
-								<%
-									}
-									}
-								%>
+		<%
+			List<Integer> listeCodesErreur = (List<Integer>) request.getAttribute("listeCodesErreur");
+			if (listeCodesErreur != null) {
+		%>
+		<%
+			for (int codeErreur : listeCodesErreur) {
+		%>
+		<p style="color: red";><%=LecteurMessage.getMessageErreur(codeErreur)%></p>
+		<%
+			}
+			}
+		%>
 	</form>
 
 	<!-- DEBUT BAS DE PAGE -->
